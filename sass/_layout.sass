@@ -20,6 +20,85 @@
 .arealine
   height: 100%  
   +background(linear-gradient(left,red 0%, #fff 100%/12*1,red 100%/12*1, #fff 100%/12*2,red 100%/12*2,#fff 100%/12*3,red 100%/12*3,#fff 100%/12*4,red 100%/12*4,#fff 100%/12*5,red 100%/12*5,#fff 100%/12*6,red 100%/12*6,#fff 100%/12*7,red 100%/12*7,#fff 100%/12*8,red 100%/12*8,#fff 100%/12*9,red 100%/12*9,#fff 100%/12*10,red 100%/12*10,#fff 100%/12*11,red 100%/12*11,#fff 100%))
+html,body
+  background: $main_color
+  height: 100%
+body
+  font: $font-size "Open Sans",sans-serif
+#wrap
+  min-height: 100%
+  position: relative
++color('default',$default)
++color('primary',$primary)
++color('info',$info)
++color('success',$success)
++color('warning',$warning)
++color('danger',$danger)
+.emptybg,.emptybg:hover
+  background: transparent
+  color: black
+h1,.h1
+  font-size: 2em
+  margin: .67em 0
+h2,.h2
+  font-size: 1.5em
+  margin: .75em 0
+h3,.h3
+  font-size: 1.17em
+  margin: .83em 0 
+h5,.h5
+  font-size: .83em
+  margin: 1.5em 0
+h6,.h5
+  font-size: .75em
+  margin: 1.67em 0
+h1,h2,h3,h4,h5,h6,.h1,h2,.h3,.h4,.h5,.h6,b,strong
+  font-weight: bolder
+a
+  text-decoration: none
+p
+  line-height: $line-height
+  text-align: justify
+  text-justify: distribute
+  margin: 1em 0
+.table-responsive
+  overflow-x: auto
+  overflow-y: hidden
+  -ms-overflow-style: -ms-autohiding-scrollbar
+  -webkit-overflow-scrolling: touch
+  &::-webkit-scrollbar
+    -webkit-appearance: none
+    width: 14px
+    height: 14px
+  &::-webkit-scrollbar-thumb
+    border-radius: 8px 
+    background-color: $primary
+  & th,& td
+    white-space: nowrap
+%table
+  display: table
+  width: 100%
+  max-width: 100%
+  tr,.tr
+    display: table-row
+    &[data-value*='hover']
+      cursor: pointer
+      z-index: 9
+      &:hover 
+        background: darken($default,25%)
+        color: white
+    td,th,.td,.th
+      display: table-cell
+    th,.th
+      border-bottom: 2px solid #ccc
+      font-weight: bolder
+      padding: $pd
+    td,.td
+      border-bottom: 1px solid #ccc
+      padding: $pd
+table,.table
+  @extend %table
+
 .row
   position: relative
   margin-left: -$pd
@@ -70,133 +149,5 @@
     height: 0
     clear: both 
     visibility: hidden
-html,body
-  background: $main_color
-  height: 100%
-body
-  font: $font-size "Open Sans",sans-serif
-#wrap
-  min-height: 100%
-  position: relative
-.default
-  background: $default
-  border: 1px solid darken($default,10%)
-  &:hover
-    background: darken($default,10%)
-    border-color: darken($default,15%)
-.default_font
-  color: $default
-.primary
-  color: $area_color
-  background: $primary
-  border: 1px solid darken($primary,10%)
-  &:hover
-    background: darken($primary,10%)
-    border-color: darken($primary,15%)
-.primary_font
-  color:  $primary
-.success
-  color: $area_color
-  background: $success
-  border: 1px solid darken($success,10%)
-  &:hover
-    background: darken($success,10%)
-    border-color: darken($success,15%)
-.success_font
-  color: $success
-.info
-  color: $area_color
-  background: $info
-  border: 1px solid darken($info,10%)
-  &:hover
-    background: darken($info,10%)
-    border-color: darken($info,15%)
-.info_font
-  color: $info
-.warning
-  color: $area_color
-  background: $warning
-  border: 1px solid darken($warning,10%)
-  &:hover
-    background: darken($warning,10%)
-    border-color: darken($warning,15%)
-.warning_font
-  color: $warning
-.danger
-  color: $area_color
-  background: $danger
-  border: 1px solid darken($danger,10%)
-  &:hover
-    background: darken($danger,10%)
-    border-color: darken($danger,15%)
-.danger_font
-  color: $danger
-.emptybg,.emptybg:hover
-  background: transparent
-  color: black
-.rfloat
-  float: right
-h1,.h1
-  font-size: 2em
-  margin: .67em 0
-h2,.h2
-  font-size: 1.5em
-  margin: .75em 0
-h3,.h3
-  font-size: 1.17em
-  margin: .83em 0 
-h5,.h5
-  font-size: .83em
-  margin: 1.5em 0
-h6,.h5
-  font-size: .75em
-  margin: 1.67em 0
-h1,h2,h3,h4,h5,h6,.h1,h2,.h3,.h4,.h5,.h6,b,strong
-  font-weight: bolder
-p
-  line-height: $line-height
-  text-align: justify
-  text-justify: distribute
-  margin: 1em 0
-.table-responsive
-  overflow-x: auto
-  overflow-y: hidden
-  -ms-overflow-style: -ms-autohiding-scrollbar
-  -webkit-overflow-scrolling: touch
-  &::-webkit-scrollbar
-    -webkit-appearance: none
-    width: 14px
-    height: 14px
-  &::-webkit-scrollbar-thumb
-    border-radius: 8px 
-    background-color: $primary
-  & th,& td
-    white-space: nowrap
-%table
-  display: table
-  width: 100%
-  max-width: 100%
-  tr,.tr
-    display: table-row
-    &[data-value*='hover']
-      cursor: pointer
-      z-index: 9
-      &:hover 
-        background: darken($default,25%)
-        color: white
-    td,th,.td,.th
-      display: table-cell
-    th,.th
-      border-bottom: 2px solid #ccc
-      font-weight: bolder
-      padding: $pd
-    td,.td
-      border-bottom: 1px solid #ccc
-      padding: $pd
-table,.table
-  @extend %table
-@page
-  margin: 0
-  size: A4
 
   
