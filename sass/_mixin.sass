@@ -49,8 +49,8 @@
   .#{$size}-np
     padding: 0
   .#{$size}-sameh
-    padding-bottom: 999px
-    margin-bottom: -999px 
+    padding-bottom: 9999px
+    margin-bottom: -9999px 
   @for $i from 1 through $col
     .#{$size}#{$i}
       width: ($i/$col)*100%-($gutter*2)
@@ -64,3 +64,14 @@
   -moz-clip-path: $x
   -o-clip-path: $x
   clip-path: $x
+@mixin color($x,$y)
+  .#{$x}
+    background: $y
+    border: 1px solid darken($default,10%)
+    @if $x != 'default'
+      color: white      
+  .#{$x}_font
+    color: $y
+  .#{$x}_hover
+    background: darken($y,10%)
+    border-color: darken($default,15%)
