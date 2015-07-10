@@ -73,9 +73,9 @@ p
   &::-webkit-scrollbar-thumb
     border-radius: 8px 
     background-color: $primary
-  & th,& td
+  & th,& td,& .th,& .td
     white-space: nowrap
-%table
+table,.table
   display: table
   width: 100%
   max-width: 100%
@@ -96,8 +96,7 @@ p
     td,.td
       border-bottom: 1px solid #ccc
       padding: $pd
-table,.table
-  @extend %table
+
 
 .row
   position: relative
@@ -142,6 +141,21 @@ table,.table
   +col(m)
 +susy-media(l)  
   +col(l)
+.responsive-img
+  overflow: overflow
+  position: relative
+  &::after
+    content: ''
+    display: block
+    padding-top: 56.25%
+  img
+    max-width: 100%
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    margin: auto
 .clearfix 
   &::after
     content: "."
