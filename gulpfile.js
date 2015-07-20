@@ -14,6 +14,7 @@ var gulp = require('gulp'),
     compass = require('gulp-compass'),     //compass sass+ susy
     coffee = require('gulp-coffee');       //coffeescript
 
+
 gulp.task('webserver', function() {
   gulp.src('')
     .pipe(webserver({
@@ -59,16 +60,20 @@ gulp.task('images', function() {
     .pipe(gulp.dest('images'))
     .pipe(notify({ message: 'Images task complete' }));
 });
-
+gulp.task('del', function(cb) {
+    del([
+        '.sass-cache'
+    ], cb)
+});
 gulp.task('watch', function () { 
   gulp.watch('app/jade/*.jade', ['jade']);
-  gulp.watch('app/sass/*.sass', ['compass']);
+  gulp.watch('app/sass/*.sass', ['compass','del']);
   gulp.watch('app/coffeescripts/*.coffee', ['coffee']);
   gulp.watch('app/images/**/*', ['images']);
   livereload.listen();
 });
  // Default task
-gulp.task('default', ['jade','compass','coffee','webserver','watch'], function() {
+gulp.task('default', ['jade','compass','coffee','webserver','watch','del'], function() {
     
 });
 
