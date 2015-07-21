@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,IAAI,CACF,UAAU,CAAE,IAAK",
+"sources": ["../../app/sass/public/css-framework/custom.sass"],
+"names": [],
+"file": "custom.css"
+}

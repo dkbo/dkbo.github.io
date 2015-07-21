@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,IAAI,CACF,UAAU,CAAE,IAAK",
-"sources": ["../../../app/sass/public/css-framework/all.sass"],
-"names": [],
-"file": "all.css"
-}
