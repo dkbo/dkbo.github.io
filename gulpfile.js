@@ -23,7 +23,7 @@ gulp.task('webserver', function() {
     }));
 });
 gulp.task('jade', function() {
-  gulp.src('app/jade/*.jade')
+  gulp.src('app/jade/**/**/*.jade')
     .pipe(jade({
         locals: {
           title: 'OMG THIS IS THE TITLE'
@@ -33,7 +33,7 @@ gulp.task('jade', function() {
      .pipe(notify({ message: 'html task ok' }));
 });
 gulp.task('coffee', function() { 
-     gulp.src('app/coffeescripts/*.coffee') 
+     gulp.src('app/coffeescripts/**/**/*.coffee') 
           .pipe(coffee()) 
           .pipe(concat('all.js'))
           .pipe(uglify())
@@ -41,7 +41,7 @@ gulp.task('coffee', function() {
           .pipe(notify({ message: 'js task ok' }));
 });
 gulp.task('compass', function() {
-  gulp.src('app/sass/*.sass')
+  gulp.src('app/sass/**/**/*.sass')
   .pipe(compass({
     config_file: 'app/sass/config.rb',
     css: 'css',
@@ -55,7 +55,7 @@ gulp.task('compass', function() {
 });
 // Images
 gulp.task('images', function() {
-  return gulp.src('app/images/**/*')
+  return gulp.src('app/images/**/**/*')
     .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
     .pipe(gulp.dest('images'))
     .pipe(notify({ message: 'Images task complete' }));
@@ -66,10 +66,10 @@ gulp.task('del', function(cb) {
     ], cb)
 });
 gulp.task('watch', function () { 
-  gulp.watch('app/jade/*.jade', ['jade']);
-  gulp.watch('app/sass/*.sass', ['compass','del']);
-  gulp.watch('app/coffeescripts/*.coffee', ['coffee']);
-  gulp.watch('app/images/**/*', ['images']);
+  gulp.watch('app/jade/**/**/*.jade', ['jade']);
+  gulp.watch('app/sass/**/**/*.sass', ['compass','del']);
+  gulp.watch('app/coffeescripts/**/**/*.coffee', ['coffee']);
+  gulp.watch('app/images/**/**/*', ['images']);
   livereload.listen();
 });
  // Default task
