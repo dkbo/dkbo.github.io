@@ -1,3 +1,4 @@
+// npm install gulp-jshint gulp-imagemin gulp-rename gulp-concat gulp-notify gulp-cache gulp-livereload del gulp-watch gulp-uglify gulp-webserver gulp-jade-php gulp-jade gulp-compass gulp-coffee --save-dev
 var gulp = require('gulp'),      
     jshint = require('gulp-jshint'),        //js 和並用        
     imagemin = require('gulp-imagemin'),    //圖片壓縮用
@@ -38,7 +39,7 @@ gulp.task('coffee', function() {
      gulp.src('app/coffeescripts/**/*.coffee') 
           .pipe(coffee()) 
           .pipe(uglify())
-          .pipe(gulp.dest('js'))
+          .pipe(gulp.dest(''))
           .pipe(notify({ message: 'js task ok' }))
           .pipe(livereload());
 });
@@ -59,7 +60,7 @@ gulp.task('compass', function() {
 });
 // Images
 gulp.task('images', function() {
-  return gulp.src('app/images/**/*')
+  return gulp.src('app/images/**/**/*')
     .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
     .pipe(gulp.dest('images'))
     .pipe(notify({ message: 'Images task complete' }))
