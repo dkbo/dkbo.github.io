@@ -35,39 +35,55 @@ while x < init.screen.length
   x++
 left = ->
    if init.x == 0 and init.y == 0
-      init.screen[4].box.style.marginLeft = 0
-      init.screen[0].box.style.marginLeft = '100%'
+      init.screen[4].box.style.webkitTransform = "translate3d(0,0,0)"
+      init.screen[0].box.style.webkitTransform = "translate3d(100%,0,0)"
+      init.screen[4].box.style.transform = "translate3d(0,0,0)"
+      init.screen[0].box.style.transform = "translate3d(100%,0,0)"
       init.x = -1
    else if init.x == init.screen[2].x
-      init.screen[2].box.style.marginLeft = '100%'
-      init.screen[0].box.style.marginLeft = 0
+      init.screen[2].box.style.webkitTransform = "translate3d(100%,0,0)"
+      init.screen[0].box.style.webkitTransform = "translate3d(0,0,0)"
+      init.screen[2].box.style.transform = "translate3d(100%,0,0)"
+      init.screen[0].box.style.transform = "translate3d(0,0,0)"
       init.x = 0
 up = ->
    if init.x == 0 and init.y == 0
-      init.screen[1].box.style.marginTop = 0
-      init.screen[0].box.style.marginTop = '100%'
+      init.screen[1].box.style.webkitTransform = "translate3d(0,0,0)"
+      init.screen[0].box.style.webkitTransform = "translate3d(0,100%,0)"
+      init.screen[1].box.style.transform = "translate3d(0,0,0)"
+      init.screen[0].box.style.transform = "translate3d(0,100%,0)"
       init.y = 1
    else if init.y == init.screen[3].y
-      init.screen[3].box.style.marginTop = '100%'
-      init.screen[0].box.style.marginTop = 0
+      init.screen[3].box.style.webkitTransform = "translate3d(0,100%,0)"
+      init.screen[0].box.style.webkitTransform = "translate3d(0,0,0)"
+      init.screen[3].box.style.transform = "translate3d(0,100%,0)"
+      init.screen[0].box.style.transform = "translate3d(0,0,0)"
       init.y = 0
 right = ->
    if init.x == 0 and init.y == 0
-      init.screen[2].box.style.marginLeft = 0
-      init.screen[0].box.style.marginLeft = '-100%'
+      init.screen[2].box.style.webkitTransform = "translate3d(0,0,0)"
+      init.screen[0].box.style.webkitTransform = "translate3d(-100%,0,0)"
+      init.screen[2].box.style.transform = "translate3d(0,0,0)"
+      init.screen[0].box.style.transform = "translate3d(-100%,0,0)"
       init.x = 1
    else if init.x == init.screen[4].x
-      init.screen[4].box.style.marginLeft = '-100%'
-      init.screen[0].box.style.marginLeft = 0
+      init.screen[4].box.style.webkitTransform = "translate3d(-100%,0,0)"
+      init.screen[0].box.style.webkitTransform = "translate3d(0,0,0)"
+      init.screen[4].box.style.transform = "translate3d(-100%,0,0)"
+      init.screen[0].box.style.transform = "translate3d(0,0,0)"
       init.x = 0
 down = ->
   if init.x == 0 and init.y == 0
-      init.screen[3].box.style.marginTop = 0
-      init.screen[0].box.style.marginTop = '-100%'
+      init.screen[3].box.style.webkitTransform = "translate3d(0,0,0)"
+      init.screen[0].box.style.webkitTransform = "translate3d(-0,-100%,0)"
+      init.screen[3].box.style.transform = "translate3d(0,0,0)"
+      init.screen[0].box.style.transform = "translate3d(-0,-100%,0)"
       init.y= -1
     else if init.y == init.screen[1].y
-      init.screen[1].box.style.marginTop = '-100%'
-      init.screen[0].box.style.marginTop = 0
+      init.screen[1].box.style.webkitTransform = "translate3d(-0,-100%,0)"
+      init.screen[0].box.style.webkitTransform = "translate3d(0,0,0)"
+      init.screen[1].box.style.transform = "translate3d(-0,-100%,0)"
+      init.screen[0].box.style.transform = "translate3d(0,0,0)"
       init.y = 0
       
 window.document.addEventListener 'keyup', (e) ->

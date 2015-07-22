@@ -6,28 +6,39 @@ body
   background-size: cover
 #wrap
   height: 100%
-  width: 100%  
-  overflow: hidden
-.container
-  height: 100%
   width: 100%
-  max-height: 100%
+  +susy-media(s)  
+    overflow: hidden
+.container
+  +susy-media(s)
+    height: 100%
+    max-height: 100%
+  width: 100%
   max-width: 100%
   +transition(1s all ease)
 section
-  position: absolute
+  position: relative
+  min-height: 500px
+  +susy-media(s)
+    position: absolute
+    min-height: 100%
   width: 100%
-  min-height: 100%
   +transition(1s all ease)
+#main
+  +susy-media(s)
+    +transform(translate3d(0, 0, 0))
 #skill
-  margin-top: -100%
+  +susy-media(s)
+    +transform(translate3d(0, -100%, 0))
 #work
-  margin-left: 100%
+  +susy-media(s)
+    +transform(translate3d(100%, 0, 0))
 #contact
-  margin-top: 100%
+  +susy-media(s)
+    +transform(translate3d(0, 100%, 0))
 #about
-  margin-left: -100%
-  background: rgba(0, 0, 0, 0.80)
+  +susy-media(s)
+    +transform(translate3d(-100%, 0, 0))
 
    
 .arrow
