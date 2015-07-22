@@ -59,7 +59,7 @@ gulp.task('compass', function() {
 });
 // Images
 gulp.task('images', function() {
-  return gulp.src('app/images/**/**/*')
+  return gulp.src('app/images/**/*')
     .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
     .pipe(gulp.dest('images'))
     .pipe(notify({ message: 'Images task complete' }))
