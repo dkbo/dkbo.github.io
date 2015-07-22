@@ -1,6 +1,9 @@
 @import variable
 @import compass
 @import susy
+body
+  background: url('/images/mainbg.jpg')
+  background-size: cover
 #wrap
   height: 100%
   width: 100%  
@@ -16,10 +19,6 @@ section
   width: 100%
   min-height: 100%
   +transition(1s all ease)
-  background: white
-#main
-  background: url('/images/mainbg.jpg')
-  background-size: cover
 #skill
   margin-top: -100%
 #work
@@ -28,6 +27,9 @@ section
   margin-top: 100%
 #about
   margin-left: -100%
+  background: rgba(0, 0, 0, 0.80)
+
+   
 .arrow
   position: absolute
   cursor: pointer
@@ -54,15 +56,11 @@ section
   padding: 10px
   +border-radius(10px)
   
-  
-
 #author
   text-align: center
-  background: #422B38
+  background: black
   color: white
-  img
-    width: 80%
-    +border-radius(50%)
+  margin-top: 100px
 #social-icon
   margin: 10px 0
   a
@@ -76,7 +74,7 @@ section
       font-size: 1.6em
     +transition(.3s all ease)
     &:hover
-      color: black
+      color: blue
 
 .author-description
   font-size: 0.6em
