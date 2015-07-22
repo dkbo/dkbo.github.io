@@ -1,0 +1,78 @@
+@import variable
+@import compass
+@import susy
+#wrap
+  height: 100%
+  width: 100%  
+  overflow: hidden
+.container
+  height: 100%
+  width: 100%
+  max-height: 100%
+  max-width: 100%
+  +transition(1s all ease)
+section
+  position: absolute
+  width: 100%
+  min-height: 100%
+  +transition(1s all ease)
+  background: white
+#skill
+  margin-top: -100%
+#work
+  margin-left: 100%
+#contact
+  margin-top: 100%
+#about
+  margin-left: -100%
+.arrow
+  position: absolute
+  cursor: pointer
+  font-size: 3em
+  color: white
+  background: black
+  padding: 10px
+#main_box
+  width: 300px
+  position: absolute
+  top: 30%
+  left: 50%
+  margin-left: -150px
+  span
+    margin: 0 5px
+    cursor: pointer
+.title
+  border: 1px solid black
+  padding: 10px
+  +border-radius(10px)
+  
+  
+
+#author
+  text-align: center
+  background: #422B38
+  color: white
+  img
+    width: 80%
+    +border-radius(50%)
+#social-icon
+  margin: 10px 0
+  a
+    color: white
+    font-size: 1em
+    padding: $pd/2
+    +susy-media(m)
+      font-size: 1.4em
+      padding: $pd
+    +susy-media(l)
+      font-size: 1.6em
+    +transition(.3s all ease)
+    &:hover
+      color: black
+#main
+  background: #F5F5F5
+
+.author-description
+  font-size: 0.6em
+  +susy-media(s)
+    font-size: 1em

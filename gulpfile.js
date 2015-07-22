@@ -37,7 +37,6 @@ gulp.task('jade', function() {
 gulp.task('coffee', function() { 
      gulp.src('app/coffeescripts/**/*.coffee') 
           .pipe(coffee()) 
-          .pipe(concat('all.js'))
           .pipe(uglify())
           .pipe(gulp.dest('js'))
           .pipe(notify({ message: 'js task ok' }))
