@@ -97,11 +97,11 @@ move = (start,end) ->
   y = end.y - start.y
   if x > 50 && x > y && x > -y
     left() 
-  if y > 100 && y > x && y > -x
+  if y > 50 && y > x && y > -x
     up()
   if x < -50 && -x > y && -x > -y  
     right()
-  if y < -100 && -y > x && -y > -x
+  if y < -50 && -y > x && -y > -x
     down()
   return      
 window.document.addEventListener 'keyup', (e) ->

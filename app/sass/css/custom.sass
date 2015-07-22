@@ -13,12 +13,13 @@ body
   max-height: 100%
   width: 100%
   max-width: 100%
-  +transition(1s all ease)
 section
   position: absolute
   min-height: 100%
   width: 100%
-  +transition(1s all ease)
+  +transition(.5s all ease)
+  +susy-media(s)
+    +transition(1s all ease)
 #main
   +transform(translate3d(0, 0, 0))
 #skill
