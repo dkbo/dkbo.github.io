@@ -17,6 +17,9 @@ section
   min-height: 100%
   +transition(1s all ease)
   background: white
+#main
+  background: url('/images/mainbg.jpg')
+  background-size: cover
 #skill
   margin-top: -100%
 #work
@@ -33,16 +36,21 @@ section
   background: black
   padding: 10px
 #main_box
-  width: 300px
+  +background(linear-gradient(to bottom, rgba(0,0,0,0.62) 0%,rgba(44,44,44,0.2) 36%,rgba(0,0,0,0.45) 100%),rgba(0,0,0,0.35))
+  color: white
+  width: 400px
+  padding: 20px
   position: absolute
   top: 30%
   left: 50%
-  margin-left: -150px
+  margin-left: -200px
+  a
+    color: white
   span
     margin: 0 5px
     cursor: pointer
 .title
-  border: 1px solid black
+  border: 2px solid white
   padding: 10px
   +border-radius(10px)
   
@@ -69,8 +77,6 @@ section
     +transition(.3s all ease)
     &:hover
       color: black
-#main
-  background: #F5F5F5
 
 .author-description
   font-size: 0.6em
