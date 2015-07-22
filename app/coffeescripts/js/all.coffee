@@ -1,6 +1,8 @@
 init = 
   x: 0
   y: 0
+  touchStart: {}
+  touchEnd: {}
   arrow: document.getElementsByClassName('arrow')
   screen: [
     {
@@ -85,7 +87,23 @@ down = ->
       init.screen[1].box.style.transform = "translate3d(-0,-100%,0)"
       init.screen[0].box.style.transform = "translate3d(0,0,0)"
       init.y = 0
-      
+getTouchPos = (e) ->
+  {
+    x: e.changedTouches[0].clientX
+    y: e.changedTouches[0].clientY
+  }
+move = (start,end) ->
+  x = end.x - start.x
+  y = end.y - start.y
+  if x < -50 && -x > y && -x > -y
+    left() 
+  if y > 100 && y > x && y > -x
+    up()
+  if x > 50 && x > y && x > -y
+    right()
+  if y < -100 && -y > x && -y > -x
+    down()
+  return      
 window.document.addEventListener 'keyup', (e) ->
   if e.keyCode == 37
     left() 
@@ -100,3 +118,12 @@ document.querySelector("span[move='up']").addEventListener('click',up)
 document.querySelector("span[move='down']").addEventListener('click',down)
 document.querySelector("span[move='left']").addEventListener('click',left)
 document.querySelector("span[move='right']").addEventListener('click',right)
+window.document.addEventListener 'touchstart', (e) ->
+  init.touchStart = getTouchPos(e)
+  return
+, false
+window.document.addEventListener 'touchend', (e) ->
+  init.touchEnd = getTouchPos(e)
+  move(init.touchStart,init.touchEnd)
+  return
+, false
