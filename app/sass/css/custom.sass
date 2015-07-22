@@ -3,7 +3,11 @@
 @import susy
 body
   background: url('/images/mainbg.jpg')
+  background-attachment: fixed
   background-size: cover
+  height: auto
+  +susy-media(s)
+    height: 100%
 #wrap
   height: 100%
   width: 100%
@@ -51,12 +55,17 @@ section
 #main_box
   +background(linear-gradient(to bottom, rgba(0,0,0,0.62) 0%,rgba(44,44,44,0.2) 36%,rgba(0,0,0,0.45) 100%),rgba(0,0,0,0.35))
   color: white
-  width: 400px
-  padding: 20px
   position: absolute
   top: 30%
   left: 50%
-  margin-left: -200px
+  width: 300px
+  margin-left: -150px
+  padding: 20px
+  +susy-media(s)
+    width: 400px
+    margin-left: -200px
+  
+  
   a
     color: white
   span
