@@ -95,11 +95,11 @@ getTouchPos = (e) ->
 move = (start,end) ->
   x = end.x - start.x
   y = end.y - start.y
-  if x < -50 && -x > y && -x > -y
+  if x > 50 && x > y && x > -y
     left() 
   if y > 100 && y > x && y > -x
     up()
-  if x > 50 && x > y && x > -y
+  if x < -50 && -x > y && -x > -y  
     right()
   if y < -100 && -y > x && -y > -x
     down()
