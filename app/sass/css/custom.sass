@@ -3,7 +3,6 @@
 @import susy
 body
   background: url('/images/mainbg.jpg')
-  background-attachment: fixed
   background-size: cover
   height: auto
   +susy-media(s)
@@ -22,12 +21,11 @@ body
   +transition(1s all ease)
 section
   position: relative
-  min-height: 500px
-  +susy-media(s)
-    position: absolute
-    min-height: 100%
+  min-height: 100% 
   width: 100%
   +transition(1s all ease)
+  +susy-media(s)
+    position: absolute
 #main
   +susy-media(s)
     +transform(translate3d(0, 0, 0))
