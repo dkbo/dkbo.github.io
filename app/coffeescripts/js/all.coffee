@@ -21,7 +21,7 @@ init =
       y: 2
     }
     {
-      id: 'work'
+      id: 'works'
       x: 0
       y: 3
     }
@@ -31,17 +31,14 @@ init =
       y: 4
     }
   ]
-x = 0
-while x < init.screen.length
-  init.screen[x].box = document.getElementById(init.screen[x].id)
-  x++
+for x in init.screen
+  init.screen[x.y].box = document.getElementById(x.id)
 scroll = (x)->
   if init.y + x  >= 0 && init.y + x <=4
     init.y += x 
     i = 0
     while i<init.screen.length
       j = (init.screen[i].y - init.y)*100 + '%'
-      init.screen[i].box.style.webkitTransform = "translate3d(0,"+j+",0)"
       init.screen[i].box.style.transform = "translate3d(0,"+j+",0)"
       i++
 getTouchPos = (e) ->
@@ -92,4 +89,13 @@ else if (document.addEventListener)
       e.preventDefault()
       if init.wheel > 0 then  scroll(-1) else scroll(1)
       return
-    , false 
+    , false
+document.querySelector("span[move='about']").addEventListener 'click',->
+  scroll(1)
+document.querySelector("span[move='skill']").addEventListener 'click',->
+  scroll(2)
+document.querySelector("span[move='works']").addEventListener 'click',->
+  scroll(3)
+document.querySelector("span[move='contact']").addEventListener 'click',->
+  scroll(4)
+
