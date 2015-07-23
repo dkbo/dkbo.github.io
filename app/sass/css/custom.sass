@@ -14,6 +14,8 @@ body
   width: 100%
   max-width: 100%
 section
+  -webkit-backface-visibility: hidden
+  -webkit-perspective: 1000
   position: absolute
   min-height: 100%
   width: 100%
@@ -40,42 +42,100 @@ section
   color: white
   background: black
   padding: 10px
-#main_box
+#main_box,#contact_box,#about-author,.social a
   +background(linear-gradient(to bottom, rgba(0,0,0,0.62) 0%,rgba(44,44,44,0.2) 36%,rgba(0,0,0,0.45) 100%),rgba(0,0,0,0.35))
+#main_box
+  +border-radius(10px)
   color: white
   position: absolute
-  top: 20%
+  top: 15%
   left: 50%
   width: 300px
   margin-left: -150px
   padding: 20px
+  overflow: hidden
+  .title
+    +transition(.3s all ease)
+    border: 2px solid white
+    padding: 10px
+    +border-radius(10px)
+    &:hover
+      background: rgba(0, 0, 0, 0.5)
   +susy-media(s)
     width: 400px
-    margin-left: -200px
-  
-  
+    margin-left: -200px 
   a
     color: white
-  span
+  span.icon
+    position: relative
     margin: 0 5px
     cursor: pointer
     padding: 10px
-    width: 70px
-    height: 70px
+    width: 55px
+    height: 55px
+    +susy-media(s)
+      width: 70px
+      height: 70px
     border: 2px solid white
     +border-radius(50%)
     display: inline-block
     +transition(.3s all ease)
     &:hover
       background: rgba(0, 0, 0, 0.5)
-    i   
-      font-size: 2em
+      span
+        opacity: 1
+        bottom: -30px
+    i 
       line-height: 1.5em
-      
-      
-.title
-  border: 2px solid white
-  padding: 10px
-  +border-radius(10px)
-#author
-  margin-top: 100px
+      font-size: 1.4em
+      +susy-media(s)  
+        font-size: 2em
+    span
+      opacity: 1
+      bottom: -30px
+      +susy-media(s)
+        opacity: 0
+        bottom: -100px
+      position: absolute
+      width: 100%
+      left: 50%  
+      margin-left: -50%
+      color: white
+      +transition(.3s all ease)  
+.importfont
+  font-family: 'Dancing Script', cursive
+#about 
+
+  h1
+    color: #272727
+  p
+    font-size: 0.8em
+    color: white
+    +susy-media(s)
+      font-size: 1em
+    
+.social
+  a
+    color: white
+    display: inline-block
+    width: 40px
+    height: 40px
+    padding: 10px
+    margin: 5px
+    border: 2px solid white
+    +border-radius(50%)
+    &:hover
+      color: rgb(204, 222, 236)
+  +susy-media(s)
+    margin-top: 100px
+    p
+      font-size: 1em
+
+#contact_box
+  margin-top: 15%
+  h1,p
+    color: white
+  p
+    padding-top: 0
+
+
