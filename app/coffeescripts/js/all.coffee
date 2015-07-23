@@ -1,8 +1,8 @@
 init = 
-  x: 0
   y: 0
   touchStart: {}
   touchEnd: {}
+  wheel: 0
   arrow: document.getElementsByClassName('arrow')
   screen: [
     {
@@ -11,82 +11,39 @@ init =
       y: 0
     }
     {
-      id: 'skill'
+      id: 'about'
       x: 0
       y: 1
     }
     {
+      id: 'skill'
+      x: 0
+      y: 2
+    }
+    {
       id: 'work'
-      x: 1
-      y: 0
+      x: 0
+      y: 3
     }
     {
       id: 'contact'
       x: 0
-      y: -1
-    }
-    {
-      id: 'about'
-      x: -1
-      y: 0
+      y: 4
     }
   ]
 x = 0
 while x < init.screen.length
   init.screen[x].box = document.getElementById(init.screen[x].id)
   x++
-left = ->
-   if init.x == 0 and init.y == 0
-      init.screen[4].box.style.webkitTransform = "translate3d(0,0,0)"
-      init.screen[0].box.style.webkitTransform = "translate3d(100%,0,0)"
-      init.screen[4].box.style.transform = "translate3d(0,0,0)"
-      init.screen[0].box.style.transform = "translate3d(100%,0,0)"
-      init.x = -1
-   else if init.x == init.screen[2].x
-      init.screen[2].box.style.webkitTransform = "translate3d(100%,0,0)"
-      init.screen[0].box.style.webkitTransform = "translate3d(0,0,0)"
-      init.screen[2].box.style.transform = "translate3d(100%,0,0)"
-      init.screen[0].box.style.transform = "translate3d(0,0,0)"
-      init.x = 0
-up = ->
-   if init.x == 0 and init.y == 0
-      init.screen[1].box.style.webkitTransform = "translate3d(0,0,0)"
-      init.screen[0].box.style.webkitTransform = "translate3d(0,100%,0)"
-      init.screen[1].box.style.transform = "translate3d(0,0,0)"
-      init.screen[0].box.style.transform = "translate3d(0,100%,0)"
-      init.y = 1
-   else if init.y == init.screen[3].y
-      init.screen[3].box.style.webkitTransform = "translate3d(0,100%,0)"
-      init.screen[0].box.style.webkitTransform = "translate3d(0,0,0)"
-      init.screen[3].box.style.transform = "translate3d(0,100%,0)"
-      init.screen[0].box.style.transform = "translate3d(0,0,0)"
-      init.y = 0
-right = ->
-   if init.x == 0 and init.y == 0
-      init.screen[2].box.style.webkitTransform = "translate3d(0,0,0)"
-      init.screen[0].box.style.webkitTransform = "translate3d(-100%,0,0)"
-      init.screen[2].box.style.transform = "translate3d(0,0,0)"
-      init.screen[0].box.style.transform = "translate3d(-100%,0,0)"
-      init.x = 1
-   else if init.x == init.screen[4].x
-      init.screen[4].box.style.webkitTransform = "translate3d(-100%,0,0)"
-      init.screen[0].box.style.webkitTransform = "translate3d(0,0,0)"
-      init.screen[4].box.style.transform = "translate3d(-100%,0,0)"
-      init.screen[0].box.style.transform = "translate3d(0,0,0)"
-      init.x = 0
-down = ->
-  if init.x == 0 and init.y == 0
-      init.screen[3].box.style.webkitTransform = "translate3d(0,0,0)"
-      init.screen[0].box.style.webkitTransform = "translate3d(-0,-100%,0)"
-      init.screen[3].box.style.transform = "translate3d(0,0,0)"
-      init.screen[0].box.style.transform = "translate3d(-0,-100%,0)"
-      init.y= -1
-    else if init.y == init.screen[1].y
-      init.screen[1].box.style.webkitTransform = "translate3d(-0,-100%,0)"
-      init.screen[0].box.style.webkitTransform = "translate3d(0,0,0)"
-      init.screen[1].box.style.transform = "translate3d(-0,-100%,0)"
-      init.screen[0].box.style.transform = "translate3d(0,0,0)"
-      init.y = 0
+scroll = (x)->
+  if init.y + x  >= 0 && init.y + x <=4
+    init.y += x 
+    i = 0
+    while i<init.screen.length
+      j = (init.screen[i].y - init.y)*100 + '%'
+      init.screen[i].box.style.webkitTransform = "translate3d(0,"+j+",0)"
+      init.screen[i].box.style.transform = "translate3d(0,"+j+",0)"
+      i++
 getTouchPos = (e) ->
   {
     x: e.changedTouches[0].clientX
@@ -96,28 +53,21 @@ move = (start,end) ->
   x = end.x - start.x
   y = end.y - start.y
   if x > 50 && x > y && x > -y
-    left() 
+    scroll(-1) 
   if y > 50 && y > x && y > -x
-    up()
+    scroll(-1)
   if x < -50 && -x > y && -x > -y  
-    right()
+    scroll(1)
   if y < -50 && -y > x && -y > -x
-    down()
+    scroll(1)
   return      
 window.document.addEventListener 'keyup', (e) ->
-  if e.keyCode == 37
-    left() 
-  if e.keyCode == 38
-    up()
-  if e.keyCode == 39
-    right()
-  if e.keyCode == 40
-    down()
+  if e.keyCode == 37 || e.keyCode == 38
+    scroll(-1)
+  if e.keyCode == 39 || e.keyCode == 40
+    scroll(1)
   return
-document.querySelector("span[move='up']").addEventListener('click',up)
-document.querySelector("span[move='down']").addEventListener('click',down)
-document.querySelector("span[move='left']").addEventListener('click',left)
-document.querySelector("span[move='right']").addEventListener('click',right)
+
 window.document.addEventListener 'touchstart', (e) ->
   init.touchStart = getTouchPos(e)
   return
@@ -127,3 +77,19 @@ window.document.addEventListener 'touchend', (e) ->
   move(init.touchStart,init.touchEnd)
   return
 , false
+
+mousewheelevt= if (/Firefox/i.test(navigator.userAgent))  then "DOMMouseScroll" else "mousewheel"
+
+if (document.attachEvent)
+    document.attachEvent "on"+mousewheelevt, (e) ->
+      init.wheel = if e.detail then e.detail*(-120) else e.wheelDelta
+      e.preventDefault()
+      if init.wheel > 0 then  scroll(-1) else scroll(1)
+      return  
+else if (document.addEventListener)
+    document.addEventListener mousewheelevt, (e) ->
+      init.wheel = if e.detail then e.detail*(-120) else e.wheelDelta
+      e.preventDefault()
+      if init.wheel > 0 then  scroll(-1) else scroll(1)
+      return
+    , false 
