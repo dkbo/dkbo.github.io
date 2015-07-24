@@ -1,0 +1,76 @@
+@import compass
+*
+  +box-sizing(border-box)
+.crmera
+  +perspective(500px)
+  +perspective-origin(center center)
+  .single,.double
+    position: relative
+    .space
+      +transform-style(perserve-3d)
+      border: 1px dashed black
+      +backface-visibility(hidden)
+      +perspective(1000)
+      .box
+        cursor: pointer
+        display: inline-block
+        width: 100%
+        height: 100%
+        background: rgb(176, 195, 255)
+        text-align: center
+        vertical-align: middle
+        +box-shadow(10px 10px 10px #969494)
+        +transition(transform .5s)
+        span
+          position: absolute
+          font-size: 10px
+          top: 50%
+          left: 50%
+          width: 100%
+          margin-left: -50%
+  .single
+    &:nth-child(1) .box
+      +transform(translateX(20px))
+    &:nth-child(2) .box
+      +transform(translateY(20px))
+    &:nth-child(3) .box
+      +transform(translateZ(20px))
+    &:nth-child(4) .box
+      +transform(translate3d(20px,20px,20px))
+    &:nth-child(5) .box
+      +transform(rotateX(20deg))
+    &:nth-child(6) .box
+      +transform(rotateY(20deg))
+    &:nth-child(7) .box
+      +transform(rotateZ(20deg))
+    &:nth-child(8) .box
+      +transform(rotate3d(1,1,1,20deg))
+    &:nth-child(9) .box
+      +transform(scaleX(1.2))
+    &:nth-child(10) .box
+      +transform(scaleY(1.2))
+    &:nth-child(11) .box
+      +transform(scaleZ(1.2))
+    &:nth-child(12) .box
+      +transform(scale3d(1.2,1.2,1.2))
+    &:hover .box
+      +transform(translate3d(0,0,0),rotate3d(0,0,0,0deg))
+  .double
+    &:nth-child(1) .box
+      +transform(translateX(20px) rotate3d(1,1,1,90deg))
+    &:nth-child(2) .box
+      +transform(translateY(20px) rotate3d(1,1,1,90deg))
+    &:nth-child(3) .box
+      +transform(translateZ(20px) rotate3d(1,1,1,90deg))
+    &:nth-child(4) .box
+      +transform(translate3d(20px,20px,20px) rotate3d(1,1,1,90deg))
+    &:nth-child(5) .box
+      +transform(scaleX(1.2) rotate3d(1,1,1,90deg))
+    &:nth-child(6) .box
+      +transform(scaleY(1.2) rotate3d(1,1,1,90deg))
+    &:nth-child(7) .box
+      +transform(scaleZ(1.2) rotate3d(1,1,1,90deg))
+    &:nth-child(8) .box
+      +transform(scale3d(1.2,1.2,1.2) rotate3d(1,1,1,90deg))
+    &:hover .box
+      +transform(translate3d(0,0,0),rotate3d(0,0,0,0deg))
