@@ -99,3 +99,16 @@ document.querySelector("span[move='works']").addEventListener 'click',->
 document.querySelector("span[move='contact']").addEventListener 'click',->
   scroll(4)
 
+show = document.getElementsByClassName('test')
+author_photo= document.getElementById('authorphoto')
+
+window.addEventListener 'resize', ->
+  photo()
+  
+photo =  ->
+  if window.screen.width > 768
+    width = author_photo.offsetHeight/2
+    width2 = -width
+    val = 'transform: rotate3d(0, 1, 0, 240deg) scale3d(0.8, 0.8, 1) rotateX(90deg) scaleY(2) translate3d(0,' + width + 'px, ' + width2 + 'px);-ms-transform: rotate3d(0, 1, 0, 240deg) scale3d(0.8, 0.8, 1) rotateX(90deg) scaleY(2) translate3d(0,' + width + 'px, ' + width2 + 'px);-webkit-transform: rotate3d(0, 1, 0, 240deg) scale3d(0.8, 0.8, 1) rotateX(90deg) scaleY(2) translate3d(0,' + width + 'px, ' + width2 + 'px);-moz-transform: rotate3d(0, 1, 0, 240deg) scale3d(0.8, 0.8, 1) rotateX(90deg) scaleY(2) translate3d(0,' + width + 'px, ' + width2 + 'px);'
+    show[0].setAttribute("style",val)
+photo()
