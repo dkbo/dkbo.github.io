@@ -61,8 +61,29 @@ html
                     i#codepen.fa.fa-codepen
                   a(href='http://github.com/dkbo')
                     i#codepen.fa.fa-github-alt
-        section#skill s
-
+        section#skill
+          #skillbox
+            .skill.css
+              -var x=1
+              while x < 7
+                .face
+                  if x == 5
+                    .text CSS
+                -x++
+              -var x=1
+            .skill.html
+              while x < 7
+                .face
+                  if x == 5
+                    .text HTML
+                -x++
+              -var x=1
+            .skill.js
+              while x < 7
+                .face
+                  if x == 5
+                    .text JS
+                -x++
         section#works w
 
         section#contact
