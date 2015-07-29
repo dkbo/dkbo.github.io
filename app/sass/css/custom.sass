@@ -116,13 +116,15 @@ section
   height: 100%
   position: relative
   overflow: hidden
+.works
+  height: 100%
+  width: 100%
+  position: absolute
+  +backface-visibility(hidden)
+  +transform-style(preserve-3d)
   +transition(.5s all ease)
   +susy-media(s)
     +transition(1s all ease)
-.works
-  height: 100%
-  position: relative
-  display: inline-block
 .importfont
   font-family: 'Dancing Script', cursive
 #about 

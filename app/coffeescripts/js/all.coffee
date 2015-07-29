@@ -6,10 +6,8 @@ init =
   works: {
             id:document.getElementById('works_box')
             class : document.getElementsByClassName('works')
-            width: document.getElementById('works_box').clientWidth
-            maxWidth: 0
             maxBox: 0
-            x: 1
+            x: 0
           }
   arrow: document.getElementsByClassName('arrow')
   screen: [
@@ -41,8 +39,8 @@ init =
   ]
 
 for x in init.works.class
-  x.style.width = init.works.width+"px"
-  init.works.maxWidth += init.works.width
+  j = init.works.maxBox*100+"%"
+  x.style.transform = "translate3d("+j+",0,0)"
   init.works.maxBox +=1
 
 init.works.id.style.width = init.works.maxWidth+"px"
@@ -50,9 +48,11 @@ init.works.id.style.width = init.works.maxWidth+"px"
 for x in init.screen
   init.screen[x.y].box = document.getElementById(x.id)
 works = (x)->
-  if init.works.x + x <= init.works.maxBox && init.works.x + x >= 1
-        init.works.x += x
-        init.works.id.style.marginLeft = -(init.works.x-1)*init.works.width+"px"   
+  if init.works.x + x < init.works.maxBox && init.works.x + x >= 0
+    j = -x*100+"%"
+    init.works.class[init.works.x].style.transform = "translate3d("+j+",0,0)" 
+    init.works.x += x
+    init.works.class[init.works.x].style.transform = "translate3d(0,0,0)"   
 scroll = (x)->
   if init.y + x  >= 0 && init.y + x <=4
     init.y += x 
