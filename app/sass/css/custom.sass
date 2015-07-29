@@ -39,6 +39,7 @@ section
   height: 100%
 #works
   +transform(translate3d(0, 300%, 0))
+  height: 100%
 #contact
   +transform(translate3d(0, 400%, 0))
 
@@ -51,9 +52,9 @@ section
   color: white
   background: black
   padding: 10px
-#main_box,#contact_box,#about-author,.social a
+#main_box,#contact_box,#about-author,.social a,.works_box
   +background(linear-gradient(to bottom, rgba(0,0,0,0.62) 0%,rgba(44,44,44,0.2) 36%,rgba(0,0,0,0.45) 100%),rgba(0,0,0,0.35))
-#main_box
+#main_box,.works_box
   +border-radius(10px)
   color: white
   position: absolute
@@ -111,6 +112,17 @@ section
       margin-left: -50%
       color: white
       +transition(.3s all ease)  
+#works_box
+  height: 100%
+  position: relative
+  overflow: hidden
+  +transition(.5s all ease)
+  +susy-media(s)
+    +transition(1s all ease)
+.works
+  height: 100%
+  position: relative
+  display: inline-block
 .importfont
   font-family: 'Dancing Script', cursive
 #about 
@@ -122,13 +134,6 @@ section
     color: white
     +susy-media(s)
       font-size: 1em
-  .test
-    position: absolute
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    background: rgba(0, 0, 0, 0.45)
   img
     +transform(rotate3d(0,1,0,240deg) scale3d(0.8,0.8,1))
 .social
@@ -197,6 +202,7 @@ html,body
     width: $swidth
     height: $sheight
     +transform-style(preserve-3d)
+    +backface-visibility(hidden)
     +transition(.5s)
     cursor: pointer
     .text

@@ -3,6 +3,14 @@ init =
   touchStart: {}
   touchEnd: {}
   wheel: 0
+  works: {
+            id:document.getElementById('works_box')
+            class : document.getElementsByClassName('works')
+            width: document.getElementById('works_box').clientWidth
+            maxWidth: 0
+            maxBox: 0
+            x: 1
+          }
   arrow: document.getElementsByClassName('arrow')
   screen: [
     {
@@ -31,8 +39,20 @@ init =
       y: 4
     }
   ]
+
+for x in init.works.class
+  x.style.width = init.works.width+"px"
+  init.works.maxWidth += init.works.width
+  init.works.maxBox +=1
+
+init.works.id.style.width = init.works.maxWidth+"px"
+
 for x in init.screen
   init.screen[x.y].box = document.getElementById(x.id)
+works = (x)->
+  if init.works.x + x <= init.works.maxBox && init.works.x + x >= 1
+        init.works.x += x
+        init.works.id.style.marginLeft = -(init.works.x-1)*init.works.width+"px"   
 scroll = (x)->
   if init.y + x  >= 0 && init.y + x <=4
     init.y += x 
@@ -49,21 +69,26 @@ getTouchPos = (e) ->
 move = (start,end) ->
   x = end.x - start.x
   y = end.y - start.y
-  if x > 50 && x > y && x > -y
-    scroll(-1) 
   if y > 50 && y > x && y > -x
-    scroll(-1)
-  if x < -50 && -x > y && -x > -y  
-    scroll(1)
+    scroll(-1) 
   if y < -50 && -y > x && -y > -x
     scroll(1)
+  if init.y == 3
+    if x > 50 && x > y && x > -y
+      works(-1)
+    if x < -50 && -x > y && -x > -y  
+      works(1)
   return      
 window.document.addEventListener 'keyup', (e) ->
-  if e.keyCode == 37 || e.keyCode == 38
+  if e.keyCode == 38
     scroll(-1)
-  if e.keyCode == 39 || e.keyCode == 40
+  if e.keyCode == 40
     scroll(1)
-  return
+  if init.y == 3
+    if e.keyCode == 37
+      works(-1)
+    if e.keyCode == 39
+      works(1)
 
 window.document.addEventListener 'touchstart', (e) ->
   init.touchStart = getTouchPos(e)
@@ -98,17 +123,3 @@ document.querySelector("span[move='works']").addEventListener 'click',->
   scroll(3)
 document.querySelector("span[move='contact']").addEventListener 'click',->
   scroll(4)
-
-show = document.getElementsByClassName('test')
-author_photo= document.getElementById('authorphoto')
-
-window.addEventListener 'resize', ->
-  photo()
-  
-photo =  ->
-  if window.screen.width > 768
-    width = author_photo.offsetHeight/2
-    width2 = -width
-    val = 'transform: rotate3d(0, 1, 0, 240deg) scale3d(0.8, 0.8, 1) rotateX(90deg) scaleY(2) translate3d(0,' + width + 'px, ' + width2 + 'px);-ms-transform: rotate3d(0, 1, 0, 240deg) scale3d(0.8, 0.8, 1) rotateX(90deg) scaleY(2) translate3d(0,' + width + 'px, ' + width2 + 'px);-webkit-transform: rotate3d(0, 1, 0, 240deg) scale3d(0.8, 0.8, 1) rotateX(90deg) scaleY(2) translate3d(0,' + width + 'px, ' + width2 + 'px);-moz-transform: rotate3d(0, 1, 0, 240deg) scale3d(0.8, 0.8, 1) rotateX(90deg) scaleY(2) translate3d(0,' + width + 'px, ' + width2 + 'px);'
-    show[0].setAttribute("style",val)
-photo()
