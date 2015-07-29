@@ -91,6 +91,7 @@ window.document.addEventListener 'keyup', (e) ->
       works(1)
 
 window.document.addEventListener 'touchstart', (e) ->
+  e.preventDefault()
   init.touchStart = getTouchPos(e)
   return
 , false
