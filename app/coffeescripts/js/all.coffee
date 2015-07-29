@@ -91,11 +91,14 @@ window.document.addEventListener 'keyup', (e) ->
       works(1)
 
 window.document.addEventListener 'touchstart', (e) ->
-  e.preventDefault()
+  window.document.addEventListener 'touchmove', (e) ->
+    e.preventDefault()
   init.touchStart = getTouchPos(e)
   return
 , false
 window.document.addEventListener 'touchend', (e) ->
+  window.document.removeEventListener 'touchmove', (e) ->
+    e.preventDefault()
   init.touchEnd = getTouchPos(e)
   move(init.touchStart,init.touchEnd)
   return
