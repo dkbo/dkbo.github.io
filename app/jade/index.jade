@@ -3,113 +3,12 @@ html
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
-    link(rel='stylesheet', href='css/style.css', media='screen')
     link(rel='stylesheet', type='text/css', href='/css/custom.css', media='screen')
-    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', type='text/css')
-    link(href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css')
     title DKBO'Git Space
     meta(name='description', content='')
     meta(name='viewport', content='width=device-width,initial-scale=1')
+    script(src='//fb.me/react-0.13.1.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
   body
-    #wrap
-      .container.xx-np
-        section#main
-          #main_box
-            a(href="http://dkbo.tw")
-              h1.title.xx-center.xx-ng.importfont
-                |Welcome
-            p
-              |歡迎來到此處觀摩，在這將會收藏著我所有公開的開發程式、網頁範例等等，目的為提升專案管理，及開發網站時所接觸到的問題等等。
-            p.xx-center
-              span.icon(move="about")
-                i.fa.fa-thumbs-o-up
-                span About
-              span.icon(move="skill")  
-                i.fa.fa-compass
-                span Skill
-              span.icon(move="works")
-                i.fa.fa-laptop
-                span Works
-              span.icon(move="contact")
-                i.fa.fa-comment
-                span Contact
-               
-        section#about
-          .row.xx-ng
-            .col.xx5.xx5o1.s3o2.s3.l3o2.l3.xx-ng.xx-np.img3d
-              img#authorphoto(src="/images/aboutbg.jpg" width="100%" height="100%")
-              .social.xx-center.xx-show.s-hide
-                a(href='http://dkbo.tw')
-                  i#facebook.fa.fa-pencil
-                a(href='http://www.facebook.com/lu.dkbo')
-                  i#facebook.fa.fa-facebook
-                a(href='http://codepen.io/dkbo/')
-                  i#codepen.fa.fa-codepen
-                a(href='http://github.com/dkbo')
-                  i#codepen.fa.fa-github-alt  
-            .col.xx5.s3.s3.l3.l3.xx-ng.xx-np
-                h1.importfont.xx-p.xx-ng About DKBO             
-                p.xx-ng.xx-p#about-author 高雄小前端，熟悉基礎語言HTML5，CSS3，Javascript，唯獨美感不足，正朝著網頁美感路線努力中。
-                .social.xx-center.xx-hide.s-show
-                  a(href='http://dkbo.tw')
-                    i#facebook.fa.fa-pencil
-                  a(href='http://www.facebook.com/lu.dkbo')
-                    i#facebook.fa.fa-facebook
-                  a(href='http://codepen.io/dkbo/')
-                    i#codepen.fa.fa-codepen
-                  a(href='http://github.com/dkbo')
-                    i#codepen.fa.fa-github-alt
-        section#skill
-          #skillbox
-            .skill.css
-              -var x=1
-              while x < 7
-                .face
-                  if x == 5
-                    .text CSS
-                -x++
-              -var x=1
-            .skill.html
-              while x < 7
-                .face
-                  if x == 5
-                    .text HTML
-                -x++
-              -var x=1
-            .skill.js
-              while x < 7
-                .face
-                  if x == 5
-                    .text JS
-                -x++
-        section#works
-          #works_box
-            .works
-              .works_box
-                a(href="/public/css-3d-style" target="_blank" )
-                  h1.title.xx-center.xx-ng.importfont
-                    |CSS 3D 實作
-                  p 3D可以讓網站看起來更生動，CSS3 有提供 3D 屬性，在焦距、焦點、X、Y、Z，轉來轉去都眼花撩亂嚕，如果有三角函數加上線性代數還有立體學學得好的，或許可以寫得呱呱叫。
-            .works
-              .works_box
-                a(href="/public/css-framework" target="_blank")
-                  h1.title.xx-center.xx-ng.importfont
-                    |簡易版RWD
-                  p 雖然怎寫都沒寫的比 Bootstrap 好用，但是也要知道一下 RWD CSS 該如何寫概念比較好，簡易版的 RWD ，其實也就是在幾個解析度範圍設置 @media，長度、寬度、大小、可見度、顏色、形狀..等。
-            .works
-              .works_box
-                a(href="/public/canvas-pinter" target="_blank")
-                  h1.title.xx-center.xx-ng.importfont
-                    |線上小畫家
-                  p Html5 的 Canvas 透過 Javascript 的 Eventlistener 也可以實作線上小畫家唷!
-        section#contact
-          .row.xx-ng
-            .col.xx10.xx10o1.x8.x8o2.s6o3.s6
-              #contact_box
-                h1.title.xx-ng.xx-p.importfont Contact DKBO
-                p.xx-ng.xx-p 對於此 Github 有疑問、意見、指導，抑或是合作、教學、發包、工作等...可以用下列方式聯繫我。
-                p.xx-ng.xx-p (E) dk880842@gmail.com
-                p.xx-ng.xx-p (P) 0985877499
-                p.xx-ng.xx-p (Line) dk880842
-    script(type='text/javascript', src='js/all.js')
-
+    script(src='js/all.js') 
+    

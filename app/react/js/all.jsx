@@ -1,14 +1,15 @@
-"use strict";
+/** @jsx React.DOM */
 // init
+
 var init = {
   object:{
     sizeX : 32, // sprites width size 
     sizeY : 32, // sprites height size
-    sprites :"url('http://fc03.deviantart.net/fs26/i/2008/149/d/7/rpg_maker_xp_the_best_tileset_by_davide_86.png')"
+    sprites :"url('images/rpg_maker_xp.png')"
   },
   man : {
-    sprite : "url('http://dkbo.tw/man.png')",
-    speak : "url('http://dkbo.tw/speak.png'),pointer",
+    sprite : "url('images/man.png')",
+    speak : "url('images/speak.png'),pointer",
     sizeX: 32, //人物寬度度
     sizeY: 48, //人物長度
     moveSetInterVal: 1000/60,  // FPS

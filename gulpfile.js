@@ -15,7 +15,7 @@ var gulp = require('gulp'),
     jade = require('gulp-jade'),           //html 用 
     compass = require('gulp-compass'),     //compass sass+ susy
     coffee = require('gulp-coffee');       //coffeescript
-
+    react = require('gulp-react');       //babel
 
 gulp.task('webserver', function() {
   gulp.src('')
@@ -41,6 +41,14 @@ gulp.task('coffee', function() {
           .pipe(uglify())
           .pipe(gulp.dest(''))
           .pipe(notify({ message: 'js task ok' }))
+          .pipe(livereload());
+});
+gulp.task('react', function() { 
+     gulp.src('app/react/**/*.jsx') 
+          .pipe(react()) 
+          .pipe(uglify())
+          .pipe(gulp.dest(''))
+          .pipe(notify({ message: 'Reactjs task ok' }))
           .pipe(livereload());
 });
 gulp.task('compass', function() {
@@ -75,11 +83,10 @@ gulp.task('watch', function () {
   gulp.watch('app/jade/**/*.jade', ['jade']);
   gulp.watch('app/sass/**/*.sass', ['compass']);
   gulp.watch('app/coffeescripts/**/*.coffee', ['coffee']);
+  gulp.watch('app/react/**/*.jsx', ['react']);
   gulp.watch('app/images/**/*', ['images']);
   livereload.listen();
 });
  // Default task
-gulp.task('default', ['jade','compass','coffee','webserver','watch'], function() {
-    
-});
+gulp.task('default', ['jade','compass','coffee','react','webserver','watch'])
 
