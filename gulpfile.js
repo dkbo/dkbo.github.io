@@ -1,6 +1,6 @@
 // npm install gulp-jshint gulp-imagemin gulp-rename gulp-concat gulp-notify gulp-cache gulp-livereload del gulp-watch gulp-uglify gulp-webserver gulp-jade-php gulp-jade gulp-compass gulp-coffee --save-dev
 var gulp = require('gulp'),      
-    jshint = require('gulp-jshint'),        //js 和並用        
+    jshint = require('gulp-jshint'),        //js 合並用        
     imagemin = require('gulp-imagemin'),    //圖片壓縮用
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),        
@@ -45,6 +45,7 @@ gulp.task('coffee', function() {
 });
 gulp.task('react', function() { 
      gulp.src('app/react/**/*.jsx') 
+          .pipe(concat('js/all.jsx'))
           .pipe(react()) 
           .pipe(uglify())
           .pipe(gulp.dest(''))

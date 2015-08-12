@@ -7,9 +7,10 @@ $spriteObject: '/images/rpg_maker_xp.png'
 $indexBg : '/images/mainbg.jpg'
 *
   box-sizing : border-box
-ul,li
+ul,li,p
   list-style-type : none
   padding: 0
+  margin: 0
 html,body
   min-width: 100%
   min-height: 100%
@@ -49,6 +50,13 @@ html,body
     margin-left: -200px 
   a
     color: white
+ul
+  li.chatSelect
+    font-size: 2rem
+    border: solid transparent
+    cursor: pointer
+    +transition(border .1s)
+
 #map
   position: absolute
   top: 0
@@ -77,6 +85,13 @@ html,body
 .gridbox
   position : relative
   z-index : -1
-.grid
-  border: solid black 1px
+.gridX
+  border-left: solid black 2px
   position: absolute
+  &:hover
+    border-color: white
+.gridY
+  border-top: solid black 2px
+  position: absolute
+  &:hover
+    border-color: white
