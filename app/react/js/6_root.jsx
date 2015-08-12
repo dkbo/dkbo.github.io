@@ -21,10 +21,10 @@ var Root = React.createClass({
       end : "transparent",  // 進場畫面選單 End 顏色 
       map : 0, //場景圖及物件陣列
       mapBg : init.map.bg, // 場景地圖 
-      gridX : [], //格線 X
-      gridY : [], //格線 Y
       windowWidth: window.innerWidth, //視窗寬度
       windowHeight: window.innerHeight, //視窗高度
+      gridX : false, // X 格線
+      gridY : false, // Y 格線
       x : pos.x, //人物 X 座標
       y : pos.y, //人物 Y 座標 
       left : pos.x-1, //人物 X 座標位移
@@ -521,6 +521,8 @@ componentWillMount : function(){
 },
 //所有DOM 已經載入時
 componentDidMount: function () {
+    var canvas = document.getElementById('grid');
+    init.context = canvas.getContext('2d');
     $(window).on('load',this.backIndex);
     $(window).on('resize',this.handleResize);
     $(window).on('keydown',this.handleKeyDown);
@@ -595,26 +597,39 @@ drawGrid : function(){
   this.drawGridY();
 },
 drawGridX : function(){
-  if(this.state.gridX.length == 0){
-    var grid = [];
-  for(var j =0;j<(init.maps[this.state.map].row/init.object.sizeY);j++){
-    grid.push(<div className="gridY" title={"Y : " +j*init.object.sizeY} style={{width: init.maps[this.state.map].col , height:init.object.sizeY , left: 0 , top: init.object.sizeY*j}} >{j*init.object.sizeY}</div>)
-  } 
-  this.setState({gridX : grid})
+  if(!this.state.gridX){
+
+    init.context.beginPath();
+      for(var i=1;i<(init.maps[this.state.map].col/init.object.sizeX);i++){
+      init.context.moveTo(i*init.object.sizeX,init.object.sizeY);
+      init.context.lineTo(i*init.object.sizeX,init.maps[this.state.map].row);
+      init.context.font = 'italic .5em Calibri';
+      init.context.textAlign = 'center';
+      init.context.fillText(i*init.object.sizeX, i*init.object.sizeX, 20);
+    }
+      init.context.stroke();
+}
+  else{
+      init.context.clearRect(0, 0, init.maps[this.state.map].col, init.maps[this.state.map].row);
   }
-  else
-  this.setState({gridX : []})
+  this.setState({gridX : !this.state.gridX});
 },
 drawGridY : function(){
-  if(this.state.gridY.length == 0){
-    var grid = [];
-  for(var i =0;i<(init.maps[this.state.map].col/init.object.sizeX);i++){
-    grid.push(<div className="gridX" title={"X : " +init.object.sizeX*i}style={{width: init.object.sizeX , height:init.maps[this.state.map].row , top: 0 , left: init.object.sizeX*i}} >{init.object.sizeX*i}</div>)
+  if(!this.state.gridY){
+    init.context.beginPath();
+      for(var j=1;j<(init.maps[this.state.map].row/init.object.sizeY);j++){
+      init.context.moveTo(init.object.sizeX,j*init.object.sizeY);
+      init.context.lineTo(init.maps[this.state.map].col,j*init.object.sizeY);
+      init.context.font = 'italic .5em Calibri';
+      init.context.textAlign = 'center';
+      init.context.fillText(j*init.object.sizeY, 20, j*init.object.sizeY+4);
+    }
+      init.context.stroke();
   }
-  this.setState({gridY : grid})
+      else{
+      init.context.clearRect(0, 0, init.maps[this.state.map].col, init.maps[this.state.map].row);
   }
-  else
-  this.setState({gridY : []})
+  this.setState({gridY : !this.state.gridY});
 },
 //人物移動動作
 moveAnimate : function(){
@@ -727,7 +742,7 @@ move : function(){
       <div id="map"  style={{zIndex : s.mapZindex , transition:s.mapAnimateSpeed,opacity:s.mapFade,background: m[s.map].bg, transform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)",width: s.mapSizeX*m[s.map].col,height: s.mapSizeY*m[s.map].row}} onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
      <div className="man-container" style={{transform : "translate3D("+s.left+"px,"+s.top+"px,0)",width : s.mapSizeX*init.man.sizeX,height : s.mapSizeY*init.man.sizeY,backgroundPosition : s.manMoveAnimate*32+"px "+s.manMoveImg*48+"px"}} ></div>
      <div className="object">{init.arr[s.map]}</div>
-     <div className="gridbox">{s.gridX}{s.gridY}</div>
+     <canvas id="grid" width={m[s.map].col} height={m[s.map].row}/>
    </div>
      <div className="chat" onClick={this.moveAnimate} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
      </body>
