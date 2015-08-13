@@ -535,7 +535,6 @@ componentDidMount: function () {
     $(window).on('resize',this.handleResize);
     $(window).on('keydown',this.handleKeyDown);
     $(window).on('keyup',this.handleKeyUp);
-    $(".object").on('click',"div[style*='cursor']",this.moveAnimate);
     this.timer = setInterval(this.move.bind(this), init.man.moveSetInterVal);
   },
 //所有DOM將移除時
@@ -544,7 +543,6 @@ componentDidMount: function () {
     $(window).off('resize',this.handleResize);
     $(window).off('keydown',this.handleKeyDown);
     $(window).off('keyup',this.handleKeyUp);
-    $(".object").off('click',this.moveAnimate);
     clearInterval(this.timer)
   },
 //返回平板 / 手機裝置的 XY 座標
@@ -561,6 +559,7 @@ handleTouchStart : function(e){
 },
 //返回觸碰移動時 XY 座標
 handleTouchMove : function(e){
+  e.preventDefault();
   var pos = this.getTouchPos(e);
   if(pos.x-this.state.startTouchX < -50)
     init.control.left = true
@@ -750,7 +749,7 @@ move : function(){
     var s = this.state;
     var m = init.maps;
    return (
-     <body>
+     <body onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
       <div id="index" style={{opacity : s.indexShow}}>
         <div id="indexBox"  style={{opacity : s.indexBoxShow}}>
           <ul>
@@ -761,7 +760,7 @@ move : function(){
         </div>
         <div id="loadBox"  style={{opacity : s.loadBoxShow}}> </div>
       </div>  
-      <div id="map"  style={{zIndex : s.mapZindex , transition:s.mapAnimateSpeed,opacity:s.mapFade,background: m[s.map].bg, transform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)",width: s.mapSizeX*m[s.map].col,height: s.mapSizeY*m[s.map].row}} onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
+      <div id="map"  style={{zIndex : s.mapZindex , transition:s.mapAnimateSpeed,opacity:s.mapFade,background: m[s.map].bg, transform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)",width: s.mapSizeX*m[s.map].col,height: s.mapSizeY*m[s.map].row}} >
      <div className="man-container" style={{transform : "translate3D("+s.left+"px,"+s.top+"px,0)",width : s.mapSizeX*init.man.sizeX,height : s.mapSizeY*init.man.sizeY,backgroundPosition : s.manMoveAnimate*32+"px "+s.manMoveImg*48+"px"}} ></div>
      <canvas id="firstCanvas" width={m[s.map].col} height={m[s.map].row} />
      <canvas id="secondCanvas" width={m[s.map].col} height={m[s.map].row} />
