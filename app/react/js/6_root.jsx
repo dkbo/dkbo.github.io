@@ -554,8 +554,8 @@ componentDidMount: function () {
 //返回平板 / 手機裝置的 XY 座標
 getTouchPos : function(e){
   return {
-    x: e.changedTouches[0].pageX,
-    y: e.changedTouches[0].pageY
+    x: e.originalEvent.touches[0].pageX,
+    y: e.originalEvent.touches[0].pageY
   }
 },
 //返回觸碰時 XY 座標
