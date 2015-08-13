@@ -550,9 +550,9 @@ componentDidMount: function () {
     $(window).on('resize',this.handleResize);
     $(window).on('keydown',this.handleKeyDown);
     $(window).on('keyup',this.handleKeyUp);
-    $(window).on('touchstart',function(){this.handleTouchStart(); return false}.bind(this));
-    $(window).on('touchmove',function(){this.handleTouchMove(); return false}.bind(this));
-    $(window).on('touchend',function(){this.handleTouchEnd(); return false}.bind(this));
+    $(window).on('touchstart',this.handleTouchStart);
+    $(window).on('touchmove',this.handleTouchMove);
+    $(window).on('touchend',this.handleTouchEnd);
     this.timer = setInterval(this.move.bind(this), init.man.moveSetInterVal);
   },
 //所有DOM將移除時
@@ -577,6 +577,7 @@ getTouchPos : function(e){
 handleTouchStart : function(e){
   
   if(this.state.mapFade != 0){ 
+    e.preventDefault();
   var pos = this.getTouchPos(e);
   this.setState({startTouchX : pos.x, startTouchY: pos.y})
 }
@@ -585,6 +586,7 @@ handleTouchStart : function(e){
 handleTouchMove : function(e){
 
   if(this.state.mapFade != 0){
+  e.preventDefault();
   var pos = this.getTouchPos(e);
   if(pos.x-this.state.startTouchX < -50)
     init.control.left = true
