@@ -121,9 +121,9 @@ init.objects=[{
             ,
             {name:"farmland",id:4,left: 624,top:728,width:3*sX,height: 3*sY,background: init.object.sprites,sourceX :32 ,sourceY:5056}
              ,
-            {name:"bogy",id:5,left: 578,top:728,width:sX,height: sY,background: init.object.sprites,sourceX :96 ,sourceY:4994,zIndex:2, mx : 578,my:728+sY,mw:sX,mh: sY/4,eventID:0,cursor: init.man.speak}
+            {name:"bogy",id:5,left: 578,top:728,width:sX,height: sY,background: init.object.sprites,sourceX :96 ,sourceY:4994,zIndex:2, mx : 578,my:728+sY,mw:sX,mh: sY/4,eventID:0}
             ,
-            {name:"bogy",id:5,left: 578,top:760,width:sX,height: sY,background: init.object.sprites,sourceX :96 ,sourceY:5026,cursor: init.man.speak}
+            {name:"bogy",id:5,left: 578,top:760,width:sX,height: sY,background: init.object.sprites,sourceX :96 ,sourceY:5026}
             ,
             {name:"crop",id:5,left: 464,top:760,width:sX,height: 2*sY,background: init.object.sprites,sourceX :64 ,sourceY:4994},
             {name:"crop",id:5,left: 496,top:740,width:sX,height: 2*sY,background: init.object.sprites,sourceX :64 ,sourceY:4994}
@@ -148,18 +148,18 @@ init.objects=[{
             ,{name:"tree7",id:11,left: 880,top:964,width:4*sX,height:4*sY,background: init.object.sprites,sourceX :0 ,sourceY:768,zIndex : 2},
             {name:"tree7",id:11,left: 880,top:1092,width:4*sX,height: sY,background: init.object.sprites,sourceX :0 ,sourceY:896,mx:880+sX,my:1092,mw:2*sX,mh:0}
             ,
-            {name:"man",id:12,left: 810,top:490,width:sX,height: 24,background: init.man.spriteObj,sourceX: 0 ,sourceY:0,zIndex: 2,mx: 810,my:490+sY,mw:sX,mh:0,cursor: init.man.speak ,eventID:1}
+            {name:"man",id:12,left: 810,top:490,width:sX,height: 24,background: init.man.spriteObj,sourceX: 0 ,sourceY:0,zIndex: 2,mx: 810,my:490+sY,mw:sX,mh:0,eventID:1}
              ,
-            {name:"man",id:12,left: 810,top:514,width:sX,height: 24,background: init.man.spriteObj,sourceX: 0 ,sourceY:24,cursor: init.man.speak }
+            {name:"man",id:12,left: 810,top:514,width:sX,height: 24,background: init.man.spriteObj,sourceX: 0 ,sourceY:24}
             ,
-            {name:"stone",id:13,left: 980,top:448,width:sX*2,height: sY*2,background: init.object.sprites,sourceX :192 ,sourceY: 1664,zIndex: 2,cursor: init.man.speak}
+            {name:"stone",id:13,left: 980,top:448,width:sX*2,height: sY*2,background: init.object.sprites,sourceX :192 ,sourceY: 1664,zIndex: 2}
              ,
-            {name:"stone",id:13,left: 980,top:512,width:sX*2,height: sY*1,background: init.object.sprites,sourceX :192  ,sourceY:1728,cursor: init.man.speak,mx: 980,my:512,mw:sX*2,mh:0 ,eventID:2}
+            {name:"stone",id:13,left: 980,top:512,width:sX*2,height: sY*1,background: init.object.sprites,sourceX :192  ,sourceY:1728,mx: 980,my:512,mw:sX*2,mh:0 ,eventID:2}
             
 ]},{
   styles:[{name:"housedoor",id:1,left: 224,top:320,width:sX*2,height: sY,background: init.object.sprites ,sourceX :192  ,sourceY:1728,mx:224,my:320,mw:sX*2,mh:sY,cm:0,cmm:0},
-         {name:"man",id:12,left: 200,top:144,width:sX,height: 24,background: init.man.spriteObj,sourceX:0 ,sourceY:0,zIndex: 2,mx: 200,my:144+sY,mw:sX,mh:0,cursor: init.man.speak ,eventID:0}
+         {name:"man",id:12,left: 200,top:144,width:sX,height: 24,background: init.man.spriteObj,sourceX:0 ,sourceY:0,zIndex: 2,mx: 200,my:144+sY,mw:sX,mh:0,eventID:0}
              ,
-            {name:"man",id:12,left: 200,top:168,width:sX,height: 24,background: init.man.spriteObj,sourceX:0 ,sourceY:24,cursor: init.man.speak }
+            {name:"man",id:12,left: 200,top:168,width:sX,height: 24,background: init.man.spriteObj,sourceX:0 ,sourceY:24}
             ]
 }]

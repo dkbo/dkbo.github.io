@@ -70,8 +70,10 @@ ul
   left: 0
   color: white
   z-index: 1
-#firstCanvas,#secondCanvas
+#firstCanvas,#secondCanvas,#spritesOpacity
   position: absolute
+  top : 0
+  left : 0
 #firstCanvas
   z-index: 2
 #secondCanvas
@@ -89,5 +91,17 @@ ul
   font-size : 2em
   padding: .5em
 #pre
-  background: url($spriteObject)
-  display : none
+  position: absolute
+  height: 100%
+  left: 0
+  top: 0
+  overflow: auto
+  z-index: 1
+  -ms-overflow-style: -ms-autohiding-scrollbar
+  -webkit-overflow-scrolling: touch
+  &::-webkit-scrollbar
+    -webkit-appearance: none
+    width: 0px
+    height: 0px
+  &::-webkit-scrollbar-thumb
+    background-color: transparent

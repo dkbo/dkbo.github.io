@@ -12,6 +12,8 @@ var Root = React.createClass({
    getInitialState : function(){
      var pos = init.man.initPos;
     return {
+      spritesGird : false,
+      spritesOpacity : 0, //布置圖片透明度
       indexShow : 0,  //進場畫面透明度
       indexBoxShow : 0, //進場畫面選單透明度
       loadBoxShow : 0, //進場畫面載入選單透明度
@@ -270,17 +272,21 @@ var Root = React.createClass({
           case 49:
               this.handleMap(1,0)
               break;
-                // 顯示/取消格線
+                // 顯示X/Y取消格線
           case 71:
-             this.drawGrid();
+             this.drawSpritesGrid();
              break;
-          // 顯示/取消格線
+          // 顯示X取消格線
           case 88:
              this.drawGridX();
              break;
-          // 顯示/取消格線
+          // 顯示Y取消格線
           case 89:
              this.drawGridY();
+             break;
+          // 顯示圖庫
+          case 80:
+             this.showSprites();
              break;
           // 返回進場畫面
           case 27:
@@ -523,6 +529,8 @@ handleMouseOver : function(x,e){
 handleLoad : function(){
   this.backIndex();
   this.drawObject();
+  init.spritesHeight = init.sprites.clientHeight
+  init.spritesWidth = init.sprites.clientWidth
 },
 //所有DOM 載入前 
 componentWillMount : function(){
@@ -532,9 +540,12 @@ componentDidMount: function () {
     var canvas = document.getElementById('grid');
     var firstCanvas = document.getElementById('firstCanvas');
     var secondCanvas = document.getElementById('secondCanvas');
+    var spritesCanvas = document.getElementById('spritesOpacity');
+    init.sprites = document.getElementById('preimg');
     init.context = canvas.getContext('2d');
     init.fcontext = firstCanvas.getContext('2d');
     init.scontext = secondCanvas.getContext('2d');
+    init.spcontext = spritesCanvas.getContext('2d');
     $(window).on('load',this.handleLoad);
     $(window).on('resize',this.handleResize);
     $(window).on('keydown',this.handleKeyDown);
@@ -622,11 +633,29 @@ for(var i=0 ;i<ff.length;i++){
   init.scontext.drawImage(imageObj, ff[i].sourceX , ff[i].sourceY , ff[i].width, ff[i].height, ff[i].left, ff[i].top, ff[i].width, ff[i].height );     
 }
 },
-//利用 DIV 畫格線或取消格線
-drawGrid : function(){
-  this.drawGridX();
-  this.drawGridY();
+drawSpritesGrid : function(){
+  if(!this.state.spritesGrid){
+  init.spcontext.beginPath();
+    for(var i=1;i<(init.spritesWidth/init.object.sizeX);i++){
+      init.spcontext.moveTo(i*init.object.sizeX,0);
+      init.spcontext.lineTo(i*init.object.sizeX,init.spritesHeight);
+    }
+    for(var i=1;i<(init.spritesHeight/init.object.sizeY);i++){
+      init.spcontext.moveTo(init.object.sizeX,i*init.object.sizeY);
+      init.spcontext.lineTo(init.spritesWidth,i*init.object.sizeY);
+      init.spcontext.font = 'italic .5em Calibri';
+      init.spcontext.textAlign = 'center';
+      init.spcontext.fillText(i*init.object.sizeY, 20, i*init.object.sizeY+4);
+    }
+      init.spcontext.strokeStyle="#ff0000";
+      init.spcontext.stroke();
+  }
+  else{
+      init.spcontext.clearRect(0, 0, init.spritesWidth, init.spritesHeight);
+}
+      this.setState({spritesGrid : !this.state.spritesGrid});
 },
+//畫格線或取消格線
 drawGridX : function(){
   if(!this.state.gridX){
 
@@ -661,6 +690,12 @@ drawGridY : function(){
       init.context.clearRect(0, 0, init.maps[this.state.map].col, init.maps[this.state.map].row);
   }
   this.setState({gridY : !this.state.gridY});
+},
+showSprites : function(){
+  if(this.state.mapFade != 0){
+    var x = this.state.spritesOpacity > 0 ? 0 : 1;
+    this.setState({spritesOpacity : x})
+  }
 },
 //人物移動動作
 moveAnimate : function(){
@@ -777,7 +812,7 @@ move : function(){
      <canvas id="grid" width={m[s.map].col} height={m[s.map].row} />
    </div>
      <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
-     <div id="pre"/>
+     <div id="pre" style={{opacity : s.spritesOpacity}}><img  id="preimg" src={init.object.sprites} /><canvas id="spritesOpacity" width={init.spritesWidth} height={init.spritesHeight}></canvas></div>
      </body>
    ) 
   }
