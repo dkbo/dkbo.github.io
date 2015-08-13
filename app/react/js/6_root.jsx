@@ -575,17 +575,18 @@ getTouchPos : function(e){
 },
 //返回觸碰時 XY 座標
 handleTouchStart : function(e){
-  e.preventDefault();
+  
   if(this.state.mapFade != 0){ 
+    e.preventDefault();
   var pos = this.getTouchPos(e);
   this.setState({startTouchX : pos.x, startTouchY: pos.y})
 }
 },
 //返回觸碰移動時 XY 座標
 handleTouchMove : function(e){
-  e.preventDefault();
+
   if(this.state.mapFade != 0){
-  
+  e.preventDefault();
   var pos = this.getTouchPos(e);
   if(pos.x-this.state.startTouchX < -50)
     init.control.left = true
