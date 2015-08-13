@@ -535,6 +535,9 @@ componentDidMount: function () {
     $(window).on('resize',this.handleResize);
     $(window).on('keydown',this.handleKeyDown);
     $(window).on('keyup',this.handleKeyUp);
+    $(window).on('touchstart',this.handleTouchStart);
+    $(window).on('touchmove',this.handleTouchMove);
+    $(window).on('touchend',this.handleTouchEnd);
     this.timer = setInterval(this.move.bind(this), init.man.moveSetInterVal);
   },
 //所有DOM將移除時
@@ -543,6 +546,9 @@ componentDidMount: function () {
     $(window).off('resize',this.handleResize);
     $(window).off('keydown',this.handleKeyDown);
     $(window).off('keyup',this.handleKeyUp);
+    $(window).off('touchstart',this.handleTouchStart);
+    $(window).off('touchmove',this.handleTouchMove);
+    $(window).off('touchend',this.handleTouchEnd);
     clearInterval(this.timer)
   },
 //返回平板 / 手機裝置的 XY 座標
@@ -749,7 +755,7 @@ move : function(){
     var s = this.state;
     var m = init.maps;
    return (
-     <body onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
+     <body>
       <div id="index" style={{opacity : s.indexShow}}>
         <div id="indexBox"  style={{opacity : s.indexBoxShow}}>
           <ul>
