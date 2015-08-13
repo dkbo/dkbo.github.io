@@ -429,8 +429,10 @@ handleMap : function(x,y){
                  y : init.maps[x].in[y].y})
   this.drawObject();
   this.handleResize();
-  setTimeout(function(){this.handleFade(1)}.bind(this), 200);
-  setTimeout(function(){this.handleAnimateSpeed("0s")}.bind(this),300);
+  setTimeout(function(){this.handleFade(1)
+    setTimeout(function(){this.handleAnimateSpeed("0s")}.bind(this),100);
+
+  }.bind(this), 100);
  }.bind(this), 100);
   
   
@@ -446,12 +448,12 @@ handleAnimateSpeed : function (x){
 //處理進場畫面至 Map 畫面事件
 handleStart : function(){
     this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0})
-    setTimeout(function(){this.handleFade(1)}.bind(this), 500);
+    setTimeout(function(){this.handleFade(1)}.bind(this), 200);
 },
 //返回進場畫面
 backIndex : function(){
     this.setState({mapZindex : -1 , indexBoxShow : 1,indexShow : 1})
-    setTimeout(function(){this.handleFade(0)}.bind(this), 500);
+    setTimeout(function(){this.handleFade(0)}.bind(this), 300);
 },
 //處理進場畫面選單移動
 handleIndexBoxMove : function(x){
