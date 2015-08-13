@@ -96,12 +96,14 @@ ul
   left: 0
   top: 0
   overflow: auto
-  z-index: 1
-  -ms-overflow-style: -ms-autohiding-scrollbar
-  -webkit-overflow-scrolling: touch
-  &::-webkit-scrollbar
-    -webkit-appearance: none
-    width: 0px
-    height: 0px
-  &::-webkit-scrollbar-thumb
-    background-color: transparent
+  z-index: -1
+  @media (min-width: 720px)
+    z-index: 1
+    -ms-overflow-style: -ms-autohiding-scrollbar
+    -webkit-overflow-scrolling: touch
+    &::-webkit-scrollbar
+      -webkit-appearance: none
+      width: 0px
+      height: 0px
+    &::-webkit-scrollbar-thumb
+      background-color: transparent
