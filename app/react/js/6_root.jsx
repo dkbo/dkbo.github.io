@@ -70,6 +70,7 @@ var Root = React.createClass({
         }
     else{
       this.setState({messageId : x ,chatOpacity : 1,chatZindex : 2,message: <p>{init.event[this.state.map][x].text[0]}</p>,messageName:init.event[this.state.map][x].name,messageNum:0,messageMax:init.event[this.state.map][x].text.length-1}); 
+      
     }
   },
   eventSelect : function(x){
@@ -88,7 +89,7 @@ var Root = React.createClass({
       for(var i=0;i<init.event[this.state.map][x].select.length;i++){ 
         array.push(<li className="chatSelect"  onMouseOut={this.handleMouseOut} onMouseOver={this.handleMouseOver.bind(null,i)} onClick={this.handleEventSelect.bind(null,i)}>{init.event[this.state.map][x].select[i].title}</li>)
       }
-      this.setState({chatSelectIndex : 0 ,chatSelectArray : array,messageId : x ,chatOpacity : 1,chatZindex : 2,messageName:init.event[this.state.map][x].name})
+      this.setState({chatSelectIndex : 0 ,chatSelectArray : array,messageId : x ,chatOpacity : 1,chatZindex : 2,messageName:init.event[this.state.map][x].name,message:''})
       $(".chatSelect").eq(this.state.chatSelectIndex).css("border-color" , "white");
     }
   },
@@ -219,10 +220,7 @@ var Root = React.createClass({
   initEvent : function(){
     this.setState(
      {chatOpacity : 0,
-      chatZindex : -1,
       messageId : -1,
-      message: '',
-      messageName: false,
       messageNum: -1,
       messageMax: -1,
       chatSelectIndex : -1,
@@ -427,10 +425,12 @@ handleMap : function(x,y){
                  top : init.maps[x].in[y].y -1,
                  x : init.maps[x].in[y].x,
                  y : init.maps[x].in[y].y})
+  this.drawObject();
   this.handleResize();
-                       }.bind(this), 100);
   setTimeout(function(){this.handleFade(1)}.bind(this), 200);
   setTimeout(function(){this.handleAnimateSpeed("0s")}.bind(this),300);
+ }.bind(this), 100);
+  
   
 },
 //處理地圖浮出浮入事件
@@ -516,14 +516,22 @@ handleMouseOver : function(x,e){
    }
  }
 },
+handleLoad : function(){
+  this.backIndex();
+  this.drawObject();
+},
 //所有DOM 載入前 
 componentWillMount : function(){
 },
 //所有DOM 已經載入時
 componentDidMount: function () {
     var canvas = document.getElementById('grid');
+    var firstCanvas = document.getElementById('firstCanvas');
+    var secondCanvas = document.getElementById('secondCanvas');
     init.context = canvas.getContext('2d');
-    $(window).on('load',this.backIndex);
+    init.fcontext = firstCanvas.getContext('2d');
+    init.scontext = secondCanvas.getContext('2d');
+    $(window).on('load',this.handleLoad);
     $(window).on('resize',this.handleResize);
     $(window).on('keydown',this.handleKeyDown);
     $(window).on('keyup',this.handleKeyUp);
@@ -590,6 +598,20 @@ handleTouchEnd : function(e){
   init.map.up = false;
   init.control.down = false;
   init.map.down = false;
+},
+drawObject : function(){
+var imageObj = new Image();
+var s = this.state;
+var f = init.firstCanvas[s.map];
+var ff = init.secondCanvas[s.map];
+for(var i=0 ;i<f.length;i++){
+  imageObj.src = f[i].background;
+  init.fcontext.drawImage(imageObj, f[i].sourceX , f[i].sourceY , f[i].width, f[i].height ,f[i].left, f[i].top , f[i].width, f[i].height);     
+}
+for(var i=0 ;i<ff.length;i++){
+  imageObj.src = ff[i].background;
+  init.scontext.drawImage(imageObj, ff[i].sourceX , ff[i].sourceY , ff[i].width, ff[i].height, ff[i].left, ff[i].top, ff[i].width, ff[i].height );     
+}
 },
 //利用 DIV 畫格線或取消格線
 drawGrid : function(){
@@ -741,10 +763,12 @@ move : function(){
       </div>  
       <div id="map"  style={{zIndex : s.mapZindex , transition:s.mapAnimateSpeed,opacity:s.mapFade,background: m[s.map].bg, transform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)",width: s.mapSizeX*m[s.map].col,height: s.mapSizeY*m[s.map].row}} onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
      <div className="man-container" style={{transform : "translate3D("+s.left+"px,"+s.top+"px,0)",width : s.mapSizeX*init.man.sizeX,height : s.mapSizeY*init.man.sizeY,backgroundPosition : s.manMoveAnimate*32+"px "+s.manMoveImg*48+"px"}} ></div>
-     <div className="object">{init.arr[s.map]}</div>
-     <canvas id="grid" width={m[s.map].col} height={m[s.map].row}/>
+     <canvas id="firstCanvas" width={m[s.map].col} height={m[s.map].row} />
+     <canvas id="secondCanvas" width={m[s.map].col} height={m[s.map].row} />
+     <canvas id="grid" width={m[s.map].col} height={m[s.map].row} />
    </div>
      <div className="chat" onClick={this.moveAnimate} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
+     <div id="pre"/>
      </body>
    ) 
   }

@@ -1,14 +1,17 @@
 init.events=[];
-init.style=[];
+init.firstCanvas=[];
+init.secondCanvas=[];
 init.move=[];
 
 //預先載入物件
 for(var j =0;j <init.objects.length;j++){
   init.events[j]=[];
-init.style[j]=[];
+init.firstCanvas[j]=[];
+init.secondCanvas[j]=[];
 init.move[j]=[];
   var xx = 0;
   var yy = 0;
+  var zz = 0;
   var ee = 0;
 for(var i =0;i<init.objects[j].styles.length;i++){
 var obj = init.objects[j].styles[i];
@@ -26,17 +29,25 @@ var obj = init.objects[j].styles[i];
     xx+=1;
   }
   if(obj.left){
+    
 var y={
     left :  obj.left,
     top : obj.top,
     width : obj.width,
     height : obj.height,
     background : obj.background,
-    zIndex : obj.zIndex,
-    cursor : obj.cursor
+    sourceX: obj.sourceX,
+    sourceY: obj.sourceY,
    }
-init.style[j][yy]=y;
+   if(obj.zIndex == 2){
+init.firstCanvas[j][yy]=y;
     yy+=1
+  }
+  else{
+
+init.secondCanvas[j][zz]=y;
+  zz+=1
+  }
 }
   if(obj.eventID>=0){
     var e={
@@ -49,14 +60,5 @@ init.style[j][yy]=y;
     init.events[j][ee]=e;
     ee+=1
   }
-}
-}
-//物件放入陣列
-init.arr=[];
-for(var j =0;j<init.style.length;j++){
-  init.arr[j]=[];
-for(var i =0;i<init.style[j].length;i++){
-    init.arr[j][i] =<div className="objects" name={init.objects[j].styles[i].name} style={init.style[j][i]}></div>;
-        
 }
 }

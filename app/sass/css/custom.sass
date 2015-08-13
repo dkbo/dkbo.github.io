@@ -70,8 +70,12 @@ ul
   left: 0
   color: white
   z-index: 1
-.objects
+#firstCanvas,#secondCanvas
   position: absolute
+#firstCanvas
+  z-index: 2
+#secondCanvas
+  z-index: 0
 .chat
   width: 90%
   height: 200px
@@ -84,16 +88,6 @@ ul
   color : white
   font-size : 2em
   padding: .5em
-.gridbox
-  position : relative
-  z-index : -1
-.gridX
-  border-left: solid black 2px
-  position: absolute
-  &:hover
-    border-color: white
-.gridY
-  border-top: solid black 2px
-  position: absolute
-  &:hover
-    border-color: white
+#pre
+  background: url($spriteObject)
+  display : none

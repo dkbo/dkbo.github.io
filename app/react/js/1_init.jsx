@@ -4,10 +4,11 @@ var init = {
   object:{
     sizeX : 32, // sprites width size 
     sizeY : 32, // sprites height size
-    sprites :"url('images/rpg_maker_xp.png')"
+    sprites :"images/rpg_maker_xp.png"
   },
   man : {
     sprite : "url('images/man.png')",
+    spriteObj : "images/man.png",
     speak : "url('images/speak.png'),pointer",
     sizeX: 32, //人物寬度度
     sizeY: 48, //人物長度
