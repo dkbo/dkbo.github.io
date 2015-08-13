@@ -60,17 +60,17 @@ var Root = React.createClass({
   event : function(x){
     //判斷是否對話中
     if(this.state.messageId !=-1){
+
       //判斷對話計次有無小於對話最大計次
       if(this.state.messageMax > this.state.messageNum){
-    this.setState({messageNum : this.state.messageNum+1})
-    this.setState({message: <p>{init.event[this.state.map][x].text[this.state.messageNum]}</p> });    
+      var x = this.state.messageNum +1
+      this.setState({messageNum : x,message: <p>{init.event[this.state.map][this.state.messageId].text[x]}</p> });
       }
       else
         this.initEvent();
         }
     else{
-      this.setState({messageId : x ,chatOpacity : 1,chatZindex : 2,message: <p>{init.event[this.state.map][x].text[0]}</p>,messageName:init.event[this.state.map][x].name,messageNum:0,messageMax:init.event[this.state.map][x].text.length-1}); 
-      
+      this.setState({messageId : x ,chatOpacity : 1,chatZindex : 2,message: <p>{init.event[this.state.map][x].text[0]}</p>,messageName:init.event[this.state.map][x].name,messageNum:0,messageMax:init.event[this.state.map][x].text.length-1});
     }
   },
   eventSelect : function(x){
@@ -92,6 +92,10 @@ var Root = React.createClass({
       this.setState({chatSelectIndex : 0 ,chatSelectArray : array,messageId : x ,chatOpacity : 1,chatZindex : 2,messageName:init.event[this.state.map][x].name,message:''})
       $(".chatSelect").eq(this.state.chatSelectIndex).css("border-color" , "white");
     }
+  },
+  handleChat : function(){
+    if(this.state.chatOpacity != 0)
+      this.moveAnimate();
   },
   handleEventSelect : function(i){
     if(this.state.messageNum == -1)
@@ -195,8 +199,7 @@ var Root = React.createClass({
   },
   // 判斷有無事件
  isEvents: function(posX,posY){
-   var x = init.events[this.state.map]; 
-   
+   var x = init.events[this.state.map];  
    if(this.state.messageId == -1){
    for(var i = 0 ; i < x.length;i++){  
      if((x[i].sx <= this.state.x+init.man.sizeX+posX) && (this.state.x+posX <= x[i].ex) && (x[i].sy <= this.state.y+posY+init.man.sizeY) && (this.state.y+posY <= x[i].ey)){
@@ -209,7 +212,6 @@ var Root = React.createClass({
    }
    }
    else{
-    
     if(this.state.chatSelectIndex > -1)
       this.handleEventSelect(this.state.chatSelectIndex);
     else
@@ -444,12 +446,12 @@ handleAnimateSpeed : function (x){
 //處理進場畫面至 Map 畫面事件
 handleStart : function(){
     this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0})
-    setTimeout(function(){this.handleFade(1)}.bind(this), 200);
+    setTimeout(function(){this.handleFade(1)}.bind(this), 500);
 },
 //返回進場畫面
 backIndex : function(){
     this.setState({mapZindex : -1 , indexBoxShow : 1,indexShow : 1})
-    setTimeout(function(){this.handleFade(0)}.bind(this), 200);
+    setTimeout(function(){this.handleFade(0)}.bind(this), 500);
 },
 //處理進場畫面選單移動
 handleIndexBoxMove : function(x){
@@ -772,7 +774,7 @@ move : function(){
      <canvas id="secondCanvas" width={m[s.map].col} height={m[s.map].row} />
      <canvas id="grid" width={m[s.map].col} height={m[s.map].row} />
    </div>
-     <div className="chat" onClick={this.moveAnimate} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
+     <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
      <div id="pre"/>
      </body>
    ) 
