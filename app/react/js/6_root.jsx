@@ -94,11 +94,7 @@ var Root = React.createClass({
       $(".chatSelect").eq(this.state.chatSelectIndex).css("border-color" , "white");
     }
   },
-  handleMouseChat : function(){
-    if(this.state.chatOpacity != 0)
-      this.moveAnimate();
-  },
-  handleTouchChat : function(){
+  handleChat : function(e){
       this.moveAnimate();
   },
   handleEventSelect : function(i){
@@ -818,7 +814,7 @@ move : function(){
      <canvas id="secondCanvas" width={m[s.map].col} height={m[s.map].row} />
      <canvas id="grid" width={m[s.map].col} height={m[s.map].row} />
    </div>
-     <div className="chat" onMouseDown={this.handleMouseChat} onTouchStart={this.handleTouchChat} style={{opacity: s.chatOpacity}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
+     <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
      <div id="pre" style={{opacity : s.spritesOpacity}}><img  id="preimg" src={init.object.sprites} /><canvas id="spritesOpacity" width={init.spritesWidth} height={init.spritesHeight}></canvas></div>
      </body>
    ) 
