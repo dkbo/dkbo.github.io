@@ -12,6 +12,7 @@ var Root = React.createClass({
    getInitialState : function(){
      var pos = init.man.initPos;
     return {
+      loadProcess : true,
       spritesGird : false,
       spritesOpacity : 0, //布置圖片透明度
       indexShow : 0,  //進場畫面透明度
@@ -457,7 +458,7 @@ handleStart : function(){
 },
 //返回進場畫面
 backIndex : function(){
-    this.setState({mapZindex : -1 , indexBoxShow : 1,indexShow : 1,chatZindex : -1})
+    this.setState({mapZindex : -1 , indexBoxShow : 1,indexShow : 1,chatZindex : -1,loadProcess: false})
     setTimeout(function(){this.handleFade(0)}.bind(this), 300);
 },
 //處理進場畫面選單移動
@@ -797,6 +798,7 @@ move : function(){
   render : function (){
     var s = this.state;
     var m = init.maps;
+    var load = s.loadProcess ? {display : "block" } : {display : "none"}
    return (
      <body>
       <div id="index" style={{opacity : s.indexShow}}>
@@ -807,7 +809,7 @@ move : function(){
             <li style={{borderColor : s.end}} onMouseOver={this.handleMouseOver.bind('null',2)}>END</li>
           </ul>
         </div>
-        <div id="loadBox"  style={{opacity : s.loadBoxShow}}> </div>
+        <Loadbox style={{opacity : s.loadBoxShow}} />
       </div>  
       <div id="map"  style={{zIndex : s.mapZindex , transition:s.mapAnimateSpeed,opacity:s.mapFade,background: m[s.map].bg,WebkitTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", msTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", transform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)",width: s.mapSizeX*m[s.map].col,height: s.mapSizeY*m[s.map].row}} >
      <div className="man-container" style={{WebkitTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",msTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",transform : "translate3D("+s.left+"px,"+s.top+"px,0)",width : s.mapSizeX*init.man.sizeX,height : s.mapSizeY*init.man.sizeY,backgroundPosition : s.manMoveAnimate*32+"px "+s.manMoveImg*48+"px"}} ></div>
@@ -817,8 +819,33 @@ move : function(){
    </div>
      <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
      <div id="pre" style={{opacity : s.spritesOpacity}}><img  id="preimg" src={init.object.sprites} /><canvas id="spritesOpacity" width={init.spritesWidth} height={init.spritesHeight}></canvas></div>
+     <Load style={load} />
      </body>
    ) 
   }
 });
+var Loadbox = React.createClass({
+  render : function(){
+    return(
+    <div id="loadBox" style={this.props.style}></div>
+  )
+  }
+});
+var Load = React.createClass({
+  getDefaultProps: function() {
+    var x = [];
+    for(var i=0; i < 12;i++){
+    x.push(<div></div>);
+  }
+    return {
+      load : x
+    }
+  },
+  render : function(){
+    return(
+    <div  id="load" style={this.props.style} >{this.props.load}</div>
+  )
+  }
+});
+
 React.render(<Root  />,document.body)
