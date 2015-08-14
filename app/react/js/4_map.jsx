@@ -5,18 +5,18 @@ init.maps =[
     col : 1920,
     row : 1280,
   in :[{
-      x : 488,
+      x : 472,
       y : 544
     }]
   },
 // Map 1
   {
     bg : init.map.bg,
-    col : 480,
-    row : 320,
+    col : 960,
+    row : 640,
   in :[{
-      x : 240,
-      y : 260
+      x : 480,
+      y : 580
     }]
   }
   ]

@@ -423,6 +423,7 @@ handleResize : function(){
                  isMoveDown: this.getMoveRDPoint(this.getWindowHeight()),
                  mapLeft: this.getResizeManPosX(),
                  mapTop: this.getResizeManPosY()})
+
 },
 //處理地圖事件
 handleMap : function(x,y){
@@ -625,6 +626,8 @@ handleTouchEnd : function(e){
   init.map.down = false;
 },
 drawObject : function(){
+  init.fcontext.clearRect(0, 0, init.maps[this.state.map].col, init.maps[this.state.map].row);
+  init.scontext.clearRect(0, 0, init.maps[this.state.map].col, init.maps[this.state.map].row);
 var imageObj = new Image();
 var s = this.state;
 var f = init.firstCanvas[s.map];
