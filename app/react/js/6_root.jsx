@@ -47,7 +47,6 @@ var Root = React.createClass({
       StartTouchX : 0, //手機平板裝置觸碰接收 X 座標
       startTouchY : 0, //手機平板裝置觸碰接收 Y 座標
       chatOpacity : 0, //對話框透明度
-      chatZindex : -1, //對話框前後層
       chatSelectArray : [], //對話框選項
       chatSelectIndex : -1, //對話框節點
       messageId : -1, //對話人 ID
@@ -72,7 +71,7 @@ var Root = React.createClass({
         this.initEvent();
         }
     else{
-      this.setState({messageId : x ,chatOpacity : 1,chatZindex : 2,message: <p>{init.event[this.state.map][x].text[0]}</p>,messageName:init.event[this.state.map][x].name,messageNum:0,messageMax:init.event[this.state.map][x].text.length-1});
+      this.setState({messageId : x ,chatOpacity : 1,message: <p>{init.event[this.state.map][x].text[0]}</p>,messageName:init.event[this.state.map][x].name,messageNum:0,messageMax:init.event[this.state.map][x].text.length-1});
     }
   },
   eventSelect : function(x){
@@ -91,12 +90,15 @@ var Root = React.createClass({
       for(var i=0;i<init.event[this.state.map][x].select.length;i++){ 
         array.push(<li className="chatSelect"  onMouseOut={this.handleMouseOut} onMouseOver={this.handleMouseOver.bind(null,i)} onClick={this.handleEventSelect.bind(null,i)}>{init.event[this.state.map][x].select[i].title}</li>)
       }
-      this.setState({chatSelectIndex : 0 ,chatSelectArray : array,messageId : x ,chatOpacity : 1,chatZindex : 2,messageName:init.event[this.state.map][x].name,message:''})
+      this.setState({chatSelectIndex : 0 ,chatSelectArray : array,messageId : x ,chatOpacity : 1,messageName:init.event[this.state.map][x].name,message:''})
       $(".chatSelect").eq(this.state.chatSelectIndex).css("border-color" , "white");
     }
   },
-  handleChat : function(){
+  handleMouseChat : function(){
     if(this.state.chatOpacity != 0)
+      this.moveAnimate();
+  },
+  handleTouchChat : function(){
       this.moveAnimate();
   },
   handleEventSelect : function(i){
@@ -577,7 +579,6 @@ getTouchPos : function(e){
 handleTouchStart : function(e){
   
   if(this.state.mapFade != 0){ 
-    e.preventDefault();
   var pos = this.getTouchPos(e);
   this.setState({startTouchX : pos.x, startTouchY: pos.y})
 }
@@ -588,25 +589,25 @@ handleTouchMove : function(e){
   if(this.state.mapFade != 0){
   e.preventDefault();
   var pos = this.getTouchPos(e);
-  if(pos.x-this.state.startTouchX < -50)
+  if(pos.x-this.state.startTouchX < -25)
     init.control.left = true
   else{
     init.control.left = false
     init.map.left = false
   }
-  if(pos.x-this.state.startTouchX > 50)
+  if(pos.x-this.state.startTouchX > 25)
     init.control.right = true
   else{
     init.control.right = false
     init.map.right = false
   }
-  if(pos.y-this.state.startTouchY < -50)
+  if(pos.y-this.state.startTouchY < -25)
     init.control.up = true
   else{
     init.control.up = false
     init.map.up = false
   }
-  if(pos.y-this.state.startTouchY > 50)
+  if(pos.y-this.state.startTouchY > 25)
     init.control.down = true
   else{
     init.control.down = false
@@ -817,7 +818,7 @@ move : function(){
      <canvas id="secondCanvas" width={m[s.map].col} height={m[s.map].row} />
      <canvas id="grid" width={m[s.map].col} height={m[s.map].row} />
    </div>
-     <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
+     <div className="chat" onMouseDown={this.handleMouseChat} onTouchStart={this.handleTouchChat} style={{opacity: s.chatOpacity}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
      <div id="pre" style={{opacity : s.spritesOpacity}}><img  id="preimg" src={init.object.sprites} /><canvas id="spritesOpacity" width={init.spritesWidth} height={init.spritesHeight}></canvas></div>
      </body>
    ) 
