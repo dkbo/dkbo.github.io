@@ -42,7 +42,7 @@ body
   overflow: hidden
   ul
     li
-      font-size: 2em
+      font-size: 2rem
       text-align: center
       border: solid
       cursor: pointer
@@ -54,11 +54,12 @@ body
     color: white
 ul
   li.chatSelect
-    font-size: 2rem
     border: solid transparent
     cursor: pointer
     +transition(border .1s)
-
+    font-size: 1.5rem
+    @media (min-width: 720px)
+      font-size: 2rem
 #map
   position: absolute
   top: 0
@@ -80,7 +81,7 @@ ul
   z-index: 0
 .chat
   width: 90%
-  height: 200px
+  height: 8.1rem
   position: absolute
   bottom: 1rem
   left: 50%
@@ -88,9 +89,11 @@ ul
   border-radius : 1rem
   border: solid 
   color : white
-  font-size : 2em
+  font-size : 1.2em
   padding: .5em
-  z-index: 2
+  @media (min-width: 720px)
+    height: 10.5rem
+    font-size : 2rem
 #pre
   position: absolute
   height: 100%

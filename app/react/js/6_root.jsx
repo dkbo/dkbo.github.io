@@ -47,6 +47,7 @@ var Root = React.createClass({
       StartTouchX : 0, //手機平板裝置觸碰接收 X 座標
       startTouchY : 0, //手機平板裝置觸碰接收 Y 座標
       chatOpacity : 0, //對話框透明度
+      chatZindex : -1, //對話框前後層
       chatSelectArray : [], //對話框選項
       chatSelectIndex : -1, //對話框節點
       messageId : -1, //對話人 ID
@@ -451,12 +452,12 @@ handleAnimateSpeed : function (x){
 },
 //處理進場畫面至 Map 畫面事件
 handleStart : function(){
-    this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0})
+    this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0 ,chatZindex: 2})
     setTimeout(function(){this.handleFade(1)}.bind(this), 200);
 },
 //返回進場畫面
 backIndex : function(){
-    this.setState({mapZindex : -1 , indexBoxShow : 1,indexShow : 1})
+    this.setState({mapZindex : -1 , indexBoxShow : 1,indexShow : 1,chatZindex : -1})
     setTimeout(function(){this.handleFade(0)}.bind(this), 300);
 },
 //處理進場畫面選單移動
@@ -814,7 +815,7 @@ move : function(){
      <canvas id="secondCanvas" width={m[s.map].col} height={m[s.map].row} />
      <canvas id="grid" width={m[s.map].col} height={m[s.map].row} />
    </div>
-     <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
+     <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
      <div id="pre" style={{opacity : s.spritesOpacity}}><img  id="preimg" src={init.object.sprites} /><canvas id="spritesOpacity" width={init.spritesWidth} height={init.spritesHeight}></canvas></div>
      </body>
    ) 
