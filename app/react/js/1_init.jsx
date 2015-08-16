@@ -15,8 +15,8 @@ var init = {
     moveSetInterVal: 1000/60,  // FPS
     moveSpeed: 4, // 移動速度
     initPos : {
-      x : 1240, //  % moveSpeed = 0
-      y : 300, // % moveSpeed = 0
+      x : 1000, //  % moveSpeed = 0
+      y : 548, // % moveSpeed = 0
     }
   },
   control :{  // 判斷移動
