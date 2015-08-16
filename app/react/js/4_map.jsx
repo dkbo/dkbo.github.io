@@ -7,9 +7,22 @@ init.maps =[
   in :[{
       x : 472,
       y : 544
+    },{
+      x : 1344,
+      y : 512
     }]
   },
 // Map 1
+  {
+    bg : init.map.bg,
+    col : 960,
+    row : 640,
+  in :[{
+      x : 472,
+      y : 580
+    }]
+  },
+// Map 2
   {
     bg : init.map.bg,
     col : 960,
