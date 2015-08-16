@@ -8,12 +8,14 @@ var init = {
   },
   man : {
     sprite : "url('images/man.png')",
+    spriteSpeed : 0,
+    spriteSpeedCount : 10,
     spriteObj : "images/man.png",
     speak : "url('images/speak.png'),pointer",
     sizeX: 32, //人物寬度度
     sizeY: 48, //人物長度
     moveSetInterVal: 1000/60,  // FPS
-    moveSpeed: 4, // 移動速度
+    moveSpeed: 2, // 移動速度
     initPos : {
       x : 1000, //  % moveSpeed = 0
       y : 548, // % moveSpeed = 0

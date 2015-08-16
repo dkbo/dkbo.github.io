@@ -728,8 +728,11 @@ move : function(){
   var p = this.props;
   var ctl = init.control;
   var map = init.map;
-  if(ctl.left || ctl.right || ctl.up || ctl.down)
+  if(ctl.left || ctl.right || ctl.up || ctl.down){
+    if(!init.man.spriteSpeed)
     this.setState({manMoveAnimate: (c.manMoveAnimate+1)%4});
+    init.man.spriteSpeed < init.man.spriteSpeedCount ? init.man.spriteSpeed++ : init.man.spriteSpeed=0;
+  }
   if(ctl.left)
     this.setState({manMoveImg: 3});
   if(ctl.right)
