@@ -816,9 +816,9 @@ move : function(){
       </div>  
       <div id="map"  style={{zIndex : s.mapZindex , transition:s.mapAnimateSpeed,opacity:s.mapFade,background: m[s.map].bg,WebkitTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", msTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", transform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)",width: s.mapSizeX*m[s.map].col,height: s.mapSizeY*m[s.map].row}} >
      <div className="man-container" style={{WebkitTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",msTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",transform : "translate3D("+s.left+"px,"+s.top+"px,0)",width : s.mapSizeX*init.man.sizeX,height : s.mapSizeY*init.man.sizeY,backgroundPosition : s.manMoveAnimate*32+"px "+s.manMoveImg*48+"px"}} ></div>
+      <canvas id="grid" width={m[s.map].col} height={m[s.map].row} />
      <canvas id="firstCanvas" width={m[s.map].col} height={m[s.map].row} />
      <canvas id="secondCanvas" width={m[s.map].col} height={m[s.map].row} />
-     <canvas id="grid" width={m[s.map].col} height={m[s.map].row} />
    </div>
      <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
      <div id="pre" style={{opacity : s.spritesOpacity}}><img  id="preimg" src={init.object.sprites} /><canvas id="spritesOpacity" width={init.spritesWidth} height={init.spritesHeight}></canvas></div>

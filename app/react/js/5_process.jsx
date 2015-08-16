@@ -28,7 +28,7 @@ var obj = init.objects[j].styles[i];
   init.move[j][xx]=x;
     xx+=1;
   }
-  if(obj.left){
+  if(obj.width){
     
 var y={
     left :  obj.left,
