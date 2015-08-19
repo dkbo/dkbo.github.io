@@ -98,23 +98,36 @@ ul
   @media (min-width: 720px)
     height: 10.5rem
     font-size : 2rem
-#pre
+#menu
   position: absolute
-  height: 100%
-  left: 0
-  top: 0
-  overflow: auto
-  z-index: -1
-  @media (min-width: 720px)
-    z-index: 1
-    -ms-overflow-style: -ms-autohiding-scrollbar
-    -webkit-overflow-scrolling: touch
-    &::-webkit-scrollbar
-      -webkit-appearance: none
-      width: 0px
-      height: 0px
-    &::-webkit-scrollbar-thumb
-      background-color: transparent
+  top: 10%
+  left : 10%
+  width: 80%
+  height: 80%
+  z-index: 5
+  h1
+    margin : 0
+  #left,#right
+    color: white
+    background: rgba(37, 69, 168, 0.77)
+    border-radius : 1rem
+    border: solid
+    float: left
+    padding: 1rem
+  #left
+    width: 20%
+    height: 100%
+    ul
+      li
+        cursor: pointer
+  #right
+    margin-left: 1%
+    width: 79%
+    height: 100%
+
+
+#pimg
+  display: none
 
 #load
   z-index: -1
