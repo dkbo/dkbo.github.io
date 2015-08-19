@@ -46,7 +46,7 @@ body
     li
       font-size: 2rem
       text-align: center
-      border: solid
+      border: solid transparent
       cursor: pointer
       +transition(border .1s) 
   @media (min-width: 720px)
@@ -95,6 +95,10 @@ ul
   color : white
   font-size : 1.2em
   padding: .5em
+  ul
+    li
+      border : solid transparent
+      cursor : pointer
   @media (min-width: 720px)
     height: 10.5rem
     font-size : 2rem
@@ -119,6 +123,7 @@ ul
     height: 100%
     ul
       li
+        border: solid transparent
         cursor: pointer
   #right
     margin-left: 1%

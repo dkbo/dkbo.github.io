@@ -17,9 +17,6 @@ var Root = React.createClass({
       indexBoxShow : 0, //進場畫面選單透明度
       loadBoxShow : 0, //進場畫面載入選單透明度
       indexBox : 0,  //進場畫面選單位置
-      start : "white", // 進場畫面選單 Start 顏色 
-      load : "transparent",  // 進場畫面選單 Load 顏色 
-      end : "transparent",  // 進場畫面選單 End 顏色 
       map : 0, //場景圖及物件陣列
       mapBg : init.map.bg, // 場景地圖 
       windowWidth: window.innerWidth, //視窗寬度
@@ -90,10 +87,9 @@ var Root = React.createClass({
     else{
       var array = [];
       for(var i=0;i<init.event[this.state.map][x].select.length;i++){ 
-        array.push(<li className="chatSelect"  onMouseOut={this.handleMouseOut} onMouseOver={this.handleMouseOver.bind(null,i)} onClick={this.handleEventSelect.bind(null,i)}>{init.event[this.state.map][x].select[i].title}</li>)
+        array.push({id: i, title : init.event[this.state.map][x].select[i].title})
       }
       this.setState({chatSelectIndex : 0 ,chatSelectArray : array,messageId : x ,chatOpacity : 1,messageName:init.event[this.state.map][x].name,message:''})
-      $(".chatSelect").eq(this.state.chatSelectIndex).css("border-color" , "white");
     }
   },
   handleChat : function(e){
@@ -104,13 +100,6 @@ var Root = React.createClass({
         this.setState({chatSelectArray :[],message:<p>{init.event[this.state.map][this.state.messageId].select[i].text[0]}</p>,messageNum:0,messageMax:init.event[this.state.map][this.state.messageId].select[i].text.length-1}); 
     else{      
       this.eventSelect(this.state.messageId)
-    }
-  },
-  chatSelect : function(i){
-    if(init.event[this.state.map][this.state.messageId].select.length > this.state.chatSelectIndex + i && this.state.chatSelectIndex + i > -1){
-      $(".chatSelect").eq(this.state.chatSelectIndex).css("border-color" , "transParent");
-      this.setState({chatSelectIndex: this.state.chatSelectIndex + i})
-      $(".chatSelect").eq(this.state.chatSelectIndex).css("border-color" , "white");
     }
   },
   // 返回當前視窗寬度
@@ -235,7 +224,7 @@ var Root = React.createClass({
     e.preventDefault()
     // 判斷是否已經 Start
     if(this.state.mapZindex != -1  ){
-      if(this.state.chatSelectArray.length ==0){
+      if(this.state.chatSelectArray.length ==0 && !this.state.menuDisplay){
         switch(e.keyCode){
           // 人物左移
           case 37:
@@ -287,23 +276,48 @@ var Root = React.createClass({
           case 13:
               this.moveAnimate();
               break;
+          case 27:
+             this.initEvent();
+             this.ShowMenu();
+             break;
       } 
+    }
+    else if(this.state.menuDisplay){
+          switch(e.keyCode){
+            case 27:
+              this.initEvent();
+              this.ShowMenu();
+              break;
+            case 38:
+              this.handleMenuIndexMove(-1);
+              break;
+            case 87:
+              this.handleMenuIndexMove(-1);
+              break;
+ 
+            case 40:
+              this.handleMenuIndexMove(1);
+              break;
+            case 83:
+              this.handleMenuIndexMove(1);
+              break;      
+          }
     }
     else{
         // 對話框選取
         switch(e.keyCode){
           case 38:
-              this.chatSelect(-1);
+              this.chatSelectMove(-1);
               break;
           case 87:
-              this.chatSelect(-1);
+              this.chatSelectMove(-1);
               break;
  
           case 40:
-              this.chatSelect(1);
+              this.chatSelectMove(1);
               break;
           case 83:
-              this.chatSelect(1);
+              this.chatSelectMove(1);
               break;
           //選取對話框選項
           case 32:
@@ -315,7 +329,6 @@ var Root = React.createClass({
           // 取消對話框選取
           case 27:
              this.initEvent();
-             //this.ShowMenu();
              break;
       }
     }
@@ -463,17 +476,6 @@ backIndex : function(){
 },
 //處理進場畫面選單移動
 handleIndexBoxMove : function(x){
-  switch(this.state.indexBox){
-     case 0:
-       this.setState({start : 'transparent'})
-       break
-     case 1:
-       this.setState({load : 'transparent'})
-       break
-     case 2:
-       this.setState({end : 'transparent'})
-       break
-   }
    if(this.state.indexBox + x > 2)
     x = (this.state.indexBox + x)% 3
    else{
@@ -481,50 +483,19 @@ handleIndexBoxMove : function(x){
     if(x == -1)
      x = 2
    }
-   switch(x){
-     case 0:
-       this.setState({indexBox : x,start : 'white'})
-       break
-     case 1:
-       this.setState({indexBox : x,load : 'white'})
-       break
-     case 2:
-       this.setState({indexBox : x,end : 'white'})
-       break
-   }
+   this.setState({indexBox : x})
 },
-handleMouseOver : function(x,e){
-  if(this.state.mapZindex != -1){
-    if(x != this.state.chatSelectIndex)
-      $(".chatSelect").eq(this.state.chatSelectIndex).css("border-color" , "transParent");
-    e.target.style.borderColor = "white";
-    this.setState({chatSelectIndex : x });
-
-  }
-  else{
-  switch(this.state.indexBox){
-     case 0:
-       this.setState({start : 'transparent'})
-       break
-     case 1:
-       this.setState({load : 'transparent'})
-       break
-     case 2:
-       this.setState({end : 'transparent'})
-       break
-   }
-  switch(x){
-     case 0:
-       this.setState({indexBox : x,start : 'white'})
-       break
-     case 1:
-       this.setState({indexBox : x,load : 'white'})
-       break
-     case 2:
-       this.setState({indexBox : x,end : 'white'})
-       break
-   }
- }
+handleMenuIndexMove : function(x){
+  var val = x + this.state.menuIndex;
+   if( val >= 0 && val < init.menuTitle.length){
+   this.setState({menuIndex : val});
+}
+},
+chatSelectMove : function(x){
+  var val = x + this.state.chatSelectIndex;
+   if( val >= 0 && val < this.state.chatSelectArray.length){
+   this.setState({chatSelectIndex : val});
+}
 },
 handleLoad : function(){
   this.backIndex();
@@ -767,11 +738,39 @@ move : function(){
   }
 },
 menuItem : function(menuItem) {
-
-      return <li onClick={this.test}>{menuItem}</li>;
+    if(this.state.menuIndex == menuItem.id)
+      return <li style={{border : "solid"}}>{menuItem.title}</li>;
+    else
+      return <li onClick={this.menuSelect.bind('null',menuItem.id)}>{menuItem.title}</li>;
 },
-test : function(){
- alert(1);
+menuSelect : function(x){
+ this.setState({menuIndex : x});
+},
+indexBox : function(item) {
+    if(this.state.indexBox == item.id){
+      if(item.id == 0)
+        return <li style={{border : "solid"}} onClick={this.handleStart}>{item.title}</li>;
+      else
+        return <li style={{border : "solid"}} >{item.title}</li>;
+    }
+    else{
+      if(item.id == 0)
+        return <li onClick={this.handleStart} onMouseOver={this.indexBoxSelect.bind('null',item.id)}>{item.title}</li>;
+      else
+        return <li onMouseOver={this.indexBoxSelect.bind('null',item.id)}>{item.title}</li>;
+}
+},
+indexBoxSelect : function(x){
+ this.setState({indexBox : x});
+},
+chatArray : function(item) {
+    if(this.state.chatSelectIndex == item.id)
+      return <li style={{border : "solid"}}>{item.title}</li>;
+    else
+      return <li onMouseOver={this.chatSelect.bind('null',item.id)}>{item.title}</li>;
+},
+chatSelect : function(x){
+ this.setState({chatSelectIndex : x});
 },
 //生成所有DOM
   render : function (){
@@ -784,9 +783,7 @@ test : function(){
       <div id="index" style={{opacity : s.indexShow}}>
         <div id="indexBox"  style={{opacity : s.indexBoxShow}}>
           <ul>
-            <li style={{borderColor : s.start}} onMouseOver={this.handleMouseOver.bind('null',0)} onClick={this.handleStart}>START</li>
-            <li style={{borderColor : s.load}} onMouseOver={this.handleMouseOver.bind('null',1)}>LOAD</li>
-            <li style={{borderColor : s.end}} onMouseOver={this.handleMouseOver.bind('null',2)}>END</li>
+            {init.indexBox.map(this.indexBox)}
           </ul>
         </div>
         <Loadbox style={{opacity : s.loadBoxShow}} />
@@ -797,7 +794,7 @@ test : function(){
         <canvas id="firstCanvas" width={m[s.map].col} height={m[s.map].row} />
         <canvas id="secondCanvas" width={m[s.map].col} height={m[s.map].row} />
       </div>
-     <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray}</ul></div>
+     <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray.map(this.chatArray)}</ul></div>
      {s.menuDisplay ? <div id="menu" >
         <div id="left">
           <ul>

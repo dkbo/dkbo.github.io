@@ -34,8 +34,14 @@ init.maps =[
   }
   ]
 init.menuTitle =[ 
-    "說明",
-    "關於作者"
+    {
+      id : 0,
+      title: "說明"
+    },
+    {
+      id : 1,
+      title :"關於作者"
+    }
   ];
 init.menuText =
   [
@@ -43,7 +49,20 @@ init.menuText =
       <h1>製作中</h1>
     </div>,
     <div>
-      <h1>製作中</h1>
+      <h1>製作中2</h1>
     </div>
   ];
-
+init.indexBox =[ 
+    {
+      id : 0,
+      title: "Start"
+    },
+    {
+      id : 1,
+      title :"Load"
+    },
+    {
+      id : 2,
+      title :"End"
+    }
+  ];

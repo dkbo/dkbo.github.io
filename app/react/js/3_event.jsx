@@ -19,7 +19,9 @@ init.event=[
               },
               { name : "古文碑",
                 select : [
-                           { title : "世界形成之初",
+                           { 
+                             id : 0,
+                             title : "世界形成之初",
                              text : [ 
                                       "此石碑記載著這個世界的創立因素，上面留有密密麻麻的文字....","世界形成之初，有著 HTML 、 CSS 、 JavaScrit",
                                       "ReactJs、Jquery 是 JavaScirpt 的兒子，祂們能把世界毀滅亦可重生。",
@@ -29,8 +31,10 @@ init.event=[
                                       "於是 ReactJs、Jquery、Sass 攜手打造了這個世界。"
                                     ]
                            },
-                           { title : "關於作者",
-                             text : [ 
+                           { 
+                              id : 1,
+                              title : "關於作者",
+                              text : [ 
                                       <span>作者本名叫 盧宏寶 在家排名老二，畢業於高雄市正修科技大學電機工程系，在網路世界中暱稱為 DKBO，<del>目前已婚有一子</del></span>
                                     ]
                            }
