@@ -33,5 +33,10 @@ var init = {
     up : false,
     right : false,
     down : false,
- }
+ },
+ startTouch:{
+    x : 0,
+    y : 0
+ },
+ menuNav: false
 }

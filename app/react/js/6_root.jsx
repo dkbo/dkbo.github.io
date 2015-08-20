@@ -52,7 +52,8 @@ var Root = React.createClass({
       messageNum: -1, //對話計次
       messageMax: -1, //對話最大計次
       menuIndex : 0,
-      menuDisplay : false
+      menuDisplay : false,
+      menuRightBoxWheel: 0
     }
   },
 
@@ -458,13 +459,13 @@ handleAnimateSpeed : function (x){
   this.setState({mapAnimateSpeed : x})
 },
 //處理進場畫面至 Map 畫面事件
-handleStart : function(){
+handleStart : function(e){
     this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0 ,chatZindex: 2});
     this.handleAnimateSpeed(".1s");
     this.handleFade(0);
     setTimeout(function(){
     this.drawObject();
-  setTimeout(function(){this.handleFade(1)
+  setTimeout(function(){this.handleFade(1);init.menuNav= true;
     setTimeout(function(){this.handleAnimateSpeed("0s")}.bind(this),100);
   }.bind(this), 100);
  }.bind(this), 100);
@@ -488,7 +489,7 @@ handleIndexBoxMove : function(x){
 handleMenuIndexMove : function(x){
   var val = x + this.state.menuIndex;
    if( val >= 0 && val < init.menuTitle.length){
-   this.setState({menuIndex : val});
+   this.menuSelect(val);
 }
 },
 chatSelectMove : function(x){
@@ -544,34 +545,44 @@ handleTouchStart : function(e){
   
   if(this.state.mapFade != 0){ 
   var pos = this.getTouchPos(e);
-  this.setState({startTouchX : pos.x, startTouchY: pos.y})
+  init.startTouch.x = pos.x;
+  init.startTouch.y = pos.y
 }
 },
 //返回觸碰移動時 XY 座標
 handleTouchMove : function(e){
-
-  if(this.state.mapFade != 0){
   e.preventDefault();
   var pos = this.getTouchPos(e);
-  if(pos.x-this.state.startTouchX < -25)
+  if (this.state.menuDisplay) {
+    var rw = React.findDOMNode(this.refs.right).clientHeight;
+    var rbw = React.findDOMNode(this.refs.rightBox).clientHeight;
+    var y = pos.y-init.startTouch.y;
+    var x = rbw + (this.state.menuRightBoxWheel +  y);
+    init.startTouch = pos;  
+    if( x > rw && this.state.menuRightBoxWheel +y <= 0)
+    this.setState({menuRightBoxWheel: this.state.menuRightBoxWheel+y});
+  }
+  else if(this.state.mapFade != 0){
+
+  if(pos.x-init.startTouch.x < -25)
     init.control.left = true
   else{
     init.control.left = false
     init.map.left = false
   }
-  if(pos.x-this.state.startTouchX > 25)
+  if(pos.x-init.startTouch.x > 25)
     init.control.right = true
   else{
     init.control.right = false
     init.map.right = false
   }
-  if(pos.y-this.state.startTouchY < -25)
+  if(pos.y-init.startTouch.y < -25)
     init.control.up = true
   else{
     init.control.up = false
     init.map.up = false
   }
-  if(pos.y-this.state.startTouchY > 25)
+  if(pos.y-init.startTouch.y > 25)
     init.control.down = true
   else{
     init.control.down = false
@@ -739,12 +750,12 @@ move : function(){
 },
 menuItem : function(menuItem) {
     if(this.state.menuIndex == menuItem.id)
-      return <li style={{border : "solid"}}>{menuItem.title}</li>;
+      return <li className="xx-dark-text-shadow" style={{border : "solid"}}>{menuItem.title}</li>;
     else
-      return <li onClick={this.menuSelect.bind('null',menuItem.id)}>{menuItem.title}</li>;
+      return <li className="xx-dark-text-shadow" onClick={this.menuSelect.bind('null',menuItem.id)}>{menuItem.title}</li>;
 },
 menuSelect : function(x){
- this.setState({menuIndex : x});
+ this.setState({menuIndex : x , menuRightBoxWheel : 0});
 },
 indexBox : function(item) {
     if(this.state.indexBox == item.id){
@@ -772,6 +783,15 @@ chatArray : function(item) {
 chatSelect : function(x){
  this.setState({chatSelectIndex : x});
 },
+menuRightWheel : function(e){
+  var scrollSpeed = 32;
+  var rw = React.findDOMNode(this.refs.right).clientHeight;
+  var rbw = React.findDOMNode(this.refs.rightBox).clientHeight;
+  var x = rbw + (this.state.menuRightBoxWheel - scrollSpeed*(e.deltaY / 100))  
+  var y = -scrollSpeed *e.deltaY / 100 +this.state.menuRightBoxWheel
+ if( x +scrollSpeed >  rw && y <= 0)
+  this.setState({menuRightBoxWheel : y})
+},
 //生成所有DOM
   render : function (){
     var s = this.state;
@@ -780,6 +800,7 @@ chatSelect : function(x){
    
    return (
      <body>
+
       <div id="index" style={{opacity : s.indexShow}}>
         <div id="indexBox"  style={{opacity : s.indexBoxShow}}>
           <ul>
@@ -794,16 +815,22 @@ chatSelect : function(x){
         <canvas id="firstCanvas" width={m[s.map].col} height={m[s.map].row} />
         <canvas id="secondCanvas" width={m[s.map].col} height={m[s.map].row} />
       </div>
+      { init.menuNav ?<nav id="menunav" className="s-hide">
+        <ul>
+          <li onClick={this.ShowMenu}>選單</li>
+        </ul>
+     </nav>:<nav />}
      <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray.map(this.chatArray)}</ul></div>
      {s.menuDisplay ? <div id="menu" >
-        <div id="left">
+        <div id="left" className="col xx12 s3 xx-np xx-ng" >
           <ul>
             {init.menuTitle.map(this.menuItem)}
           </ul>
         </div>
-        <div id="right">{init.menuText[s.menuIndex]}</div>
+        <div id="right" className="col xx12 s9 xx-np xx-ng" ref="right"><div id="rightBox" onWheel={this.menuRightWheel} ref="rightBox" style={{WebkitTransform : "translateY("+s.menuRightBoxWheel+"px)",msTransform : "translateY("+s.menuRightBoxWheel+"px)",transform : "translateY("+s.menuRightBoxWheel+"px)" }}>{init.menuText[s.menuIndex]}</div></div>
      </div> : <div />}
      <Load style={load} />
+     
      <img id="pimg" src={init.object.sprites}/>
      </body>
    ) 
