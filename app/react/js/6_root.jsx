@@ -40,8 +40,6 @@ var Root = React.createClass({
       isMoveRight: this.getMoveRDPoint(this.getWindowWidth()), //地圖右位移點
       isMoveUp: this.getMoveLUPoint(this.getWindowHeight()), //地圖上位移點
       isMoveDown: this.getMoveRDPoint(this.getWindowHeight()), //地圖下位移點
-      StartTouchX : 0, //手機平板裝置觸碰接收 X 座標
-      startTouchY : 0, //手機平板裝置觸碰接收 Y 座標
       chatOpacity : 0, //對話框透明度
       chatZindex : -1, //對話框前後層
       chatSelectArray : [], //對話框選項
@@ -146,9 +144,11 @@ var Root = React.createClass({
   getResizeManPosX : function(){
     if(window.innerWidth - init.maps[this.state.map].col < 0){
     if(this.state.x > this.getMoveRDPoint(this.getWindowWidth())){
-      var x= Math.floor(window.innerWidth/2 - this.state.x - init.man.sizeX/2);
+      var x = Math.floor(window.innerWidth/2 - this.state.x - init.man.sizeX/2);
+      if(window.innerWidth >  x + init.maps[this.state.map].col)
+        x =  window.innerWidth - init.maps[this.state.map].col;
       if(x % init.man.moveSpeed != 0)
-        x = x - (x % init.man.moveSpeed)
+        x -=  (x % init.man.moveSpeed)
         return x
     }
     else
@@ -164,6 +164,8 @@ var Root = React.createClass({
     if(window.innerHeight - init.maps[this.state.map].row <0){
     if(this.state.y > this.getMoveRDPoint(this.getWindowHeight())){
       var  y = Math.floor(window.innerHeight/2 - this.state.y - init.man.sizeY/2);
+    if(window.innerHeight >  y + init.maps[this.state.map].row)
+        y =  window.innerHeight - init.maps[this.state.map].row;
       if(y % init.man.moveSpeed != 0)
         y = y - (y % init.man.moveSpeed)
       return y
