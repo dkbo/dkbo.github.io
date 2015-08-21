@@ -51,7 +51,8 @@ var Root = React.createClass({
       messageMax: -1, //對話最大計次
       menuIndex : 0,
       menuDisplay : false,
-      menuRightBoxWheel: 0
+      menuRightBoxWheel: 0,
+      menuLeftBoxWheel: 0
     }
   },
 
@@ -519,32 +520,24 @@ componentDidMount: function () {
     $(window).on('resize',this.handleResize);
     $(window).on('keydown',this.handleKeyDown);
     $(window).on('keyup',this.handleKeyUp);
-    $(window).on('touchstart',this.handleTouchStart);
-    $(window).on('touchmove',this.handleTouchMove);
-    $(window).on('touchend',this.handleTouchEnd);
     this.timer = setInterval(this.move.bind(this), init.man.moveSetInterVal);
   },
 //所有DOM將移除時
  componentWillUnmount : function(){
-    
     $(window).off('resize',this.handleResize);
     $(window).off('keydown',this.handleKeyDown);
     $(window).off('keyup',this.handleKeyUp);
-    $(window).off('touchstart',this.handleTouchStart);
-    $(window).off('touchmove',this.handleTouchMove);
-    $(window).off('touchend',this.handleTouchEnd);
     clearInterval(this.timer)
   },
 //返回平板 / 手機裝置的 XY 座標
 getTouchPos : function(e){
   return {
-    x: e.originalEvent.touches[0].pageX,
-    y: e.originalEvent.touches[0].pageY
+    x: e.changedTouches[0].pageX,
+    y: e.changedTouches[0].pageY
   }
 },
 //返回觸碰時 XY 座標
 handleTouchStart : function(e){
-  
   if(this.state.mapFade != 0){ 
   var pos = this.getTouchPos(e);
   init.startTouch.x = pos.x;
@@ -553,19 +546,10 @@ handleTouchStart : function(e){
 },
 //返回觸碰移動時 XY 座標
 handleTouchMove : function(e){
-  e.preventDefault();
+  
+  if(this.state.mapFade != 0 && !this.state.menuDisplay){
+    e.preventDefault();
   var pos = this.getTouchPos(e);
-  if (this.state.menuDisplay) {
-    var rw = React.findDOMNode(this.refs.right).clientHeight;
-    var rbw = React.findDOMNode(this.refs.rightBox).clientHeight;
-    var y = pos.y-init.startTouch.y;
-    var x = rbw + (this.state.menuRightBoxWheel +  y);
-    init.startTouch = pos;  
-    if( x > rw && this.state.menuRightBoxWheel +y <= 0)
-    this.setState({menuRightBoxWheel: this.state.menuRightBoxWheel+y});
-  }
-  else if(this.state.mapFade != 0){
-
   if(pos.x-init.startTouch.x < -25)
     init.control.left = true
   else{
@@ -602,6 +586,25 @@ handleTouchEnd : function(e){
   init.map.up = false;
   init.control.down = false;
   init.map.down = false;
+},
+menuRightTouchMove : function(e){
+    var pos = this.getTouchPos(e);
+    var rw = React.findDOMNode(this.refs.right).clientHeight;
+    var rbw = React.findDOMNode(this.refs.rightBox).clientHeight;
+    var y = pos.y-init.startTouch.y;
+    var x = rbw + (this.state.menuRightBoxWheel +  y);
+    init.startTouch = pos;  
+    if( x > rw && this.state.menuRightBoxWheel +y <= 0)
+    this.setState({menuRightBoxWheel: this.state.menuRightBoxWheel+y});
+},
+menuLeftTouchMove : function(e){
+    if(e.view.innerWidth < 768 ){
+    var pos = this.getTouchPos(e);
+    var x = pos.x-init.startTouch.x;
+    init.startTouch = pos;
+    if(this.state.menuLeftBoxWheel + x <= 0)
+    this.setState({menuLeftBoxWheel: this.state.menuLeftBoxWheel+x});
+  }
 },
 drawObject : function(){
   init.fcontext.clearRect(0, 0, init.maps[this.state.map].col, init.maps[this.state.map].row);
@@ -752,9 +755,9 @@ move : function(){
 },
 menuItem : function(menuItem) {
     if(this.state.menuIndex == menuItem.id)
-      return <li className="xx-dark-text-shadow" style={{border : "solid"}}>{menuItem.title}</li>;
+      return <li className="xx-dark-text-shadow" style={{borderColor : "white"}}>{menuItem.title}</li>;
     else
-      return <li className="xx-dark-text-shadow" onClick={this.menuSelect.bind('null',menuItem.id)}>{menuItem.title}</li>;
+      return <li className="xx-dark-text-shadow" style={{borderColor : "transparent"}}onClick={this.menuSelect.bind('null',menuItem.id)}>{menuItem.title}</li>;
 },
 menuSelect : function(x){
  this.setState({menuIndex : x , menuRightBoxWheel : 0});
@@ -762,15 +765,15 @@ menuSelect : function(x){
 indexBox : function(item) {
     if(this.state.indexBox == item.id){
       if(item.id == 0)
-        return <li style={{border : "solid"}} onClick={this.handleStart}>{item.title}</li>;
+        return <li style={{borderColor : "white"}} onClick={this.handleStart}>{item.title}</li>;
       else
-        return <li style={{border : "solid"}} >{item.title}</li>;
+        return <li style={{borderColor : "white"}} >{item.title}</li>;
     }
     else{
       if(item.id == 0)
-        return <li onClick={this.handleStart} onMouseOver={this.indexBoxSelect.bind('null',item.id)}>{item.title}</li>;
+        return <li onClick={this.handleStart} style={{borderColor : "transparent"}} onMouseOver={this.indexBoxSelect.bind('null',item.id)}>{item.title}</li>;
       else
-        return <li onMouseOver={this.indexBoxSelect.bind('null',item.id)}>{item.title}</li>;
+        return <li style={{borderColor : "transparent"}} onMouseOver={this.indexBoxSelect.bind('null',item.id)}>{item.title}</li>;
 }
 },
 indexBoxSelect : function(x){
@@ -778,9 +781,9 @@ indexBoxSelect : function(x){
 },
 chatArray : function(item) {
     if(this.state.chatSelectIndex == item.id)
-      return <li style={{border : "solid"}}>{item.title}</li>;
+      return <li style={{borderColor : "white"}}>{item.title}</li>;
     else
-      return <li onMouseOver={this.chatSelect.bind('null',item.id)}>{item.title}</li>;
+      return <li style={{borderColor : "transparent"}} onMouseOver={this.chatSelect.bind('null',item.id)}>{item.title}</li>;
 },
 chatSelect : function(x){
  this.setState({chatSelectIndex : x});
@@ -801,7 +804,7 @@ menuRightWheel : function(e){
     var load = s.loadProcess ? {display : "block" } : {display : "none"}
    
    return (
-     <body>
+     <div id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
 
       <div id="index" style={{opacity : s.indexShow}}>
         <div id="indexBox"  style={{opacity : s.indexBoxShow}}>
@@ -824,17 +827,17 @@ menuRightWheel : function(e){
      </nav>:<nav />}
      <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray.map(this.chatArray)}</ul></div>
      {s.menuDisplay ? <div id="menu" >
-        <div id="left" className="col xx12 s3 xx-np xx-ng" >
-          <ul>
+        <div id="left" className="col xx12 s3 xx-np xx-ng" onTouchMove={this.menuLeftTouchMove} >
+          <ul style={{WebkitTransform : "translateX("+s.menuLeftBoxWheel+"px)",msTransform : "translateX("+s.menuLeftBoxWheel+"px)",transform : "translateX("+s.menuLeftBoxWheel+"px)" }}>
             {init.menuTitle.map(this.menuItem)}
           </ul>
         </div>
-        <div id="right" className="col xx12 s9 xx-np xx-ng" ref="right"><div id="rightBox" onWheel={this.menuRightWheel} ref="rightBox" style={{WebkitTransform : "translateY("+s.menuRightBoxWheel+"px)",msTransform : "translateY("+s.menuRightBoxWheel+"px)",transform : "translateY("+s.menuRightBoxWheel+"px)" }}>{init.menuText[s.menuIndex]}</div></div>
+        <div id="right" className="col xx12 s9 xx-np xx-ng" ref="right" onTouchMove={this.menuRightTouchMove}><div id="rightBox" onWheel={this.menuRightWheel} ref="rightBox" style={{WebkitTransform : "translateY("+s.menuRightBoxWheel+"px)",msTransform : "translateY("+s.menuRightBoxWheel+"px)",transform : "translateY("+s.menuRightBoxWheel+"px)" }}>{init.menuText[s.menuIndex]}</div></div>
      </div> : <div />}
      <Load style={load} />
      
      <img id="pimg" src={init.object.sprites}/>
-     </body>
+     </div>
    ) 
   }
 });

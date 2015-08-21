@@ -11,7 +11,7 @@ ul,li,p
   list-style-type : none
   padding: 0
   margin: 0
-html,body
+html,body,#container
   min-width: 100%
   min-height: 100%
   margin : 0
@@ -128,9 +128,13 @@ ul
     border: solid
   #left
     padding: 1rem
+    overflow: hidden
     @media (min-width: 768px)
       height: 100%  
     ul
+      width: 200%
+      @media (min-width: 768px)
+        width: auto
       li
         display: inline-block
         @media (min-width: 768px)

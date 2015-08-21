@@ -15,7 +15,7 @@ var gulp = require('gulp'),
     jade = require('gulp-jade'),           //html 用 
     compass = require('gulp-compass'),     //compass sass+ susy
     coffee = require('gulp-coffee');       //coffeescript
-    react = require('gulp-react');       //babel
+    react = require('gulp-babel');       //babel
 
 gulp.task('webserver', function() {
   gulp.src('')
