@@ -1,4 +1,5 @@
 // 根
+
 var Root = React.createClass({
     getDefaultProps: function() {
     return {
@@ -41,7 +42,6 @@ var Root = React.createClass({
       isMoveUp: this.getMoveLUPoint(this.getWindowHeight()), //地圖上位移點
       isMoveDown: this.getMoveRDPoint(this.getWindowHeight()), //地圖下位移點
       chatOpacity : 0, //對話框透明度
-      chatZindex : -1, //對話框前後層
       chatSelectArray : [], //對話框選項
       chatSelectIndex : -1, //對話框節點
       messageId : -1, //對話人 ID
@@ -463,7 +463,7 @@ handleAnimateSpeed : function (x){
 },
 //處理進場畫面至 Map 畫面事件
 handleStart : function(e){
-    this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0 ,chatZindex: 2});
+    this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0});
     this.handleAnimateSpeed(".1s");
     this.handleFade(0);
     setTimeout(function(){
@@ -475,7 +475,7 @@ handleStart : function(e){
 },
 //返回進場畫面
 backIndex : function(){
-    this.setState({mapZindex : -1 , indexBoxShow : 1,indexShow : 1,chatZindex : -1,loadProcess: false})
+    this.setState({mapZindex : -1 , indexBoxShow : 1,indexShow : 1,loadProcess: false})
     setTimeout(function(){this.handleFade(0)}.bind(this), 300);
 },
 //處理進場畫面選單移動
@@ -801,11 +801,9 @@ menuRightWheel : function(e){
   render : function (){
     var s = this.state;
     var m = init.maps;
-    var load = s.loadProcess ? {display : "block" } : {display : "none"}
-   
    return (
      <div id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
-
+     {s.mapZindex == -1  ?
       <div id="index" style={{opacity : s.indexShow}}>
         <div id="indexBox"  style={{opacity : s.indexBoxShow}}>
           <ul>
@@ -813,7 +811,8 @@ menuRightWheel : function(e){
           </ul>
         </div>
         <Loadbox style={{opacity : s.loadBoxShow}} />
-      </div>  
+      </div>
+      : null }  
       <div id="map"  style={{zIndex : s.mapZindex , transition:s.mapAnimateSpeed,opacity:s.mapFade,background: m[s.map].bg,WebkitTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", msTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", transform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)",width: s.mapSizeX*m[s.map].col,height: s.mapSizeY*m[s.map].row}} >
         <div className="man-container" style={{WebkitTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",msTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",transform : "translate3D("+s.left+"px,"+s.top+"px,0)",width : s.mapSizeX*init.man.sizeX,height : s.mapSizeY*init.man.sizeY,backgroundPosition : s.manMoveAnimate*32+"px "+s.manMoveImg*48+"px"}} ></div>
         <canvas id="grid" width={m[s.map].col} height={m[s.map].row} />
@@ -824,8 +823,8 @@ menuRightWheel : function(e){
         <ul>
           <li onClick={this.ShowMenu}>選單</li>
         </ul>
-     </nav>:<nav />}
-     <div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity,zIndex : s.chatZindex}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray.map(this.chatArray)}</ul></div>
+     </nav>: null}
+     {s.mapZindex != -1  ?<div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray.map(this.chatArray)}</ul></div> : null}
      {s.menuDisplay ? <div id="menu" >
         <div id="left" className="col xx12 s3 xx-np xx-ng" onTouchMove={this.menuLeftTouchMove} >
           <ul style={{WebkitTransform : "translateX("+s.menuLeftBoxWheel+"px)",msTransform : "translateX("+s.menuLeftBoxWheel+"px)",transform : "translateX("+s.menuLeftBoxWheel+"px)" }}>
@@ -834,13 +833,19 @@ menuRightWheel : function(e){
         </div>
         <div id="right" className="col xx12 s9 xx-np xx-ng" ref="right" onTouchMove={this.menuRightTouchMove}><div id="rightBox" onWheel={this.menuRightWheel} ref="rightBox" style={{WebkitTransform : "translateY("+s.menuRightBoxWheel+"px)",msTransform : "translateY("+s.menuRightBoxWheel+"px)",transform : "translateY("+s.menuRightBoxWheel+"px)" }}>{init.menuText[s.menuIndex]}</div></div>
      </div> : <div />}
-     <Load style={load} />
-     
-     <img id="pimg" src={init.object.sprites}/>
+     {s.loadProcess ? <Load /> : null }
+     {s.mapZindex == -1 ? <Img /> : null }
      </div>
    ) 
   }
 });
+var Img = React.createClass({
+  render : function(){
+    return(
+      <img id="pimg" src={init.object.sprites} />
+    )
+  }
+})
 var Loadbox = React.createClass({
   render : function(){
     return(
@@ -873,6 +878,7 @@ render: function () {
     }
 });
 var Load = React.createClass({
+
   getDefaultProps: function() {
     var x = [];
     for(var i=0; i < 12;i++){
@@ -883,10 +889,10 @@ var Load = React.createClass({
     }
   },
   render : function(){
+    
     return(
     <div  id="load" style={this.props.style} >{this.props.load}</div>
   )
   }
 });
-
-React.render(<Root  />,document.body)
+var rt = React.render(<Root  />,document.body)

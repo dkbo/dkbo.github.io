@@ -31,14 +31,14 @@ init.menuText =
       <h2>遊戲目的</h2>
       <p>拋棄傳統簡易履歷表，以遊戲方式來了解作者履歷、構思、創作。</p>
       <h2>遊戲內容</h2>
-      <p>作者會在空餘的時間，慢慢地加進一些資訊。</p>
+      <p>作者會在空餘的時間，慢慢地加進一些資訊及修改程式。</p>
     </aircle>
     ,
     <aircle className="clearfix">
       <h2>作者</h2>
       <div className="row xx-ng">
-        <figrue className="col xx12 x6 s3 l2 xx-np"><img src="http://1.gravatar.com/avatar/d2cddbe46278bf25a41b9479af20cf8d?s=250&d=wavatar&r=g" width="100%"/></figrue>
-        <div className="col xx12 x6 s9 l10 xx-np"><p className="s-p">前端攻城師，做出的網頁以兼容電腦、手機、平板等裝置為優先。會簡單的後端語言連接資料庫能做出簡易的會員系統、訂單管理系統、物流管理系統等等。正朝著網頁美感路線努力中。</p></div>
+        <figrue className="col xx12 x6 x6o3 s3o0 s3 l2 xx-np"><img src="http://1.gravatar.com/avatar/d2cddbe46278bf25a41b9479af20cf8d?s=250&d=wavatar&r=g" width="100%"/></figrue>
+        <div className="col xx12  s9 l10 xx-np"><p className="s-p">前端攻城師，做出的網頁以兼容電腦、手機、平板等裝置為優先。會簡單的後端語言連接資料庫能做出簡易的會員系統、訂單管理系統、物流管理系統等等。正朝著網頁美感路線努力中。</p></div>
       </div>
       <h2>作者自介</h2>
       <p>作者本名叫 盧宏寶 27歲，在家排名老二，畢業於高雄市正修科技大學電機工程系，在網路世界中暱稱為 DKBO，目前已婚有一子。<br /><br />
