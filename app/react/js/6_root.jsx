@@ -547,8 +547,8 @@ handleTouchStart : function(e){
 },
 //返回觸碰移動時 XY 座標
 handleTouchMove : function(e){
+  e.preventDefault();
   if(this.state.mapFade != 0 && !this.state.menuDisplay){
-    e.preventDefault();
   var pos = this.getTouchPos(e);
   if(pos.x-init.startTouch.x < -25)
     init.control.left = true
@@ -588,7 +588,7 @@ handleTouchEnd : function(e){
   init.map.down = false;
 },
 menuRightTouchMove : function(e){
-    e.preventDefault()
+    e.preventDefault();
     var pos = this.getTouchPos(e);
     var rw = React.findDOMNode(this.refs.right).clientHeight;
     var rbw = React.findDOMNode(this.refs.rightBox).clientHeight;
