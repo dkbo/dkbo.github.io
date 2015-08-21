@@ -851,7 +851,7 @@ componentDidMount: function () {
       this.addDisqus();
 },
 componentWillUnmount: function () {
-     
+     this.removeDisqus();
 },
 addDisqus: function () {
       $("body").append("<script id='disqus' type='text/javascript' src='//dkbo-rpg.disqus.com/embed.js' async='true'></script>");
