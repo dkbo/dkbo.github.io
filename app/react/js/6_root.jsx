@@ -538,6 +538,7 @@ getTouchPos : function(e){
 },
 //返回觸碰時 XY 座標
 handleTouchStart : function(e){
+
   if(this.state.mapFade != 0){ 
   var pos = this.getTouchPos(e);
   init.startTouch.x = pos.x;
@@ -546,7 +547,6 @@ handleTouchStart : function(e){
 },
 //返回觸碰移動時 XY 座標
 handleTouchMove : function(e){
-  
   if(this.state.mapFade != 0 && !this.state.menuDisplay){
     e.preventDefault();
   var pos = this.getTouchPos(e);
@@ -588,6 +588,7 @@ handleTouchEnd : function(e){
   init.map.down = false;
 },
 menuRightTouchMove : function(e){
+    e.preventDefault()
     var pos = this.getTouchPos(e);
     var rw = React.findDOMNode(this.refs.right).clientHeight;
     var rbw = React.findDOMNode(this.refs.rightBox).clientHeight;
@@ -599,6 +600,7 @@ menuRightTouchMove : function(e){
 },
 menuLeftTouchMove : function(e){
     if(e.view.innerWidth < 768 ){
+    e.preventDefault()
     var pos = this.getTouchPos(e);
     var x = pos.x-init.startTouch.x;
     init.startTouch = pos;
