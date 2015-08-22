@@ -4,8 +4,8 @@ var init = {
   object:{
     sizeX : 32, // sprites width size 
     sizeY : 32, // sprites height size
-    sprites :"images/rpg_maker_xp.png",
-    sprites2 :"images/rpg_maker_xp2.png"
+    sprites :"http://dkbo.github.io/images/rpg_maker_xp.png",
+    sprites2 :"http://dkbo.github.io/images/rpg_maker_xp2.png"
   },
   man : {
     sprite : "url('images/man.png')",
