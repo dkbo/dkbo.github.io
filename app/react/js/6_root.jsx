@@ -836,7 +836,7 @@ menuRightWheel : function(e){
         <div id="right" className="col xx12 s9 xx-np xx-ng" ref="right" onTouchMove={this.menuRightTouchMove}><div id="rightBox" onWheel={this.menuRightWheel} ref="rightBox" style={{WebkitTransform : "translateY("+s.menuRightBoxWheel+"px)",msTransform : "translateY("+s.menuRightBoxWheel+"px)",transform : "translateY("+s.menuRightBoxWheel+"px)" }}>{init.menuText[s.menuIndex]}</div></div>
      </div> : <div />}
      {s.loadProcess ? <Load /> : null }
-     {s.mapZindex == -1 ? <Img /> : null }
+      <Img />
      </div>
    ) 
   }
