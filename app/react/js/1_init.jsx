@@ -15,7 +15,7 @@ var init = {
     speak : "url('images/speak.png'),pointer",
     sizeX: 32, //人物寬度度
     sizeY: 48, //人物長度
-    moveSetInterVal: 1000/120,  // FPS
+    moveSetInterVal: 1000/60,  // FPS
     moveSpeed: 4, // 移動速度
     initPos : {
       x : 1000, //  % moveSpeed = 0
