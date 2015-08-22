@@ -25,6 +25,18 @@ init.maps =[
 // Map 2
   {
     bg : init.map.bg,
+    col : 1440,
+    row : 960,
+  in :[{
+      x : 48,
+      y : 896
+    },{
+      x : 720,
+      y : 96
+    }]
+  },
+  {
+    bg : init.map.bg,
     col : 960,
     row : 640,
   in :[{

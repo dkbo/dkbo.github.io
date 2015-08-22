@@ -4,7 +4,8 @@ var init = {
   object:{
     sizeX : 32, // sprites width size 
     sizeY : 32, // sprites height size
-    sprites :"images/rpg_maker_xp.png"
+    sprites :"images/rpg_maker_xp.png",
+    sprites2 :"images/rpg_maker_xp2.png"
   },
   man : {
     sprite : "url('images/man.png')",
@@ -14,7 +15,7 @@ var init = {
     speak : "url('images/speak.png'),pointer",
     sizeX: 32, //人物寬度度
     sizeY: 48, //人物長度
-    moveSetInterVal: 1000/60,  // FPS
+    moveSetInterVal: 1000/120,  // FPS
     moveSpeed: 4, // 移動速度
     initPos : {
       x : 1000, //  % moveSpeed = 0

@@ -844,7 +844,10 @@ menuRightWheel : function(e){
 var Img = React.createClass({
   render : function(){
     return(
-      <img id="pimg" src={init.object.sprites} />
+      <div>
+        <img id="pimg" src={init.object.sprites} />
+        <img id="pimg" src={init.object.sprites2} />
+      </div>
     )
   }
 })
