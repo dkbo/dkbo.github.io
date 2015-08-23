@@ -17164,7 +17164,7 @@ init.objects=[{
             "mx": 312,
             "my": 192,
             "mw": 52,
-            "mh": 1,
+            "mh": 1
       },
       {
             "name": "鋼琴",
@@ -17189,7 +17189,7 @@ init.objects=[{
             "mx": 128,
             "my": 320,
             "mw": 96,
-            "mh": 32,
+            "mh": 32
       },
       {
             "name": "桌",
@@ -17214,7 +17214,7 @@ init.objects=[{
             "mx": 448,
             "my": 320,
             "mw": 96,
-            "mh": 32,
+            "mh": 32
       },
       {
             "name": "桌",
@@ -17288,7 +17288,7 @@ init.objects=[{
             "mx": 32,
             "my": 96,
             "mw": 32,
-            "mh": 1,
+            "mh": 1
       },
       {
             "name": "雕像",
@@ -17302,7 +17302,111 @@ init.objects=[{
             "mx": 640,
             "my": 96,
             "mw": 32,
-            "mh": 1,
+            "mh": 1
+      },
+      {
+            "name": "壁畫",
+            "left": 192,
+            "top": 32,
+            "width": 64,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 128,
+            "sourceY": 5504
+      },
+      {
+            "name": "壁畫",
+            "left": 416,
+            "top": 32,
+            "width": 64,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 192,
+            "sourceY": 5504
+      },
+      {
+            "name": "食物",
+            "left": 128,
+            "top": 288,
+            "width": 64,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 64,
+            "sourceY": 3296,
+            "zIndex": 2
+      },
+      {
+            "name": "食物",
+            "left": 128,
+            "top": 320,
+            "width": 64,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 64,
+            "sourceY": 3328
+      },
+      {
+            "name": "食物",
+            "left": 480,
+            "top": 288,
+            "width": 64,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 64,
+            "sourceY": 3296,
+            "zIndex": 2
+      },
+      {
+            "name": "食物",
+            "left": 480,
+            "top": 320,
+            "width": 64,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 64,
+            "sourceY": 3328
+      },
+      {
+            "name": "食物",
+            "left": 192,
+            "top": 320,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 224,
+            "sourceY": 2112
+      },
+      {
+            "name": "食物",
+            "left": 448,
+            "top": 320,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 224,
+            "sourceY": 2112
+      },
+      {
+            "name": "食物",
+            "left": 448,
+            "top": 288,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 224,
+            "sourceY": 2176,
+            "zIndex": 2
+      },
+      {
+            "name": "食物",
+            "left": 192,
+            "top": 288,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 224,
+            "sourceY": 2176,
+            "zIndex": 2
       }
 ]},
 {
