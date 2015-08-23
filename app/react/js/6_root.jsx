@@ -849,6 +849,7 @@ var Img = React.createClass({
       <div>
         <img id="pimg" src={init.object.sprites} />
         <img id="pimg" src={init.object.sprites2} />
+        <img id="pimg"  src="http://dkbo.github.io/images/man.png" />
       </div>
     )
   }

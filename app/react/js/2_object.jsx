@@ -5656,9 +5656,9 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 32,
-            "my":32,
-            "mw":1408,
-            "mh":32 
+            "my": 32,
+            "mw": 1408,
+            "mh": 32
       },
       {
             "name": "天花板",
@@ -5671,9 +5671,9 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 32,
-            "my":544,
-            "mw":256,
-            "mh":32 
+            "my": 544,
+            "mw": 256,
+            "mh": 32
       },
       {
             "name": "天花板",
@@ -5686,9 +5686,9 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 352,
-            "my":544,
-            "mw":352,
-            "mh":32 
+            "my": 544,
+            "mw": 352,
+            "mh": 32
       },
       {
             "name": "天花板",
@@ -5701,9 +5701,9 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 144,
-            "my":736,
-            "mw":1296,
-            "mh":32 
+            "my": 736,
+            "mw": 1296,
+            "mh": 32
       },
       {
             "name": "天花板",
@@ -5716,9 +5716,9 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 32,
-            "my":0,
-            "mw":0,
-            "mh":928 
+            "my": 0,
+            "mw": 0,
+            "mh": 928
       },
       {
             "name": "天花板",
@@ -5731,9 +5731,9 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 144,
-            "my":736,
-            "mw":32,
-            "mh":256 
+            "my": 736,
+            "mw": 32,
+            "mh": 256
       },
       {
             "name": "天花板",
@@ -5746,9 +5746,9 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 768,
-            "my":352,
-            "mw":288,
-            "mh":32 
+            "my": 352,
+            "mw": 288,
+            "mh": 32
       },
       {
             "name": "天花板",
@@ -5761,9 +5761,9 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 1120,
-            "my":352,
-            "mw":288,
-            "mh":32 
+            "my": 352,
+            "mw": 288,
+            "mh": 32
       },
       {
             "name": "天花板",
@@ -5776,9 +5776,9 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 768,
-            "my":0,
-            "mw":32,
-            "mh":352 
+            "my": 0,
+            "mw": 32,
+            "mh": 352
       },
       {
             "name": "天花板",
@@ -5791,9 +5791,9 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 672,
-            "my":0,
-            "mw":32,
-            "mh":512 
+            "my": 0,
+            "mw": 32,
+            "mh": 512
       },
       {
             "name": "天花板",
@@ -5806,9 +5806,9 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 1408,
-            "my":0,
-            "mw":32,
-            "mh":736 
+            "my": 0,
+            "mw": 32,
+            "mh": 736
       },
       {
             "name": "天花板",
@@ -5821,11 +5821,11 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 32,
-            "my":960,
-            "mw":96,
-            "mh":0 ,
-            "cm":0,
-            "cmm":1
+            "my": 960,
+            "mw": 96,
+            "mh": 0,
+            "cm": 0,
+            "cmm": 1
       },
       {
             "name": "天花板",
@@ -5838,11 +5838,11 @@ init.objects=[{
             "sourceY": 3424,
             "zIndex": 2,
             "mx": 704,
-            "my":32,
-            "mw":64,
-            "mh":32 ,
-            "cm":3,
-            "cmm":0
+            "my": 32,
+            "mw": 64,
+            "mh": 32,
+            "cm": 3,
+            "cmm": 0
       },
       {
             "name": "天花板",
@@ -17070,6 +17070,239 @@ init.objects=[{
             "background": "http://dkbo.github.io/images/man.png",
             "sourceX": 0,
             "sourceY": 24
+      },
+      {
+            "name": "燈",
+            "left": 128,
+            "top": 544,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 160,
+            "sourceY": 4064
+      },
+      {
+            "name": "燈",
+            "left": 512,
+            "top": 544,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 160,
+            "sourceY": 4064
+      },
+      {
+            "name": "燈",
+            "left": 896,
+            "top": 352,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 160,
+            "sourceY": 4064
+      },
+      {
+            "name": "燈",
+            "left": 1248,
+            "top": 352,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 160,
+            "sourceY": 4064
+      },
+      {
+            "name": "燈",
+            "left": 128,
+            "top": 32,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 160,
+            "sourceY": 4064
+      },
+      {
+            "name": "燈",
+            "left": 512,
+            "top": 32,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 160,
+            "sourceY": 4064
+      },
+      {
+            "name": "燈",
+            "left": 896,
+            "top": 32,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 160,
+            "sourceY": 4064
+      },
+      {
+            "name": "燈",
+            "left": 1248,
+            "top": 32,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 160,
+            "sourceY": 4064
+      },
+      {
+            "name": "鋼琴",
+            "left": 288,
+            "top": 160,
+            "width": 96,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 0,
+            "sourceY": 4000,
+            "zIndex": 2,
+            "mx": 312,
+            "my": 192,
+            "mw": 52,
+            "mh": 1,
+      },
+      {
+            "name": "鋼琴",
+            "left": 288,
+            "top": 192,
+            "width": 96,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+            "sourceX": 0,
+            "sourceY": 4032
+      },
+      {
+            "name": "桌",
+            "left": 128,
+            "top": 288,
+            "width": 96,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp.png",
+            "sourceX": 0,
+            "sourceY": 6784,
+            "zIndex": 2,
+            "mx": 128,
+            "my": 320,
+            "mw": 96,
+            "mh": 32,
+      },
+      {
+            "name": "桌",
+            "left": 448,
+            "top": 288,
+            "width": 96,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp.png",
+            "sourceX": 0,
+            "sourceY": 6784,
+            "zIndex": 2
+      },
+      {
+            "name": "桌",
+            "left": 128,
+            "top": 320,
+            "width": 96,
+            "height": 64,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp.png",
+            "sourceX": 0,
+            "sourceY": 6816,
+            "mx": 448,
+            "my": 320,
+            "mw": 96,
+            "mh": 32,
+      },
+      {
+            "name": "桌",
+            "left": 448,
+            "top": 320,
+            "width": 96,
+            "height": 64,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp.png",
+            "sourceX": 0,
+            "sourceY": 6816
+      },
+      {
+            "name": "椅子",
+            "left": 320,
+            "top": 224,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp.png",
+            "sourceX": 128,
+            "sourceY": 6784
+      },
+      {
+            "name": "椅子",
+            "left": 96,
+            "top": 320,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp.png",
+            "sourceX": 128,
+            "sourceY": 6784
+      },
+      {
+            "name": "椅子",
+            "left": 224,
+            "top": 320,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp.png",
+            "sourceX": 128,
+            "sourceY": 6784
+      },
+      {
+            "name": "椅子",
+            "left": 416,
+            "top": 320,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp.png",
+            "sourceX": 128,
+            "sourceY": 6784
+      },
+      {
+            "name": "椅子",
+            "left": 544,
+            "top": 320,
+            "width": 32,
+            "height": 32,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp.png",
+            "sourceX": 128,
+            "sourceY": 6784
+      },
+      {
+            "name": "雕像",
+            "left": 32,
+            "top": 64,
+            "width": 32,
+            "height": 64,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp.png",
+            "sourceX": 160,
+            "sourceY": 6976,
+            "mx": 32,
+            "my": 96,
+            "mw": 32,
+            "mh": 1,
+      },
+      {
+            "name": "雕像",
+            "left": 640,
+            "top": 64,
+            "width": 32,
+            "height": 64,
+            "background": "http://dkbo.github.io/images/rpg_maker_xp.png",
+            "sourceX": 160,
+            "sourceY": 6976,
+            "mx": 640,
+            "my": 96,
+            "mw": 32,
+            "mh": 1,
       }
 ]},
 {
