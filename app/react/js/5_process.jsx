@@ -12,15 +12,15 @@ init.secondCanvas[j]=[];
 for(var i =0;i<init.objects[j].styles.length;i++){
 var obj = init.objects[j].styles[i];  
 var y={
-    left :  obj.left,
-    top : obj.top,
-    width : obj.width,
-    height : obj.height,
-    background : obj.background,
-    sourceX: obj.sourceX,
-    sourceY: obj.sourceY,
+    left :  obj.l,
+    top : obj.t,
+    width : obj.w,
+    height : obj.h,
+    background : obj.b,
+    sourceX: obj.x,
+    sourceY: obj.y,
    }
-   if(obj.zIndex == 2){
+   if(obj.z == 2){
 init.firstCanvas[j][yy]=y;
     yy+=1
   }
@@ -38,22 +38,22 @@ init.move[j]=[];
 for(var i =0;i<init.objects[j].isMove.length;i++){
 var obj = init.objects[j].isMove[i];
   var x={
-    sx :  obj.mx,
-    sy : obj.my,
-    ex : obj.mw + obj.mx,
-    ey : obj.mh + obj.my,
+    sx :  obj.x,
+    sy : obj.y,
+    ex : obj.w + obj.x,
+    ey : obj.h + obj.y,
     cm : obj.cm,
     cmm : obj.cmm
    }
   init.move[j][xx]=x;
     xx+=1;
-  if(obj.eventID>=0){
+  if(obj.e>=0){
     var e={
-    sx :  obj.mx,
-    sy : obj.my,
-    ex : obj.mw + obj.mx,
-    ey : obj.mh + obj.my,
-    ev : obj.eventID
+    sx :  obj.x,
+    sy : obj.y,
+    ex : obj.w + obj.x,
+    ey : obj.h + obj.y,
+    ev : obj.e
    }
     init.events[j][ee]=e;
     ee+=1
