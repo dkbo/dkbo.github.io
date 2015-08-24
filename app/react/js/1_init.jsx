@@ -39,5 +39,6 @@ var init = {
     x : 0,
     y : 0
  },
- menuNav: false
+ menuNav: false,
+ objects : []
 }
