@@ -3343,7 +3343,8 @@ init.objects=[
                   "mx": 980,
                   "my": 512,
                   "mw": 64,
-                  "mh": 0
+                  "mh": 0,
+                  "eventID" : 2
             },
             {
                   "name": "tree1",
@@ -3422,7 +3423,8 @@ init.objects=[
                   "mx": 578,
                   "my": 760,
                   "mw": 32,
-                  "mh": 8
+                  "mh": 8,
+                  "eventID" : 0
             },
             {
                   "name": "tree2",
@@ -3471,7 +3473,8 @@ init.objects=[
                   "mx": 810,
                   "my": 522,
                   "mw": 32,
-                  "mh": 0
+                  "mh": 0,
+                  "eventID" : 1
             },
             {
                   "name": "水池",
@@ -5567,7 +5570,8 @@ init.objects=[
                   "mx": 480,
                   "my": 352,
                   "mw": 32,
-                  "mh": 0
+                  "mh": 0,
+                  "eventID": 0
             },
             {
                   "name": "牆",
@@ -17469,7 +17473,8 @@ init.objects=[
                   "mx": 810,
                   "my": 522,
                   "mw": 32,
-                  "mh": 0
+                  "mh": 0,
+                  "eventID" : 0
             },
             {
                   "name": "鋼琴",
