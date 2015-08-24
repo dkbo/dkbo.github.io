@@ -11680,6 +11680,182 @@ init.objects[2] =
                   "x": 224,
                   "y": 2176,
                   "z": 2
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 800,
+                  "t": 64,
+                  "w": 128,
+                  "h": 64,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5344
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 928,
+                  "t": 64,
+                  "w": 128,
+                  "h": 64,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5408
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 1056,
+                  "t": 64,
+                  "w": 128,
+                  "h": 64,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5472
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 1184,
+                  "t": 64,
+                  "w": 128,
+                  "h": 64,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5600
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 1312,
+                  "t": 64,
+                  "w": 96,
+                  "h": 64,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 128,
+                  "y": 5024
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 800,
+                  "t": 160,
+                  "w": 128,
+                  "h": 32,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5472,
+                  "z": 2
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 800,
+                  "t": 192,
+                  "w": 128,
+                  "h": 32,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5504
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 992,
+                  "t": 160,
+                  "w": 128,
+                  "h": 32,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5344,
+                  "z": 2
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 992,
+                  "t": 192,
+                  "w": 128,
+                  "h": 32,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5376
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 1184,
+                  "t": 160,
+                  "w": 128,
+                  "h": 32,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5408,
+                  "z": 2
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 1184,
+                  "t": 192,
+                  "w": 128,
+                  "h": 32,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5440
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 1184,
+                  "t": 256,
+                  "w": 128,
+                  "h": 32,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5344,
+                  "z": 2
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 1184,
+                  "t": 288,
+                  "w": 128,
+                  "h": 32,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5376
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 800,
+                  "t": 256,
+                  "w": 128,
+                  "h": 32,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5408,
+                  "z": 2
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 800,
+                  "t": 288,
+                  "w": 128,
+                  "h": 32,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5440
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 992,
+                  "t": 256,
+                  "w": 128,
+                  "h": 32,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5472,
+                  "z": 2
+            },
+            {
+                  "n": "櫥櫃",
+                  "l": 992,
+                  "t": 288,
+                  "w": 128,
+                  "h": 32,
+                  "b": "http://dkbo.github.io/images/rpg_maker_xp2.png",
+                  "x": 0,
+                  "y": 5504
             }
       ],
       "isMove": [
@@ -11832,6 +12008,69 @@ init.objects[2] =
                   "w": 26,
                   "h": 4,
                   "e": 0
+            },
+            {
+                  "n": "牆壁",
+                  "x": 795,
+                  "y": 60,
+                  "w": 6,
+                  "h": 257
+            },
+            {
+                  "n": "牆壁",
+                  "x": 1408,
+                  "y": 60,
+                  "w": 2,
+                  "h": 261
+            },
+            {
+                  "n": "櫥櫃",
+                  "x": 801,
+                  "y": 93,
+                  "w": 609,
+                  "h": 2
+            },
+            {
+                  "n": "櫥櫃",
+                  "x": 801,
+                  "y": 189,
+                  "w": 128,
+                  "h": 6
+            },
+            {
+                  "n": "櫥櫃",
+                  "x": 995,
+                  "y": 190,
+                  "w": 124,
+                  "h": 4
+            },
+            {
+                  "n": "櫥櫃",
+                  "x": 1186,
+                  "y": 190,
+                  "w": 125,
+                  "h": 1
+            },
+            {
+                  "n": "櫥櫃",
+                  "x": 801,
+                  "y": 288,
+                  "w": 130,
+                  "h": 1
+            },
+            {
+                  "n": "櫥櫃",
+                  "x": 996,
+                  "y": 286,
+                  "w": 125,
+                  "h": 4
+            },
+            {
+                  "n": "櫥櫃",
+                  "x": 1183,
+                  "y": 287,
+                  "w": 132,
+                  "h": 1
             }
       ]
 }
