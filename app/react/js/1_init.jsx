@@ -4,6 +4,8 @@ var init = {
   object:{
     sizeX : 32, // sprites width size 
     sizeY : 32, // sprites height size
+    sprites :"http://dkbo.github.io/images/rpg_maker_xp.png",
+    sprites2 :"http://dkbo.github.io/images/rpg_maker_xp2.png"
   },
   man : {
     sprite : "url('images/man.png')",
@@ -38,12 +40,6 @@ var init = {
     y : 0
  },
  menuNav: false,
- preImg : [
-  "images/rpg_maker_xp.png",
-  "images/rpg_maker_xp2.png",
-  "images/man.png"
- ],
- preNewImg:[],
  objects : []
 }
     // "n": 物件名
