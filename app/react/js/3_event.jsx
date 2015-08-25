@@ -25,12 +25,12 @@ init.event=[
                              id : 0,
                              title : "世界形成之初",
                              text : [ 
-                                      "此石碑記載著這個世界的創立因素，上面留有密密麻麻的文字....","世界形成之初，有著 HTML 、 CSS 、 JavaScrit",
-                                      "ReactJs、Jquery 是 JavaScirpt 的兒子，祂們能把世界毀滅亦可重生。",
-                                      "Sass 是 Css 的女兒，在這個世界中，任何事情都逃不過牠的法眼。",
+                                      "此石碑記載著這個世界的創立因素，上面留有密密麻麻的文字....","世界形成之初，有著 HTML 、 CSS 、 JavaScript",
+                                      "ReactJs、jQuery 是 JavaScirpt 的兒子，祂們能把世界毀滅亦可重生。",
+                                      "Sass 是 CSS 的女兒，在這個世界中，任何事情都逃不過牠的法眼。",
                                       "而 HTML 則是這世界的別名。",
-                                      "在一次的 Gulp 協議中，JavaScript 及 Css 達成共識，決定讓自己的孩子在 HTML 中歷練。",
-                                      "於是 ReactJs、Jquery、Sass 攜手打造了這個世界。"
+                                      "在一次的 Gulp 協議中，JavaScript 及 CSS 達成共識，決定讓自己的孩子在 HTML 中歷練。",
+                                      "於是 ReactJs、jQuery、Sass 攜手打造了這個世界。"
                                     ]
                            },
                            { 
