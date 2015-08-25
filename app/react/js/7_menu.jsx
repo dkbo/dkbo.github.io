@@ -1,28 +1,42 @@
 init.menuTitle =[ 
     {
       id : 0,
-      title: "說明"
+      title: "實作紀錄"
     },
     {
       id : 1,
-      title :"關於作者"
+      title: "說明"
     },
     {
       id : 2,
-      title :"操作"
+      title :"關於作者"
     },
     {
       id : 3,
+      title :"操作"
+    },
+    {
+      id : 4,
       title :"素材來源"
     }
     ,
     {
-      id : 4,
+      id : 5,
       title :"Disqus留言"
     }
   ];
 init.menuText =
   [
+    <aircle className="clearfix">
+      <h2>紀錄條</h2>
+      <ul>
+        <li>
+          <date>2015/08/25</date>
+          <p>預載圖片的問題瞎忙了很多時間，最後還是放在HTML裡吧!</p>
+        </li>
+      </ul>
+    </aircle>
+    ,
     <aircle className="clearfix">
       <h2>簡介</h2>
       <p>此遊戲履歷想法來源在於 <mark>RPG 遊戲製作大師</mark>，以貼近於傳統紅白機的　UI/UX　，來架設在網頁上，另個原因則在於練習　<a href="http://facebook.github.io/react/" target="_blank" >ReactJS</a> ，以　VDOM　操作的方式 ，開發這可擴展的遊戲網頁。</p>

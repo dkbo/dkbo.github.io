@@ -502,18 +502,7 @@ chatSelectMove : function(x){
 }
 },
 handleLoad : function(){
-  var l = init.preImg.length;
-  var img;
-  for(var i = 0;i < init.preImg.length ;i++){
-    img = new Image();
-      img.onload = function(){
-      --l;
-      console.log(l)
-      if (l <= 0)
-        this.backIndex();
-  }.bind(this)
-  img.src = init.preImg[i];
-  }
+  this.backIndex();
 },
 //所有DOM 載入前 
 componentWillMount : function(){
@@ -815,7 +804,7 @@ menuRightWheel : function(e){
     var s = this.state;
     var m = init.maps;
    return (
-     <div onLoad={this.preImg} id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
+     <div  id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
      {s.mapZindex == -1  ?
       <div id="index" style={{opacity : s.indexShow}}>
         <div id="indexBox"  style={{opacity : s.indexBoxShow}}>
@@ -847,8 +836,22 @@ menuRightWheel : function(e){
         <div id="right" className="col xx12 s9 xx-np xx-ng" ref="right" onTouchMove={this.menuRightTouchMove}><div id="rightBox" onWheel={this.menuRightWheel} ref="rightBox" style={{WebkitTransform : "translateY("+s.menuRightBoxWheel+"px)",msTransform : "translateY("+s.menuRightBoxWheel+"px)",transform : "translateY("+s.menuRightBoxWheel+"px)" }}>{init.menuText[s.menuIndex]}</div></div>
      </div> : <div />}
      {s.loadProcess ? <Load /> : null }
+     <PreLoadImg />
      </div>
+     
    ) 
+  }
+});
+var PreLoadImg = React.createClass({
+  handleLoadImg : function(Img){
+  return <img src={Img} />;
+},
+  render : function(){
+    return (
+      <div style={{display: "none"}}>
+        {init.preImg.map(this.handleLoadImg)}
+      </div>
+  )
   }
 });
 var Loadbox = React.createClass({
