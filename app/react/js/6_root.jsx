@@ -447,7 +447,6 @@ handleMap : function(x,y){
   this.handleResize();
   setTimeout(function(){this.handleFade(1)
     setTimeout(function(){this.handleAnimateSpeed("0s")}.bind(this),100);
-
   }.bind(this), 100);
  }.bind(this), 100);
   
@@ -463,6 +462,7 @@ handleAnimateSpeed : function (x){
 },
 //處理進場畫面至 Map 畫面事件
 handleStart : function(e){
+    this.drawObject();
     this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0});
     this.handleAnimateSpeed(".1s");
     this.handleFade(0);
@@ -502,11 +502,21 @@ chatSelectMove : function(x){
 }
 },
 handleLoad : function(){
-  this.backIndex();
-  this.drawObject();
+  var l = init.preImg.length;
+  var img;
+  for(var i = 0;i < init.preImg.length ;i++){
+    img = new Image();
+      img.onload = function(){
+      l--;
+      if (l <= 0)
+        this.backIndex();
+  }.bind(this)
+  img.src = init.preImg[i];
+  }
 },
 //所有DOM 載入前 
 componentWillMount : function(){
+    this.handleLoad();
 },
 //所有DOM 已經載入時
 componentDidMount: function () {
@@ -516,7 +526,7 @@ componentDidMount: function () {
     init.context = canvas.getContext('2d');
     init.fcontext = firstCanvas.getContext('2d');
     init.scontext = secondCanvas.getContext('2d');
-    $(window).on('load',this.handleLoad);
+    
     $(window).on('resize',this.handleResize);
     $(window).on('keydown',this.handleKeyDown);
     $(window).on('keyup',this.handleKeyUp);
@@ -791,7 +801,6 @@ chatSelect : function(x){
  this.setState({chatSelectIndex : x});
 },
 menuRightWheel : function(e){
-  console.log(e)
   var scrollSpeed = 32;
   var delta = e.deltaY  > 0  ? e.deltaY : -e.deltaY;
   var rw = React.findDOMNode(this.refs.right).clientHeight;
@@ -806,7 +815,7 @@ menuRightWheel : function(e){
     var s = this.state;
     var m = init.maps;
    return (
-     <div id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
+     <div onLoad={this.preImg} id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
      {s.mapZindex == -1  ?
       <div id="index" style={{opacity : s.indexShow}}>
         <div id="indexBox"  style={{opacity : s.indexBoxShow}}>
@@ -838,22 +847,10 @@ menuRightWheel : function(e){
         <div id="right" className="col xx12 s9 xx-np xx-ng" ref="right" onTouchMove={this.menuRightTouchMove}><div id="rightBox" onWheel={this.menuRightWheel} ref="rightBox" style={{WebkitTransform : "translateY("+s.menuRightBoxWheel+"px)",msTransform : "translateY("+s.menuRightBoxWheel+"px)",transform : "translateY("+s.menuRightBoxWheel+"px)" }}>{init.menuText[s.menuIndex]}</div></div>
      </div> : <div />}
      {s.loadProcess ? <Load /> : null }
-      <Img />
      </div>
    ) 
   }
 });
-var Img = React.createClass({
-  render : function(){
-    return(
-      <div>
-        <img id="pimg" src={init.object.sprites} />
-        <img id="pimg" src={init.object.sprites2} />
-        <img id="pimg"  src="http://dkbo.github.io/images/man.png" />
-      </div>
-    )
-  }
-})
 var Loadbox = React.createClass({
   render : function(){
     return(
