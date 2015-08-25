@@ -38,11 +38,7 @@ var init = {
     y : 0
  },
  menuNav: false,
- preImg : [
-  "http://dkbo.github.io/images/rpg_maker_xp.png",
-  "http://dkbo.github.io/images/rpg_maker_xp2.png",
-  "http://dkbo.github.io/images/man.png"
- ],
+ preImg : [],
  objects : []
 }
     // "n": 物件名

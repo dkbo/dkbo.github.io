@@ -507,7 +507,8 @@ handleLoad : function(){
   for(var i = 0;i < init.preImg.length ;i++){
     img = new Image();
       img.onload = function(){
-      l--;
+      --l;
+      console.log(l)
       if (l <= 0)
         this.backIndex();
   }.bind(this)
@@ -516,7 +517,6 @@ handleLoad : function(){
 },
 //所有DOM 載入前 
 componentWillMount : function(){
-    this.handleLoad();
 },
 //所有DOM 已經載入時
 componentDidMount: function () {
@@ -526,7 +526,7 @@ componentDidMount: function () {
     init.context = canvas.getContext('2d');
     init.fcontext = firstCanvas.getContext('2d');
     init.scontext = secondCanvas.getContext('2d');
-    
+    $(window).on('load',this.handleLoad);
     $(window).on('resize',this.handleResize);
     $(window).on('keydown',this.handleKeyDown);
     $(window).on('keyup',this.handleKeyUp);

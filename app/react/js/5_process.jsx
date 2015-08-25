@@ -11,6 +11,8 @@ init.secondCanvas[j]=[];
   var zz = 0;
 for(var i =0;i<init.objects[j].styles.length;i++){
 var obj = init.objects[j].styles[i];  
+var l = init.preImg.length;
+var c = false;
 var y={
     left :  obj.l,
     top : obj.t,
@@ -28,6 +30,12 @@ init.firstCanvas[j][yy]=y;
 init.secondCanvas[j][zz]=y;
   zz+=1
   }
+  for(var k=0;k<l;k++){
+    if(init.preImg[k] == obj.b)
+      c = true;
+  }
+  if(!c)
+      init.preImg.push(obj.b)
 }
 }
 for(var j =0;j <init.objects.length;j++){
