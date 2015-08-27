@@ -36,12 +36,12 @@ init.maps =[
     }]
   },
   {
-    bg : init.map.bg,
-    col : 960,
-    row : 640,
+    bg : 'black',
+    col : 1440,
+    row : 960,
   in :[{
-      x : 472,
-      y : 580
+      x : 672,
+      y : 160
     }]
   }
   ]
