@@ -1,5 +1,7 @@
 // 事件內容 Event Message
-init.event=[
+function event(){
+  return(
+          [
             // Map 0
             [
               { name : "稻草人",
@@ -60,4 +62,5 @@ init.event=[
                        ]
               }
             ]
-          ];
+          ])
+}

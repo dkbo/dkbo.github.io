@@ -1,5 +1,4 @@
 // init
-
 var init = {
   object:{
     sizeX : 32, // sprites width size 
@@ -33,6 +32,9 @@ var init = {
     right : false,
     down : false,
  },
+ maps: maps() ? maps() : null,
+ indexBox : indexBox() ? indexBox() : null,
+ event : event() ? event() : null,
  startTouch:{
     x : 0,
     y : 0

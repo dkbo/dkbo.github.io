@@ -95,17 +95,3 @@ init.menuText =
       <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
     </aircle>
   ];
-init.indexBox =[ 
-    {
-      id : 0,
-      title: "Start"
-    },
-    {
-      id : 1,
-      title :"Load"
-    },
-    {
-      id : 2,
-      title :"End"
-    }
-  ];

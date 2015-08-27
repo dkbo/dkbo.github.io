@@ -1,5 +1,4 @@
 // 根
-
 var Root = React.createClass({
     getDefaultProps: function() {
     return {
@@ -19,7 +18,6 @@ var Root = React.createClass({
       loadBoxShow : 0, //進場畫面載入選單透明度
       indexBox : 0,  //進場畫面選單位置
       map : 0, //場景圖及物件陣列
-      mapBg : init.map.bg, // 場景地圖 
       windowWidth: window.innerWidth, //視窗寬度
       windowHeight: window.innerHeight, //視窗高度
       gridX : false, // X 格線
@@ -903,4 +901,4 @@ var Load = React.createClass({
   )
   }
 });
-var rt = React.render(<Root  />,document.body)
+window.onload =  React.render(<Root  />,document.body)
