@@ -1,6 +1,18 @@
-init.objects[0] =
-{
-      "styles": [
+ {     
+      "map" : {
+            "index" : 0,
+    "bg" : "url('images/bg.jpg')",
+    "col" : 1920,
+    "row" : 1280,
+  "in" :[{
+      "x" : 472,
+      "y" : 544
+    },{
+      "x" : 1344,
+      "y" : 512
+    }]
+  },
+      "styles" : [
             {
                   "n": "largetree",
                   "l": 800,

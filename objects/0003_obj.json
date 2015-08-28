@@ -1,6 +1,15 @@
-init.objects[3] =
 {
-      "styles": [
+      "map" : {
+            "index" : 3,
+    "bg" : "black",
+    "col" : 1440,
+    "row" : 960,
+  "in" :[{
+      "x" : 672,
+      "y" : 160
+    }]
+  },
+      "styles" : [
             {
                   "n": "天花板",
                   "l": 0,

@@ -1,5 +1,14 @@
-init.objects[1] =
 {
+      "map" :{
+            "index" : 1,
+    "bg" : "url('images/bg.jpg')",
+    "col" : 960,
+    "row" : 640,
+  "in" :[{
+      "x" : 472,
+      "y" : 580
+    }]
+  },
       "styles": [
             {
                   "n": "man",

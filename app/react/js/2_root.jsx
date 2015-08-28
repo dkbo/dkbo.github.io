@@ -11,23 +11,27 @@ var Root = React.createClass({
     }
   },
    getInitialState : function(){
-     var pos = init.man.initPos;
     return {
       loadProcess : true,
       indexShow : 0,  //進場畫面透明度
       indexBoxShow : 0, //進場畫面選單透明度
       loadBoxShow : 0, //進場畫面載入選單透明度
       indexBox : 0,  //進場畫面選單位置
-      map : 0, //場景圖及物件陣列
-      mapBg : init.map.bg, // 場景地圖 
+      //場景圖及物件陣列
+      map : {
+              index : 0,
+              bg : null,
+              col : 0,
+              row : 0
+            },
       windowWidth: window.innerWidth, //視窗寬度
       windowHeight: window.innerHeight, //視窗高度
       gridX : false, // X 格線
       gridY : false, // Y 格線
-      x : pos.x, //人物 X 座標
-      y : pos.y, //人物 Y 座標 
-      left : pos.x-1, //人物 X 座標位移
-      top : pos.y-1, //人物 Y 座標位移
+      x : init.man.initPos.x, //人物 X 座標
+      y : init.man.initPos.y, //人物 Y 座標 
+      left : init.man.initPos.x-1, //人物 X 座標位移
+      top : init.man.initPos.y-1, //人物 Y 座標位移
       manMoveImg: 0,  //人物移動方向 
       manMoveAnimate: 0, //人物移動動作
       mapSizeX : 1, //地圖 X 大小
@@ -60,17 +64,16 @@ var Root = React.createClass({
   event : function(x){
     //判斷是否對話中
     if(this.state.messageId !=-1){
-
       //判斷對話計次有無小於對話最大計次
       if(this.state.messageMax > this.state.messageNum){
       var x = this.state.messageNum +1
-      this.setState({messageNum : x,message: <p>{init.event[this.state.map][this.state.messageId].text[x]}</p> });
+      this.setState({messageNum : x,message: <p>{init.event[this.state.map.index][this.state.messageId].text[x]}</p> });
       }
       else
         this.initEvent();
         }
     else{
-      this.setState({messageId : x ,chatOpacity : 1,message: <p>{init.event[this.state.map][x].text[0]}</p>,messageName:init.event[this.state.map][x].name,messageNum:0,messageMax:init.event[this.state.map][x].text.length-1});
+      this.setState({messageId : x ,chatOpacity : 1,message: <p>{init.event[this.state.map.index][x].text[0]}</p>,messageName:init.event[this.state.map.index][x].name,messageNum:0,messageMax:init.event[this.state.map.index][x].text.length-1});
     }
   },
   eventSelect : function(x){
@@ -79,17 +82,17 @@ var Root = React.createClass({
       //判斷對話計次有無小於對話最大計次
       if(this.state.messageMax > this.state.messageNum){
     this.setState({messageNum : this.state.messageNum+1})
-    this.setState({message:<p>{init.event[this.state.map][x].select[this.state.chatSelectIndex].text[this.state.messageNum]}</p>});    
+    this.setState({message:<p>{init.event[this.state.map.index][x].select[this.state.chatSelectIndex].text[this.state.messageNum]}</p>});    
       }
       else
         this.initEvent();
     }
     else{
       var array = [];
-      for(var i=0;i<init.event[this.state.map][x].select.length;i++){ 
-        array.push({id: i, title : init.event[this.state.map][x].select[i].title})
+      for(var i=0;i<init.event[this.state.map.index][x].select.length;i++){ 
+        array.push({id: i, title : init.event[this.state.map.index][x].select[i].title})
       }
-      this.setState({chatSelectIndex : 0 ,chatSelectArray : array,messageId : x ,chatOpacity : 1,messageName:init.event[this.state.map][x].name,message:''})
+      this.setState({chatSelectIndex : 0 ,chatSelectArray : array,messageId : x ,chatOpacity : 1,messageName:init.event[this.state.map.index][x].name,message:''})
     }
   },
   handleChat : function(e){
@@ -97,7 +100,7 @@ var Root = React.createClass({
   },
   handleEventSelect : function(i){
     if(this.state.messageNum == -1)
-        this.setState({chatSelectArray :[],message:<p>{init.event[this.state.map][this.state.messageId].select[i].text[0]}</p>,messageNum:0,messageMax:init.event[this.state.map][this.state.messageId].select[i].text.length-1}); 
+        this.setState({chatSelectArray :[],message:<p>{init.event[this.state.map.index][this.state.messageId].select[i].text[0]}</p>,messageNum:0,messageMax:init.event[this.state.map.index][this.state.messageId].select[i].text.length-1}); 
     else{      
       this.eventSelect(this.state.messageId)
     }
@@ -143,11 +146,11 @@ var Root = React.createClass({
   },
   // 視窗改變時，返回改變人物位置及地圖 X 座標位移點
   getResizeManPosX : function(){
-    if(window.innerWidth - init.maps[this.state.map].col < 0){
+    if(window.innerWidth - init.maps.col < 0){
     if(this.state.x > this.getMoveRDPoint(this.getWindowWidth())){
       var x = Math.floor(window.innerWidth/2 - this.state.x - init.man.sizeX/2);
-      if(window.innerWidth >  x + init.maps[this.state.map].col)
-        x =  window.innerWidth - init.maps[this.state.map].col;
+      if(window.innerWidth >  x + init.maps.col)
+        x =  window.innerWidth - init.maps.col;
       if(x % init.man.moveSpeed != 0)
         x -=  (x % init.man.moveSpeed)
         return x
@@ -156,17 +159,17 @@ var Root = React.createClass({
       return 0
       }
     else {
-      var x = (window.innerWidth - init.maps[this.state.map].col)/2 
+      var x = (window.innerWidth - init.maps.col)/2 
       return x
     }
   },
   // 視窗改變時，返回改變人物位置及地圖 Y 座標位移點
   getResizeManPosY : function(){
-    if(window.innerHeight - init.maps[this.state.map].row <0){
+    if(window.innerHeight - init.maps.row <0){
     if(this.state.y > this.getMoveRDPoint(this.getWindowHeight())){
       var  y = Math.floor(window.innerHeight/2 - this.state.y - init.man.sizeY/2);
-    if(window.innerHeight >  y + init.maps[this.state.map].row)
-        y =  window.innerHeight - init.maps[this.state.map].row;
+    if(window.innerHeight >  y + init.maps.row)
+        y =  window.innerHeight - init.maps.row;
       if(y % init.man.moveSpeed != 0)
         y = y - (y % init.man.moveSpeed)
       return y
@@ -175,14 +178,14 @@ var Root = React.createClass({
       return 0
       }
     else{
-      var x =(window.innerHeight - init.maps[this.state.map].row)/2;
+      var x =(window.innerHeight - init.maps.row)/2;
       return x
     }
   },
   // 判斷人物是否可移動或是更換場景地圖
- isMove: function(posX,posY){
+ isMove : function(posX,posY){
    this.initEvent();
-   var x = init.move[this.state.map] ?init.move[this.state.map] : 0
+   var x = init.move ?init.move : 0
    var ismove = true;
    for(var i = 0 ; i < x.length;i++){
      if((x[i].sx <= this.state.x+init.man.sizeX+posX) && (this.state.x+posX <= x[i].ex) && (x[i].sy <= this.state.y+posY+init.man.sizeY) && (this.state.y+posY <= x[i].ey)){
@@ -193,12 +196,12 @@ var Root = React.createClass({
       return ismove
   },
   // 判斷有無事件
- isEvents: function(posX,posY){
-   var x = init.events[this.state.map];  
+ isEvents : function(posX,posY){
+   var x = init.events;  
    if(this.state.messageId == -1){
    for(var i = 0 ; i < x.length;i++){  
      if((x[i].sx <= this.state.x+init.man.sizeX+posX) && (this.state.x+posX <= x[i].ex) && (x[i].sy <= this.state.y+posY+init.man.sizeY) && (this.state.y+posY <= x[i].ey)){
-        if(init.event[this.state.map][x[i].ev].select){    
+        if(init.event[this.state.map.index][x[i].ev].select){    
           this.eventSelect(x[i].ev);
         }
         else
@@ -214,14 +217,16 @@ var Root = React.createClass({
    }
   },
   // 初始化事件狀態
-  initEvent : function(){
+  initEvent : function(callback){
     this.setState(
      {chatOpacity : 0,
       messageId : -1,
       messageNum: -1,
       messageMax: -1,
       chatSelectIndex : -1,
-      chatSelectArray: []});
+      chatSelectArray: []})
+      if(callback && typeof(callback) === "function")
+        callback()
   },
   // 當鍵盤按鍵按下時
   handleKeyDown : function(e){
@@ -432,51 +437,117 @@ handleResize : function(){
                  isMoveDown: this.getMoveRDPoint(this.getWindowHeight()),
                  mapLeft: this.getResizeManPosX(),
                  mapTop: this.getResizeManPosY()})
-
 },
 //處理地圖事件
 handleMap : function(x,y){
-  this.handleAnimateSpeed(".1s");
-  this.handleFade(0);
-  setTimeout(function(){this.setState({map : x,
-                 left : init.maps[x].in[y].x -1,
-                 top : init.maps[x].in[y].y -1,
-                 x : init.maps[x].in[y].x,
-                 y : init.maps[x].in[y].y})
-  this.drawObject();
+  this.AjaxLoad(x,function(){
+  this.setState({map : init.maps,
+                 left : init.maps.in[y].x -1,
+                 top : init.maps.in[y].y -1,
+                 x : init.maps.in[y].x,
+                 y : init.maps.in[y].y})
   this.handleResize();
-  setTimeout(function(){this.handleFade(1)
-    setTimeout(function(){this.handleAnimateSpeed("0s")}.bind(this),100);
-  }.bind(this), 100);
- }.bind(this), 100);
-  
-  
-},
-//處理地圖浮出浮入事件
-handleFade : function (x){
-  this.setState({mapFade : x})
-},
-//處理地圖動畫速度事件
-handleAnimateSpeed : function (x){
-  this.setState({mapAnimateSpeed : x})
+  this.drawObject(function(){
+      this.setState({mapFade : 1})
+    }.bind(this));
+}.bind(this));
 },
 //處理進場畫面至 Map 畫面事件
-handleStart : function(e){
-    this.drawObject();
-    this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0});
-    this.handleAnimateSpeed(".1s");
-    this.handleFade(0);
-    setTimeout(function(){
-    this.drawObject();
-  setTimeout(function(){this.handleFade(1);init.menuNav= true;
-    setTimeout(function(){this.handleAnimateSpeed("0s")}.bind(this),100);
-  }.bind(this), 100);
- }.bind(this), 100);
+handleStart : function(){
+    this.AjaxLoad(this.state.map.index,function(){
+     this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0,map:init.maps});
+  this.drawObject(function(){ 
+      this.setState({mapFade : 1})
+    }.bind(this));
+  }.bind(this));
+},
+AjaxLoad : function(cm,callback){
+    this.setState({mapFade : 0})
+    $.ajax({
+    url: init.mapUrl[cm],
+    dataType: 'json',
+    error: function(xhr) {
+      console.log("Ajax Error");
+    },
+    success: function(response) {
+      init.maps = response.map;
+      this.AjaxProcessObject(response.styles);
+      this.AjaxProcessMove(response.isMove,function(){
+      if(callback && typeof(callback)=== "function")
+        callback();
+    });
+      }.bind(this)
+    });
+},
+AjaxProcessObject : function(objs){
+init.firstCanvas.length = 0;
+init.secondCanvas.length = 0;
+  var yy = 0;
+  var zz = 0;
+for(var i =0;i<objs.length;i++){
+var obj = objs[i];  
+var l = init.preImg.length;
+var c = false;
+var y={
+    left :  obj.l,
+    top : obj.t,
+    width : obj.w,
+    height : obj.h,
+    background : obj.b,
+    sourceX: obj.x,
+    sourceY: obj.y,
+   }
+   if(obj.z == 2){
+init.firstCanvas[yy]=y;
+    yy+=1
+  }
+  else{
+init.secondCanvas[zz]=y;
+  zz+=1
+  }
+  for(var k=0;k<l;k++){
+    if(init.preImg[k] == obj.b)
+      c = true;
+  }
+  if(!c)
+      init.preImg.push(obj.b)
+}
+},
+AjaxProcessMove : function(objs , callback){
+  init.move.length = 0;
+  init.events.length = 0;
+  var xx = 0;
+  var ee = 0;
+for(var i =0;i<objs.length;i++){
+var obj = objs[i];
+  var x={
+    sx :  obj.x,
+    sy : obj.y,
+    ex : obj.w + obj.x,
+    ey : obj.h + obj.y,
+    cm : obj.cm,
+    cmm : obj.cmm
+   }
+  init.move[xx]=x;
+    xx+=1;
+  if(obj.e>=0){
+    var e={
+    sx :  obj.x,
+    sy : obj.y,
+    ex : obj.w + obj.x,
+    ey : obj.h + obj.y,
+    ev : obj.e
+   }
+    init.events[ee]=e;
+    ee+=1
+  }
+  if(objs.length-i == 1 && callback && typeof(callback)==="function")
+    callback();
+}
 },
 //返回進場畫面
 backIndex : function(){
-    this.setState({mapZindex : -1 , indexBoxShow : 1,indexShow : 1,loadProcess: false})
-    setTimeout(function(){this.handleFade(0)}.bind(this), 300);
+    this.setState({mapZindex : -1 , indexBoxShow : 1,indexShow : 1,loadProcess: false,mapFade : 0})
 },
 //處理進場畫面選單移動
 handleIndexBoxMove : function(x){
@@ -607,13 +678,25 @@ menuLeftTouchMove : function(e){
     this.setState({menuLeftBoxWheel: this.state.menuLeftBoxWheel+x});
   }
 },
-drawObject : function(){
-  init.fcontext.clearRect(0, 0, init.maps[this.state.map].col, init.maps[this.state.map].row);
-  init.scontext.clearRect(0, 0, init.maps[this.state.map].col, init.maps[this.state.map].row);
+preLoadImg : function(callback){
+  var l = init.preImg.length;
+  for(var i=0;i<init.preImg.length;i++){
+    var img = new Image();
+    img.onload = function(){ 
+        if(--l <= 0)
+          callback();   
+      };  
+      img.src = init.preImg[i];
+  }
+},
+drawObject : function(callback){
+  this.preLoadImg(function(){
+  init.fcontext.clearRect(0, 0, init.maps.col, init.maps.row);
+  init.scontext.clearRect(0, 0, init.maps.col, init.maps.row);
 var imageObj = new Image();
 var s = this.state;
-var f = init.firstCanvas[s.map];
-var ff = init.secondCanvas[s.map];
+var f = init.firstCanvas;
+var ff = init.secondCanvas;
 for(var i=0 ;i<f.length;i++){
   imageObj.src = f[i].background;
   init.fcontext.drawImage(imageObj, f[i].sourceX , f[i].sourceY , f[i].width, f[i].height ,f[i].left, f[i].top , f[i].width, f[i].height);     
@@ -622,15 +705,18 @@ for(var i=0 ;i<ff.length;i++){
   imageObj.src = ff[i].background;
   init.scontext.drawImage(imageObj, ff[i].sourceX , ff[i].sourceY , ff[i].width, ff[i].height, ff[i].left, ff[i].top, ff[i].width, ff[i].height );     
 }
+if(callback && typeof(callback) ==="function")
+  callback();
+}.bind(this));
 },
 //畫格線或取消格線
 drawGridX : function(){
   if(!this.state.gridX){
 
     init.context.beginPath();
-      for(var i=1;i<(init.maps[this.state.map].col/init.object.sizeX);i++){
+      for(var i=1;i<(init.maps.col/init.object.sizeX);i++){
       init.context.moveTo(i*init.object.sizeX,init.object.sizeY);
-      init.context.lineTo(i*init.object.sizeX,init.maps[this.state.map].row);
+      init.context.lineTo(i*init.object.sizeX,init.maps.row);
       init.context.font = 'italic .5em Calibri';
       init.context.textAlign = 'center';
       init.context.fillText(i*init.object.sizeX, i*init.object.sizeX, 20);
@@ -638,16 +724,16 @@ drawGridX : function(){
       init.context.stroke();
 }
   else{
-      init.context.clearRect(0, 0, init.maps[this.state.map].col, init.maps[this.state.map].row);
+      init.context.clearRect(0, 0, init.maps.col, init.maps.row);
   }
   this.setState({gridX : !this.state.gridX});
 },
 drawGridY : function(){
   if(!this.state.gridY){
     init.context.beginPath();
-      for(var j=1;j<(init.maps[this.state.map].row/init.object.sizeY);j++){
+      for(var j=1;j<(init.maps.row/init.object.sizeY);j++){
       init.context.moveTo(init.object.sizeX,j*init.object.sizeY);
-      init.context.lineTo(init.maps[this.state.map].col,j*init.object.sizeY);
+      init.context.lineTo(init.maps.col,j*init.object.sizeY);
       init.context.font = 'italic .5em Calibri';
       init.context.textAlign = 'center';
       init.context.fillText(j*init.object.sizeY, 20, j*init.object.sizeY+4);
@@ -655,7 +741,7 @@ drawGridY : function(){
       init.context.stroke();
   }
       else{
-      init.context.clearRect(0, 0, init.maps[this.state.map].col, init.maps[this.state.map].row);
+      init.context.clearRect(0, 0, init.maps.col, init.maps.row);
   }
   this.setState({gridY : !this.state.gridY});
 },
@@ -678,6 +764,7 @@ moveAnimate : function(){
 },
 //人物移動事件
 move : function(){
+
   var c = this.state;
   var p = this.props;
   var ctl = init.control;
@@ -707,11 +794,11 @@ move : function(){
     else
       map.left = false;
   }
-  if(ctl.right && (init.maps[this.state.map].col-(init.man.sizeX*c.mapSizeX)) > c.x){
+  if(ctl.right && (init.maps.col-(init.man.sizeX*c.mapSizeX)) > c.x){
     var isR = this.isMove(p.right,0);
     if(isR){
     this.setState({x:c.x + p.right,left: p.right * c.mapSizeX + c.left});
-    if((c.mapSizeX*init.maps[this.state.map].col  + c.mapLeft > c.windowWidth ) && (c.isMoveRight - c.mapLeft == c.x))
+    if((c.mapSizeX*init.maps.col  + c.mapLeft > c.windowWidth ) && (c.isMoveRight - c.mapLeft == c.x))
       map.right = true;
     else
       map.right = false;     
@@ -731,11 +818,11 @@ move : function(){
     else
       map.up = false;
   }
-  if(ctl.down && (init.maps[this.state.map].row-(init.man.sizeY*c.mapSizeY)) > c.y){
+  if(ctl.down && (init.maps.row-(init.man.sizeY*c.mapSizeY)) > c.y){
     var isD = this.isMove(0,p.down);
     if(isD){
     this.setState({y:c.y+p.down,top: p.down * c.mapSizeY+c.top});
-    if((c.mapSizeY*init.maps[this.state.map].row  + c.mapTop > c.windowHeight ) && (c.isMoveDown - c.mapTop == c.y))
+    if((c.mapSizeY*init.maps.row  + c.mapTop > c.windowHeight ) && (c.isMoveDown - c.mapTop == c.y))
       map.down = true;
     else
       map.down = false; 
@@ -802,7 +889,6 @@ menuRightWheel : function(e){
 //生成所有DOM
   render : function (){
     var s = this.state;
-    var m = init.maps;
    return (
      <div  id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
      {s.mapZindex == -1  ?
@@ -815,11 +901,11 @@ menuRightWheel : function(e){
         <Loadbox style={{opacity : s.loadBoxShow}} />
       </div>
       : null }  
-      <div id="map"  style={{zIndex : s.mapZindex , transition:s.mapAnimateSpeed,opacity:s.mapFade,background: m[s.map].bg,WebkitTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", msTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", transform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)",width: s.mapSizeX*m[s.map].col,height: s.mapSizeY*m[s.map].row}} >
-        <div className="man-container" style={{WebkitTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",msTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",transform : "translate3D("+s.left+"px,"+s.top+"px,0)",width : s.mapSizeX*init.man.sizeX,height : s.mapSizeY*init.man.sizeY,backgroundPosition : s.manMoveAnimate*32+"px "+s.manMoveImg*48+"px"}} ></div>
-        <canvas id="grid" width={m[s.map].col} height={m[s.map].row} />
-        <canvas id="firstCanvas" width={m[s.map].col} height={m[s.map].row} />
-        <canvas id="secondCanvas" width={m[s.map].col} height={m[s.map].row} />
+      <div id="map"  style={{opacity : s.mapFade ,zIndex : s.mapZindex ,background: s.map.bg,WebkitTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", msTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", transform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)",width: s.mapSizeX*s.map.col,height: s.mapSizeY*s.map.row}} >
+        <div className="man-container" style={{WebkitTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",msTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",transform : "translate3D("+s.left+"px,"+s.top+"px,0)",width : s.mapSizeX*init.man.sizeX,height : s.mapSizeY*init.man.sizeY,backgroundPosition : s.manMoveAnimate*init.man.sizeX+"px "+s.manMoveImg*init.man.sizeY+"px"}} ></div>
+        <canvas id="grid" width={s.map.col} height={s.map.row} />
+        <canvas id="firstCanvas" width={s.map.col} height={s.map.row} />
+        <canvas id="secondCanvas" width={s.map.col} height={s.map.row} />
       </div>
       { init.menuNav ?<nav id="menunav" className="s-hide">
         <ul>
@@ -838,7 +924,6 @@ menuRightWheel : function(e){
      {s.loadProcess ? <Load /> : null }
      <PreLoadImg />
      </div>
-     
    ) 
   }
 });
@@ -861,7 +946,6 @@ var Loadbox = React.createClass({
   )
   }
 });
-
 var Disqus = React.createClass({
 componentDidMount: function () {
       this.addDisqus();
@@ -886,7 +970,6 @@ render: function () {
     }
 });
 var Load = React.createClass({
-
   getDefaultProps: function() {
     var x = [];
     for(var i=0; i < 12;i++){
