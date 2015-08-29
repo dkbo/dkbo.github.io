@@ -31,6 +31,12 @@ init.menuText =
       <h2>紀錄條</h2>
       <ul>
         <li>
+          <date>2015/08/29</date>
+          <p>圖片及部分資料改成 AJAX 方式取得。目前尚未轉場效果。接下來要把 NPC 在做出來。</p>
+          <iframe height='268' scrolling='no' src='//codepen.io/dkbo/embed/RWbjjZ/?height=268&theme-id=4234&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style={{width: "100%"}}>See the Pen <a href='http://codepen.io/dkbo/pen/RWbjjZ/'>RPG NPC Walk Type one </a> by dkbo (<a href='http://codepen.io/dkbo'>@dkbo</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>        
+        </li>
+        <br />
+        <li>
           <date>2015/08/25</date>
           <p>預載圖片的問題瞎忙了很多時間，最後還是放在HTML裡吧!</p>
         </li>

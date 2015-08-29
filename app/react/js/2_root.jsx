@@ -905,7 +905,8 @@ menuRightWheel : function(e){
         <div className="man-container" style={{WebkitTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",msTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",transform : "translate3D("+s.left+"px,"+s.top+"px,0)",width : s.mapSizeX*init.man.sizeX,height : s.mapSizeY*init.man.sizeY,backgroundPosition : s.manMoveAnimate*init.man.sizeX+"px "+s.manMoveImg*init.man.sizeY+"px"}} ></div>
         <canvas id="grid" width={s.map.col} height={s.map.row} />
         <canvas id="firstCanvas" width={s.map.col} height={s.map.row} />
-        <canvas id="secondCanvas" width={s.map.col} height={s.map.row} />
+        {s.mapFade && s.map.index ==0 ? <Npc  width={s.map.col} height={s.map.row}  /> : null }
+        <canvas id="secondCanvas" width={s.map.col} height={s.map.row} /> 
       </div>
       { init.menuNav ?<nav id="menunav" className="s-hide">
         <ul>
@@ -913,19 +914,28 @@ menuRightWheel : function(e){
         </ul>
      </nav>: null}
      {s.mapZindex != -1  ?<div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray.map(this.chatArray)}</ul></div> : null}
-     {s.menuDisplay ? <div id="menu" >
+     {s.menuDisplay ? <Menu>
         <div id="left" className="col xx12 s3 xx-np xx-ng" onTouchMove={this.menuLeftTouchMove} >
           <ul style={{WebkitTransform : "translateX("+s.menuLeftBoxWheel+"px)",msTransform : "translateX("+s.menuLeftBoxWheel+"px)",transform : "translateX("+s.menuLeftBoxWheel+"px)" }}>
             {init.menuTitle.map(this.menuItem)}
           </ul>
         </div>
         <div id="right" className="col xx12 s9 xx-np xx-ng" ref="right" onTouchMove={this.menuRightTouchMove}><div id="rightBox" onWheel={this.menuRightWheel} ref="rightBox" style={{WebkitTransform : "translateY("+s.menuRightBoxWheel+"px)",msTransform : "translateY("+s.menuRightBoxWheel+"px)",transform : "translateY("+s.menuRightBoxWheel+"px)" }}>{init.menuText[s.menuIndex]}</div></div>
-     </div> : <div />}
+     </Menu> : null}
      {s.loadProcess ? <Load /> : null }
      <PreLoadImg />
      </div>
    ) 
   }
+});
+var Menu = React.createClass({
+    render : function(){
+      return(
+        <div id="menu">
+          { this.props.children }
+        </div>
+        )
+    }
 });
 var PreLoadImg = React.createClass({
   handleLoadImg : function(Img){
@@ -985,5 +995,250 @@ var Load = React.createClass({
     <div  id="load" style={this.props.style} >{this.props.load}</div>
   )
   }
+});
+var Npc = React.createClass({
+c : null,
+animate : null,
+img : new Image(),
+num :50 ,
+NPC : [],
+npcJSON : function(){
+for(var i = 0; i< this.num;i++){
+    this.NPC.push({
+    imgSrc : "http://dkbo.github.io/images/man.png",// NPC Sprites URL
+    pX: 1550+Math.floor(Math.random()*300 -150),                                          // X Pos
+    pY: 800+Math.floor(Math.random()*300 -150),                                          // y pos
+    aX: 1152,                                         // x Area
+    aY: 672,                                          // y Area
+    aW: 600,                                         //isMove Width Area
+    aH: 400,                                         //isMove Height Area
+    mX: 50,                                        // x Max
+    mY: 50,                                        // y Max
+    x : 0,                                          // x Move
+    y : 0,                                          // y Move
+    w : 32,                                         // NPC Width
+    h : 48,                                         // NPC Height
+    d : 0,                                          // NPC Down Sprites Pos
+    l : 1,                                          // NPC Up Sprites Pos
+    r : 2,                                          // NPC Right Sprites Pos
+    u : 3,                                          // NPC Left Sprites Pos
+    t : 0,                                          // NPC Turn 
+    s : 0,                                          // NPC Stop  
+    f : 0,                                          // NPC animate   ##DONT CHANGE
+    footSpeed:8,                                    // NPC Sprites Animate Speed
+    isR : false,                                     // Is Move Right
+    isU : false,                                    // Is Move Up
+    isD : false,                                    // Is Move Down
+    isL : false                                     // Is Move Left
+})
+}
+},
+walk : function(){
+  this.c.clearRect(0,0,this.props.width,this.props.height);
+  var n;
+    for(var i=0;i<this.NPC.length;i++){
+        n = this.NPC[i];
+        this.img.src = n.imgSrc;
+
+      if(n.isU && n.y > 0 || (n.isU && n.s > 0))
+        if(n.aY <= n.pY && (n.aX + n.aW) >= n.pX && n.aX <= n.pX  )
+            this.draw(i,n.u);
+        else{
+            this.NPC[i].isU = false;
+            this.NPC[i].isL = false;
+            this.NPC[i].isR = false;
+            this.NPC[i].s = 0;
+        }
+      else if(n.isU && n.y == 0)
+        this.NPC[i].isU = false;
+
+      if(n.isD && n.y < n.mY || (n.isD && n.s > 0 ))
+        if((n.aY + n.aH) >= n.pY  && (n.aX + n.aW) >= n.pX && n.aX <= n.pX  )
+            this.draw(i,n.d);
+        else{
+            this.NPC[i].isD = false;
+            this.NPC[i].isL = false;
+            this.NPC[i].isR = false;
+            this.NPC[i].s = 0;
+        }
+      else if(n.isD && n.y == n.mY)
+        this.NPC[i].isD = false;
+
+      if(n.isR && n.x < n.mX || (n.isR && n.s > 0)){
+        if(n.t != 5 && n.t != 7){
+        if((n.aX + n.aW) >= n.pX )
+            this.draw(i,n.r);
+        else{
+            this.NPC[i].isR = false;
+            this.NPC[i].s = 0;
+        }
+        }
+      }
+      else if(n.isR && n.x == n.mX)
+        this.NPC[i].isR = false; 
+
+
+      if(n.isL && n.x > 0 || (n.isL && n.s > 0)){
+        if(n.t != 4 && n.t != 6){
+         if(n.aX <= n.pX )
+            this.draw(i,n.l);
+        else{
+            this.NPC[i].isL = false;
+            this.NPC[i].s = 0;
+        }
+      }
+      }     
+      else if(n.isL && n.x == 0)
+        this.NPC[i].isL = false;
+
+      
+      if(!n.isL && !n.isD && !n.isU && !n.isR && this.NPC[i].s == 0){
+        this.random(i);
+      }
+    }
+  this.animate = requestAnimationFrame(this.walk);
+},
+draw : function(i,turn){
+  var n = this.NPC[i];
+  this.c.drawImage(this.img, Math.floor(this.NPC[i].f/ n.footSpeed) % 4 * 32 , n.h * turn , n.w, n.h ,n.pX,n.pY , n.w, n.h);
+  if((n.s > 0 && turn == 0 && n.y < n.mY) || (n.s > 0 && turn == 1 && n.x > 0) || (n.s > 0 && turn == 2 && n.x < n.mX) || (n.s > 0 && turn == 3 && n.y > 0)){
+    this.NPC[i].f++;
+    this.process(i);
+  }
+  else{
+    this.NPC[i].s--;
+    this.NPC[i].f = 0;
+  }
+},
+process : function(i){
+  switch(this.NPC[i].t){
+    case 0:
+      this.NPC[i].y--;
+      this.NPC[i].pY--;
+      break;
+    case 1:
+      this.NPC[i].x++;
+      this.NPC[i].pX++;
+      break;
+    case 2:
+      this.NPC[i].y++;
+      this.NPC[i].pY++;
+      break;
+    case 3:
+      this.NPC[i].x--;
+      this.NPC[i].pX--;
+      break;
+    case 4:
+      this.NPC[i].y--;
+      this.NPC[i].pY--;
+      this.NPC[i].x--;
+      this.NPC[i].pX--;
+      break;
+    case 5:
+      this.NPC[i].y--;
+      this.NPC[i].pY--;  
+      this.NPC[i].x++;
+      this.NPC[i].pX++;
+      break;
+    case 6:
+      this.NPC[i].y++;
+      this.NPC[i].pY++;
+      this.NPC[i].x--;
+      this.NPC[i].pX--;
+      break;
+    case 7:
+      this.NPC[i].y++;
+      this.NPC[i].pY++;  
+      this.NPC[i].x++;
+      this.NPC[i].pX++;
+      break;  
+  
+  }
+},
+random : function(i){
+  var r = Math.floor(Math.random()*80)%8;
+  var rw = Math.floor(Math.random()*100)+10;
+  this.NPC[i].s = Math.floor(Math.random()*100)+1;
+  switch(r){
+    case 0:
+      this.NPC[i].isU = true;
+      this.NPC[i].y = rw;
+      this.NPC[i].t = 0;
+      this.draw(i,this.NPC[i].u);
+      break;  
+    case 1:
+      this.NPC[i].isR = true;
+      this.NPC[i].mX = rw;
+      this.NPC[i].x = 0;
+      this.NPC[i].t = 1;
+      this.draw(i,this.NPC[i].r);
+      break; 
+    case 2:
+      this.NPC[i].isD = true;
+      this.NPC[i].mY = rw;
+      this.NPC[i].y = 0;
+      this.NPC[i].t = 2;
+      this.draw(i,this.NPC[i].d);
+      break;
+    case 3:
+      this.NPC[i].isL = true;
+      this.NPC[i].x = rw;
+      this.NPC[i].t = 3;
+      this.draw(i,this.NPC[i].l);
+      break;
+    case 4:
+      this.NPC[i].isU = true;
+      this.NPC[i].isL = true;
+      this.NPC[i].y = rw;
+      this.NPC[i].x = rw;
+      this.NPC[i].t = 4;
+      this.draw(i,this.NPC[i].l);
+      break;  
+    case 5:
+      this.NPC[i].isU = true;
+      this.NPC[i].isR = true;
+      this.NPC[i].y = rw;
+      this.NPC[i].mX = rw;
+      this.NPC[i].x = 0;
+      this.NPC[i].t = 5;
+      this.draw(i,this.NPC[i].r);
+      break; 
+    case 6:
+      this.NPC[i].isD = true;
+      this.NPC[i].isL = true;
+      this.NPC[i].mY = rw;
+      this.NPC[i].y = 0;
+      this.NPC[i].x = rw;
+      this.NPC[i].t = 6;
+      this.draw(i,this.NPC[i].l);
+      break;
+    case 7:
+      this.NPC[i].isD = true;  
+      this.NPC[i].isR = true;
+      this.NPC[i].mX = rw;
+      this.NPC[i].x = 0;
+      this.NPC[i].mY = rw;
+      this.NPC[i].y = 0;
+      this.NPC[i].t = 7;
+      this.draw(i,this.NPC[i].r);
+      break;       
+  }
+},
+componentWillMount : function(){
+    this.npcJSON();
+},
+componentDidMount : function(){
+  this.c = document.getElementById("npc").getContext('2d');
+  this.animate = requestAnimationFrame(this.walk);
+},
+componentWillUnmount : function(){
+  this.NPC.length = 0;
+  window.cancelAnimationFrame(this.animate);
+},
+render : function(){
+  return(
+  <canvas id="npc" width={this.props.width}  height={this.props.height} />
+  )
+}
 });
 var rt = React.render(<Root  />,document.body)
