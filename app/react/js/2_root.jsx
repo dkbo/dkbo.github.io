@@ -457,7 +457,9 @@ handleStart : function(){
     this.AjaxLoad(this.state.map.index,function(){
      this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0,map:init.maps});
   this.drawObject(function(){ 
+    init.menuNav = true;
       this.setState({mapFade : 1})
+
     }.bind(this));
   }.bind(this));
 },
@@ -1000,7 +1002,7 @@ var Npc = React.createClass({
 c : null,
 animate : null,
 img : new Image(),
-num :50 ,
+num : window.innerWidth < 768 ? 20 : 50 ,
 NPC : [],
 npcJSON : function(){
 for(var i = 0; i< this.num;i++){
