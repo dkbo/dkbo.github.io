@@ -1,5 +1,3 @@
-
- 
 var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 var cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame || window.webkitCancelAnimationFrame || window.msCancelAnimationFrame;
 // init
@@ -62,7 +60,8 @@ var init = {
  events : [],
  firstCanvas : [],
  secondCanvas : [],
- move : []
+ move : [],
+ npc : [],
 }
     // "n": 物件名
     // "l": 物件 X 位置
@@ -128,6 +127,12 @@ init.event = [
                                     ]
                            }
                          ]
+              },
+              { name : "哆拉喵",
+                text : [ 
+                          "作者太笨啦! NPC 碰撞有一堆 BUG，害我撞來撞去的。",
+                          <span>如果人物卡住了就按 <kbd>0</kbd> 或 <kbd>1</kbd>直接傳送走吧!</span>
+                       ]
               }
             ],
             // Map 1
@@ -136,6 +141,11 @@ init.event = [
                 text : [
                           "這屋子種了不少花!",
                           "下班之後，看看一下花花草草能適度的釋壓。"
+                       ]
+              },
+              { name : "哆拉花角",
+                text : [
+                          "我是第一個會走的 NPC 唷"
                        ]
               }
             ],

@@ -2124,6 +2124,38 @@
                   "w": 32,
                   "h": 0
             }
+      ],
+      "npc" : [
+            {
+                 "b" : "http://dkbo.github.io/images/man.png",
+                 "pX": 650,    
+                 "pY": 500,     
+                 "aX": 512,                                       
+                 "aY": 416,                                       
+                 "aW": 350,                                       
+                 "aH": 140,                                        
+                 "mX": 0,                                        
+                 "mY": 0,                                         
+                 "x" : 0,                                          
+                 "y" : 0,                                          
+                 "w" : 32,                                        
+                 "h" : 48,                                         
+                 "d" : 0,                                         
+                 "l" : 1,                                         
+                 "r" : 2,                                         
+                 "u" : 3,                                          
+                 "t" : 0,                                         
+                 "s" : 0,                                          
+                 "f" : 0,                                         
+                 "footSpeed":8,                                   
+                 "isR" : false,                                    
+                 "isU" : false,                                   
+                 "isD" : false,                                    
+                 "isL" : false,
+                 "isM" : false,
+                 "e" : 1                                     
+            }
+
       ]
 }
 

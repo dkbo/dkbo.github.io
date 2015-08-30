@@ -185,7 +185,8 @@ var Root = React.createClass({
   // 判斷人物是否可移動或是更換場景地圖
  isMove : function(posX,posY){
    this.initEvent();
-   var x = init.move ?init.move : 0
+   var x = init.move ?init.move : 0;
+   var y = init.npc ? init.npc : 0;
    var ismove = true;
    for(var i = 0 ; i < x.length;i++){
      if((x[i].sx <= this.state.x+init.man.sizeX+posX) && (this.state.x+posX <= x[i].ex) && (x[i].sy <= this.state.y+posY+init.man.sizeY) && (this.state.y+posY <= x[i].ey)){
@@ -193,11 +194,18 @@ var Root = React.createClass({
           ismove = false;
      }
    }
+   if(y){
+    for(var i = 0 ; i < y.length;i++){
+      if((y[i].pX <= this.state.x+init.man.sizeX+posX) && (this.state.x+posX <= y[i].w+y[i].pX) && (y[i].pY+24 <= this.state.y+posY+init.man.sizeY) && (this.state.y+posY <= 1+24+y[i].pY))
+        ismove = false;
+   }
+  } 
       return ismove
   },
   // 判斷有無事件
  isEvents : function(posX,posY){
    var x = init.events;  
+   var y = init.npc ? init.npc : 0;
    if(this.state.messageId == -1){
    for(var i = 0 ; i < x.length;i++){  
      if((x[i].sx <= this.state.x+init.man.sizeX+posX) && (this.state.x+posX <= x[i].ex) && (x[i].sy <= this.state.y+posY+init.man.sizeY) && (this.state.y+posY <= x[i].ey)){
@@ -208,6 +216,16 @@ var Root = React.createClass({
           this.event(x[i].ev);
      }
    }
+   if(y){
+    for(var i = 0 ; i < y.length;i++){
+      if((y[i].pX <= this.state.x+init.man.sizeX+posX) && (this.state.x+posX <= y[i].w+y[i].pX) && (y[i].pY+24 <= this.state.y+posY+init.man.sizeY) && (this.state.y+posY <= 1+24+y[i].pY))
+        if(init.event[this.state.map.index][y[i].e].select){    
+          this.eventSelect(y[i].e);
+        }
+        else
+          this.event(y[i].e);
+     }
+   } 
    }
    else{
     if(this.state.chatSelectIndex > -1)
@@ -473,6 +491,7 @@ AjaxLoad : function(cm,callback){
     },
     success: function(response) {
       init.maps = response.map;
+      init.npc  = response.npc;
       this.AjaxProcessObject(response.styles);
       this.AjaxProcessMove(response.isMove,function(){
       if(callback && typeof(callback)=== "function")
@@ -521,8 +540,8 @@ AjaxProcessMove : function(objs , callback){
   var xx = 0;
   var ee = 0;
 for(var i =0;i<objs.length;i++){
-var obj = objs[i];
-  var x={
+    var obj = objs[i];
+    var x={
     sx :  obj.x,
     sy : obj.y,
     ex : obj.w + obj.x,
@@ -907,7 +926,7 @@ menuRightWheel : function(e){
         <div className="man-container" style={{WebkitTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",msTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",transform : "translate3D("+s.left+"px,"+s.top+"px,0)",width : s.mapSizeX*init.man.sizeX,height : s.mapSizeY*init.man.sizeY,backgroundPosition : s.manMoveAnimate*init.man.sizeX+"px "+s.manMoveImg*init.man.sizeY+"px"}} ></div>
         <canvas id="grid" width={s.map.col} height={s.map.row} />
         <canvas id="firstCanvas" width={s.map.col} height={s.map.row} />
-        {s.mapFade && s.map.index ==0 ? <Npc  width={s.map.col} height={s.map.row}  /> : null }
+        <Npc  x={s.x} y={s.y} width={s.map.col} height={s.map.row}  />
         <canvas id="secondCanvas" width={s.map.col} height={s.map.row} /> 
       </div>
       { init.menuNav ?<nav id="menunav" className="s-hide">
@@ -999,23 +1018,22 @@ var Load = React.createClass({
   }
 });
 var Npc = React.createClass({
-c : null,
+fc : null,
+bc : null,
 animate : null,
 img : new Image(),
-num : window.innerWidth < 768 ? 20 : 50 ,
-NPC : [],
-npcJSON : function(){
+/**npcJSON : function(){
 for(var i = 0; i< this.num;i++){
     this.NPC.push({
     imgSrc : "http://dkbo.github.io/images/man.png",// NPC Sprites URL
-    pX: 1550+Math.floor(Math.random()*300 -150),                                          // X Pos
-    pY: 800+Math.floor(Math.random()*300 -150),                                          // y pos
-    aX: 1152,                                         // x Area
-    aY: 672,                                          // y Area
-    aW: 600,                                         //isMove Width Area
-    aH: 400,                                         //isMove Height Area
-    mX: 50,                                        // x Max
-    mY: 50,                                        // y Max
+    pX: 1550+Math.floor(Math.random()*300 -150),    // X Pos
+    pY: 800+Math.floor(Math.random()*300 -150),     // y pos
+    aX: 1152,                                       // x Area
+    aY: 672,                                        // y Area
+    aW: 600,                                        //isMove Width Area
+    aH: 400,                                        //isMove Height Area
+    mX: 50,                                         // x Max
+    mY: 50,                                         // y Max
     x : 0,                                          // x Move
     y : 0,                                          // y Move
     w : 32,                                         // NPC Width
@@ -1028,131 +1046,169 @@ for(var i = 0; i< this.num;i++){
     s : 0,                                          // NPC Stop  
     f : 0,                                          // NPC animate   ##DONT CHANGE
     footSpeed:8,                                    // NPC Sprites Animate Speed
-    isR : false,                                     // Is Move Right
+    isR : false,                                    // Is Move Right
     isU : false,                                    // Is Move Up
     isD : false,                                    // Is Move Down
     isL : false                                     // Is Move Left
 })
 }
-},
+},**/
 walk : function(){
-  this.c.clearRect(0,0,this.props.width,this.props.height);
+  var pos = 12 ;
+  this.fc.clearRect(0,0,this.props.width,this.props.height);
+  this.sc.clearRect(0,0,this.props.width,this.props.height);
   var n;
-    for(var i=0;i<this.NPC.length;i++){
-        n = this.NPC[i];
-        this.img.src = n.imgSrc;
-
-      if(n.isU && n.y > 0 || (n.isU && n.s > 0))
+    for(var i=0;i<init.npc.length;i++){
+        n = init.npc[i];
+        this.img.src = n.b; 
+      if(n.isU && n.y > 0 || (n.isU && n.s > 0)){
+        if((this.props.x <= n.pX+n.w -pos) && (n.pX-pos <= init.man.sizeX+this.props.x) && (this.props.y+24 <= n.pY-pos+n.h) && (n.pY-pos <= 1+this.props.y+24)){
+          init.npc[i].isM = false;
+          this.draw(i,n.u);
+        }
+        else{
+          init.npc[i].isM = true;
         if(n.aY <= n.pY && (n.aX + n.aW) >= n.pX && n.aX <= n.pX  )
             this.draw(i,n.u);
         else{
-            this.NPC[i].isU = false;
-            this.NPC[i].isL = false;
-            this.NPC[i].isR = false;
-            this.NPC[i].s = 0;
+            init.npc[i].isU = false;
+            init.npc[i].isL = false;
+            init.npc[i].isR = false;
+            init.npc[i].s = 0;
         }
-      else if(n.isU && n.y == 0)
-        this.NPC[i].isU = false;
+      }
+      }
 
-      if(n.isD && n.y < n.mY || (n.isD && n.s > 0 ))
+      else if(n.isU && n.y == 0)
+        init.npc[i].isU = false;
+
+      if(n.isD && n.y < n.mY || (n.isD && n.s > 0 )){
+        if((this.props.x <= n.pX+n.w +pos) && (n.pX+pos <= init.man.sizeX+this.props.x) && (this.props.y+24 <= n.pY+pos+n.h) && (n.pY+pos <= 1+this.props.y+24)){
+          init.npc[i].isM = false;
+          this.draw(i,n.d);
+        }
+        else{
+          init.npc[i].isM = true;
         if((n.aY + n.aH) >= n.pY  && (n.aX + n.aW) >= n.pX && n.aX <= n.pX  )
             this.draw(i,n.d);
         else{
-            this.NPC[i].isD = false;
-            this.NPC[i].isL = false;
-            this.NPC[i].isR = false;
-            this.NPC[i].s = 0;
+            init.npc[i].isD = false;
+            init.npc[i].isL = false;
+            init.npc[i].isR = false;
+            init.npc[i].s = 0;
         }
+      }
+      }
       else if(n.isD && n.y == n.mY)
-        this.NPC[i].isD = false;
+        init.npc[i].isD = false;
 
       if(n.isR && n.x < n.mX || (n.isR && n.s > 0)){
         if(n.t != 5 && n.t != 7){
+        if((this.props.x <= n.pX+n.w +pos) && (n.pX+pos <= init.man.sizeX+this.props.x) && (this.props.y+24 <= n.pY+pos+n.h) && (n.pY+pos <= 1+this.props.y+24)){
+          init.npc[i].isM = false;
+          this.draw(i,n.r);
+        }
+        else{
+          init.npc[i].isM = true;
+        
         if((n.aX + n.aW) >= n.pX )
             this.draw(i,n.r);
         else{
-            this.NPC[i].isR = false;
-            this.NPC[i].s = 0;
+            init.npc[i].isR = false;
+            init.npc[i].s = 0;
         }
         }
       }
+    }
       else if(n.isR && n.x == n.mX)
-        this.NPC[i].isR = false; 
+        init.npc[i].isR = false; 
 
 
       if(n.isL && n.x > 0 || (n.isL && n.s > 0)){
         if(n.t != 4 && n.t != 6){
+        if((this.props.x <= n.pX+n.w -pos) && (n.pX-pos <= init.man.sizeX+this.props.x) && (this.props.y+24 <= n.pY-pos+n.h) && (n.pY-pos <= 1+this.props.y+24)){
+          init.npc[i].isM = false;
+          this.draw(i,n.l);
+        }
+        else{
+          init.npc[i].isM = true;
+        
          if(n.aX <= n.pX )
             this.draw(i,n.l);
         else{
-            this.NPC[i].isL = false;
-            this.NPC[i].s = 0;
+            init.npc[i].isL = false;
+            init.npc[i].s = 0;
         }
+      }
       }
       }     
       else if(n.isL && n.x == 0)
-        this.NPC[i].isL = false;
-
+        init.npc[i].isL = false;
       
-      if(!n.isL && !n.isD && !n.isU && !n.isR && this.NPC[i].s == 0){
+      if(!n.isL && !n.isD && !n.isU && !n.isR && init.npc[i].s == 0){
         this.random(i);
       }
     }
   this.animate = requestAnimationFrame(this.walk);
 },
 draw : function(i,turn){
-  var n = this.NPC[i];
-  this.c.drawImage(this.img, Math.floor(this.NPC[i].f/ n.footSpeed) % 4 * 32 , n.h * turn , n.w, n.h ,n.pX,n.pY , n.w, n.h);
-  if((n.s > 0 && turn == 0 && n.y < n.mY) || (n.s > 0 && turn == 1 && n.x > 0) || (n.s > 0 && turn == 2 && n.x < n.mX) || (n.s > 0 && turn == 3 && n.y > 0)){
-    this.NPC[i].f++;
+  var n = init.npc[i];
+  var a = Math.floor(init.npc[i].f/ n.footSpeed) % 4 * 32 ;
+  var t = n.h * turn;
+  this.fc.drawImage(this.img,  a , t , n.w, n.h-24 ,n.pX,n.pY , n.w, n.h-24);
+  this.sc.drawImage(this.img,  a , t+24 , n.w, n.h-24 ,n.pX,n.pY+24 , n.w, n.h-24);
+  if(n.isM){
+  if ((n.s > 0 && turn == 0 && n.y < n.mY) || (n.s > 0 && turn == 1 && n.x > 0) || (n.s > 0 && turn == 2 && n.x < n.mX) || (n.s > 0 && turn == 3 && n.y > 0)){
+    init.npc[i].f++;
     this.process(i);
   }
   else{
-    this.NPC[i].s--;
-    this.NPC[i].f = 0;
+    init.npc[i].s--;
+    init.npc[i].f = 0;
   }
+}
 },
 process : function(i){
-  switch(this.NPC[i].t){
+  switch(init.npc[i].t){
     case 0:
-      this.NPC[i].y--;
-      this.NPC[i].pY--;
+      init.npc[i].y--;
+      init.npc[i].pY--;
       break;
     case 1:
-      this.NPC[i].x++;
-      this.NPC[i].pX++;
+      init.npc[i].x++;
+      init.npc[i].pX++;
       break;
     case 2:
-      this.NPC[i].y++;
-      this.NPC[i].pY++;
+      init.npc[i].y++;
+      init.npc[i].pY++;
       break;
     case 3:
-      this.NPC[i].x--;
-      this.NPC[i].pX--;
+      init.npc[i].x--;
+      init.npc[i].pX--;
       break;
     case 4:
-      this.NPC[i].y--;
-      this.NPC[i].pY--;
-      this.NPC[i].x--;
-      this.NPC[i].pX--;
+      init.npc[i].y--;
+      init.npc[i].pY--;
+      init.npc[i].x--;
+      init.npc[i].pX--;
       break;
     case 5:
-      this.NPC[i].y--;
-      this.NPC[i].pY--;  
-      this.NPC[i].x++;
-      this.NPC[i].pX++;
+      init.npc[i].y--;
+      init.npc[i].pY--;  
+      init.npc[i].x++;
+      init.npc[i].pX++;
       break;
     case 6:
-      this.NPC[i].y++;
-      this.NPC[i].pY++;
-      this.NPC[i].x--;
-      this.NPC[i].pX--;
+      init.npc[i].y++;
+      init.npc[i].pY++;
+      init.npc[i].x--;
+      init.npc[i].pX--;
       break;
     case 7:
-      this.NPC[i].y++;
-      this.NPC[i].pY++;  
-      this.NPC[i].x++;
-      this.NPC[i].pX++;
+      init.npc[i].y++;
+      init.npc[i].pY++;  
+      init.npc[i].x++;
+      init.npc[i].pX++;
       break;  
   
   }
@@ -1160,86 +1216,90 @@ process : function(i){
 random : function(i){
   var r = Math.floor(Math.random()*80)%8;
   var rw = Math.floor(Math.random()*100)+10;
-  this.NPC[i].s = Math.floor(Math.random()*100)+1;
+  init.npc[i].s = Math.floor(Math.random()*100)+1;
   switch(r){
     case 0:
-      this.NPC[i].isU = true;
-      this.NPC[i].y = rw;
-      this.NPC[i].t = 0;
-      this.draw(i,this.NPC[i].u);
+      init.npc[i].isU = true;
+      init.npc[i].y = rw;
+      init.npc[i].t = 0;
+      this.draw(i,init.npc[i].u);
       break;  
     case 1:
-      this.NPC[i].isR = true;
-      this.NPC[i].mX = rw;
-      this.NPC[i].x = 0;
-      this.NPC[i].t = 1;
-      this.draw(i,this.NPC[i].r);
+      init.npc[i].isR = true;
+      init.npc[i].mX = rw;
+      init.npc[i].x = 0;
+      init.npc[i].t = 1;
+      this.draw(i,init.npc[i].r);
       break; 
     case 2:
-      this.NPC[i].isD = true;
-      this.NPC[i].mY = rw;
-      this.NPC[i].y = 0;
-      this.NPC[i].t = 2;
-      this.draw(i,this.NPC[i].d);
+      init.npc[i].isD = true;
+      init.npc[i].mY = rw;
+      init.npc[i].y = 0;
+      init.npc[i].t = 2;
+      this.draw(i,init.npc[i].d);
       break;
     case 3:
-      this.NPC[i].isL = true;
-      this.NPC[i].x = rw;
-      this.NPC[i].t = 3;
-      this.draw(i,this.NPC[i].l);
+      init.npc[i].isL = true;
+      init.npc[i].x = rw;
+      init.npc[i].t = 3;
+      this.draw(i,init.npc[i].l);
       break;
     case 4:
-      this.NPC[i].isU = true;
-      this.NPC[i].isL = true;
-      this.NPC[i].y = rw;
-      this.NPC[i].x = rw;
-      this.NPC[i].t = 4;
-      this.draw(i,this.NPC[i].l);
+      init.npc[i].isU = true;
+      init.npc[i].isL = true;
+      init.npc[i].y = rw;
+      init.npc[i].x = rw;
+      init.npc[i].t = 4;
+      this.draw(i,init.npc[i].l);
       break;  
     case 5:
-      this.NPC[i].isU = true;
-      this.NPC[i].isR = true;
-      this.NPC[i].y = rw;
-      this.NPC[i].mX = rw;
-      this.NPC[i].x = 0;
-      this.NPC[i].t = 5;
-      this.draw(i,this.NPC[i].r);
+      init.npc[i].isU = true;
+      init.npc[i].isR = true;
+      init.npc[i].y = rw;
+      init.npc[i].mX = rw;
+      init.npc[i].x = 0;
+      init.npc[i].t = 5;
+      this.draw(i,init.npc[i].r);
       break; 
     case 6:
-      this.NPC[i].isD = true;
-      this.NPC[i].isL = true;
-      this.NPC[i].mY = rw;
-      this.NPC[i].y = 0;
-      this.NPC[i].x = rw;
-      this.NPC[i].t = 6;
-      this.draw(i,this.NPC[i].l);
+      init.npc[i].isD = true;
+      init.npc[i].isL = true;
+      init.npc[i].mY = rw;
+      init.npc[i].y = 0;
+      init.npc[i].x = rw;
+      init.npc[i].t = 6;
+      this.draw(i,init.npc[i].l);
       break;
     case 7:
-      this.NPC[i].isD = true;  
-      this.NPC[i].isR = true;
-      this.NPC[i].mX = rw;
-      this.NPC[i].x = 0;
-      this.NPC[i].mY = rw;
-      this.NPC[i].y = 0;
-      this.NPC[i].t = 7;
-      this.draw(i,this.NPC[i].r);
+      init.npc[i].isD = true;  
+      init.npc[i].isR = true;
+      init.npc[i].mX = rw;
+      init.npc[i].x = 0;
+      init.npc[i].mY = rw;
+      init.npc[i].y = 0;
+      init.npc[i].t = 7;
+      this.draw(i,init.npc[i].r);
       break;       
   }
 },
 componentWillMount : function(){
-    this.npcJSON();
+    // this.npcJSON();
 },
 componentDidMount : function(){
-  this.c = document.getElementById("npc").getContext('2d');
+  this.fc = document.getElementById("fnpc").getContext('2d');
+  this.sc = document.getElementById("snpc").getContext('2d');
   this.animate = requestAnimationFrame(this.walk);
 },
 componentWillUnmount : function(){
-  this.NPC.length = 0;
+  init.npc.length = 0;
   window.cancelAnimationFrame(this.animate);
 },
 render : function(){
   return(
-  <canvas id="npc" width={this.props.width}  height={this.props.height} />
+  <div x={this.props.x} y={this.props.y} >
+    <canvas id="fnpc" width={this.props.width}  height={this.props.height} />
+    <canvas id="snpc" width={this.props.width}  height={this.props.height} />
+    </div>
   )
 }
 });

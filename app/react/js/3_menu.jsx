@@ -86,6 +86,9 @@ init.menuText =
       <p>X座標格線 : <kbd>x</kbd> 、 Y座標格線 : <kbd>y</kbd></p>
       <p>執行 : <kbd>Space</kbd>、<kbd>Enter</kbd></p>
       <p>選單: <kbd>Esc</kbd></p>
+      <h2>行動裝置觸碰方式</h2>
+      <p>上 : 觸碰後往上滑 、 下 : 觸碰後往下滑 、 左 : 觸碰後往左滑 、 右 : 觸碰後往右邊滑</p>
+      <p>執行 : 螢幕下方處觸碰</p>
     </aircle>
     ,
     <aircle className="clearfix">

@@ -3580,5 +3580,37 @@
                   "w": 0,
                   "h": 416
             }
+      ],
+      "npc" : [
+            {
+                 "b" : "http://dkbo.github.io/images/man.png",
+                 "pX": 1550,    
+                 "pY": 800,     
+                 "aX": 1152,                                       
+                 "aY": 672,                                       
+                 "aW": 600,                                       
+                 "aH": 400,                                        
+                 "mX": 50,                                        
+                 "mY": 50,                                         
+                 "x" : 0,                                          
+                 "y" : 0,                                          
+                 "w" : 32,                                        
+                 "h" : 48,                                         
+                 "d" : 0,                                         
+                 "l" : 1,                                         
+                 "r" : 2,                                         
+                 "u" : 3,                                          
+                 "t" : 0,                                         
+                 "s" : 0,                                          
+                 "f" : 0,                                         
+                 "footSpeed":8,                                   
+                 "isR" : false,                                    
+                 "isU" : false,                                   
+                 "isD" : false,                                    
+                 "isL" : false,
+                 "isM" : false,
+                 "e" : 3                                    
+            }
+
       ]
 }
