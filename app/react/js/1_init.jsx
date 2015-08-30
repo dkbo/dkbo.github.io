@@ -1,5 +1,22 @@
-var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-var cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame || window.webkitCancelAnimationFrame || window.msCancelAnimationFrame;
+var requestAFrame = (function () {
+    return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            function (callback) {
+                return window.setTimeout(callback, 1000 / 60);
+            };
+})();
+var cancelAFrame = (function () {
+    return window.cancelAnimationFrame ||
+            window.webkitCancelAnimationFrame ||
+            window.mozCancelAnimationFrame ||
+            window.oCancelAnimationFrame ||
+            function (id) {
+                window.clearTimeout(id);
+            };
+})();
+console.log(window.cancelAnimationFrame)
 // init
 var init = {
   indexBox  : [ 
@@ -128,7 +145,7 @@ init.event = [
                            }
                          ]
               },
-              { name : "哆拉喵",
+              { name : "哆拉撞",
                 text : [ 
                           "作者太笨啦! NPC 碰撞有一堆 BUG，害我撞來撞去的。",
                           <span>如果人物卡住了就按 <kbd>0</kbd> 或 <kbd>1</kbd>直接傳送走吧!</span>

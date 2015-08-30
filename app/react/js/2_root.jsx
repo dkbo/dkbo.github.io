@@ -1020,7 +1020,7 @@ var Load = React.createClass({
 var Npc = React.createClass({
 fc : null,
 bc : null,
-animate : null,
+animate : 0,
 img : new Image(),
 /**npcJSON : function(){
 for(var i = 0; i< this.num;i++){
@@ -1150,7 +1150,7 @@ walk : function(){
         this.random(i);
       }
     }
-  this.animate = requestAnimationFrame(this.walk);
+  this.animate = requestAFrame(this.walk);
 },
 draw : function(i,turn){
   var n = init.npc[i];
@@ -1289,11 +1289,13 @@ componentWillMount : function(){
 componentDidMount : function(){
   this.fc = document.getElementById("fnpc").getContext('2d');
   this.sc = document.getElementById("snpc").getContext('2d');
-  this.animate = requestAnimationFrame(this.walk);
+  this.animate = requestAFrame(this.walk);
 },
 componentWillUnmount : function(){
   init.npc= [];
-  window.cancelAnimationFrame(this.animate);
+  console.log(cancelAFrame)
+  cancelAFrame(this.animate);
+
 },
 render : function(){
   return(
