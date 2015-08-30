@@ -926,7 +926,7 @@ menuRightWheel : function(e){
         <div className="man-container" style={{WebkitTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",msTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",transform : "translate3D("+s.left+"px,"+s.top+"px,0)",width : s.mapSizeX*init.man.sizeX,height : s.mapSizeY*init.man.sizeY,backgroundPosition : s.manMoveAnimate*init.man.sizeX+"px "+s.manMoveImg*init.man.sizeY+"px"}} ></div>
         <canvas id="grid" width={s.map.col} height={s.map.row} />
         <canvas id="firstCanvas" width={s.map.col} height={s.map.row} />
-        <Npc  x={s.x} y={s.y} width={s.map.col} height={s.map.row}  />
+        {s.mapFade ? <Npc  x={s.x} y={s.y} width={s.map.col} height={s.map.row}  /> : null}
         <canvas id="secondCanvas" width={s.map.col} height={s.map.row} /> 
       </div>
       { init.menuNav ?<nav id="menunav" className="s-hide">
