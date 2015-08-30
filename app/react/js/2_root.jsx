@@ -1055,10 +1055,11 @@ for(var i = 0; i< this.num;i++){
 },**/
 walk : function(){
   var pos = 12 ;
+  var l = init.npc ? init.npc.length : 0;
   this.fc.clearRect(0,0,this.props.width,this.props.height);
   this.sc.clearRect(0,0,this.props.width,this.props.height);
   var n;
-    for(var i=0;i<init.npc.length;i++){
+    for(var i=0;i<l;i++){
         n = init.npc[i];
         this.img.src = n.b; 
       if(n.isU && n.y > 0 || (n.isU && n.s > 0)){
@@ -1291,7 +1292,7 @@ componentDidMount : function(){
   this.animate = requestAnimationFrame(this.walk);
 },
 componentWillUnmount : function(){
-  init.npc.length = 0;
+  init.npc= [];
   window.cancelAnimationFrame(this.animate);
 },
 render : function(){
