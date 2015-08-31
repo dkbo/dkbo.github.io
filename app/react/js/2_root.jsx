@@ -35,8 +35,8 @@ var Root = React.createClass({
       manMoveAnimate: 0, //人物移動動作
       mapSizeX : 1, //地圖 X 大小
       mapSizeY : 1, //地圖 Y 大小
-      mapLeft: this.getManPosX(), //地圖 X 位移
-      mapTop: this.getManPosY(), //地圖 Y 位移
+      mapLeft: 0, //地圖 X 位移
+      mapTop: 0, //地圖 Y 位移
       mapAnimateSpeed: "0s", //地圖轉場速度
       mapFade : 0, //地圖轉場效果
       mapZindex: -1, //地圖前後層
@@ -119,29 +119,6 @@ var Root = React.createClass({
   // 返回當前地圖右 或 下 位移點
   getMoveRDPoint : function(x){
     return Math.floor(x/4*3) - Math.floor(x/4*3) % init.man.moveSpeed
-  },
-  // 返回初始人物位置及地圖 X 座標位移點
-  getManPosX : function(){
-    if(init.man.initPos.x > this.getMoveRDPoint(this.getWindowWidth())){
-      var x= Math.floor(window.innerWidth/2 - init.man.initPos.x - init.man.sizeX/2);
-      if(x % init.man.moveSpeed != 0)
-        x = x - (x % init.man.moveSpeed)
-        return x
-    }
-    else
-      return 0
-  },
-  // 返回初始人物位置及地圖 Y 座標位移點
-  getManPosY : function(){
-    
-    if(init.man.initPos.y > this.getMoveRDPoint(this.getWindowHeight())){
-      var  y = Math.floor(window.innerHeight/2 - init.man.initPos.y - init.man.sizeY/2);
-      if(y % init.man.moveSpeed != 0)
-        y = y - (y % init.man.moveSpeed);
-      return y
-    }
-    else
-      return 0
   },
   // 視窗改變時，返回改變人物位置及地圖 X 座標位移點
   getResizeManPosX : function(){
@@ -254,38 +231,38 @@ var Root = React.createClass({
         switch(e.keyCode){
           // 人物左移
           case 37:
-              init.control.left = true
+              init.control.left = true;
               break;
           case 65:
-              init.control.left = true 
+              init.control.left = true; 
               break;
           // 人物右移
           case 39:
-              init.control.right = true
+              init.control.right = true;
               break;
           case 68:
-              init.control.right = true 
+              init.control.right = true; 
               break;
           // 人物上移
           case 38:
-              init.control.up = true
+              init.control.up = true;
               break;
           case 87:
-              init.control.up = true
+              init.control.up = true;
               break;
           // 人物下移
           case 40:
-              init.control.down = true
+              init.control.down = true;
               break;
           case 83:
-              init.control.down = true
+              init.control.down = true;
               break;
           // 直接切換場景
           case 48:
-              this.handleMap(0,0)
+              this.handleMap(1,0);
               break;
           case 49:
-              this.handleMap(1,0)
+              this.handleMap(this.state.map.index,0);
               break;
           // 顯示X取消格線
           case 88:
@@ -932,9 +909,9 @@ menuRightWheel : function(e){
       : null }  
       <div id="map"  style={{opacity : s.mapFade ,zIndex : s.mapZindex ,background: s.map.bg,WebkitTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", msTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", transform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)",width: s.mapSizeX*s.map.col,height: s.mapSizeY*s.map.row}} >
         <canvas id="grid" width={s.map.col} height={s.map.row} />
-        <canvas id="firstCanvas" width={s.map.col} height={s.map.row} />
-        <canvas id="player" width={s.map.col} height={s.map.row} />
+        <canvas id="firstCanvas" width={s.map.col} height={s.map.row} />      
         <Npc  x={s.x} y={s.y} width={s.map.col} height={s.map.row}  />
+        <canvas id="player" width={s.map.col} height={s.map.row} />
         <canvas id="secondCanvas" width={s.map.col} height={s.map.row} /> 
       </div>
       { init.menuNav ?<nav id="menunav" className="s-hide">

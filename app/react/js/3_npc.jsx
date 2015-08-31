@@ -106,8 +106,8 @@ draw : function(i,turn){
   var n = init.npc[i];
   var a = Math.floor(init.npc[i].f/ n.footSpeed) % 4 * 32 ;
   var t = n.h * turn;
-  this.fc.drawImage(this.img,  a , t , n.w, n.h-24 ,n.pX,n.pY , n.w, n.h-24);
-  this.sc.drawImage(this.img,  a , t+24 , n.w, n.h-24 ,n.pX,n.pY+24 , n.w, n.h-24);
+  this.fc.drawImage(this.img,  a , t , n.w, n.h/2 ,n.pX,n.pY , n.w, n.h/2);
+  this.sc.drawImage(this.img,  a , t+n.h/2 , n.w, n.h/2 ,n.pX,n.pY+n.h/2 , n.w, n.h/2);
   if(n.isM){
   if ((n.s > 0 && turn == 0 && n.y < n.mY) || (n.s > 0 && turn == 1 && n.x > 0) || (n.s > 0 && turn == 2 && n.x < n.mX) || (n.s > 0 && turn == 3 && n.y > 0)){
     init.npc[i].f++;
@@ -360,9 +360,11 @@ init.menuText =
     ,
     <aircle className="clearfix">
       <h2>地圖拼圖</h2>
-      <p>來源 : <br /><a href="http://fc03.deviantart.net/fs26/i/2008/149/d/7/rpg_maker_xp_the_best_tileset_by_davide_86.png">www.deviantart.com/</a></p>
+      <p>來源 : <br /><a href="http://fc03.deviantart.net/fs26/i/2008/149/d/7/rpg_maker_xp_the_best_tileset_by_davide_86.png" target="_blank">www.deviantart.com/</a></p>
       <h2>人物拼圖</h2>
-      <p>來源 : <br /><a href="http://doraspace.web.fc2.com/file/image/material/xp/chara/dora_blu.png">doraspace.web.fc2.com</a></p>
+      <p>來源 : <br /><a href="http://doraspace.web.fc2.com/file/image/material/xp/chara/dora_blu.png" target="_blank">doraspace.web.fc2.com</a></p>
+      <p>來源 : <br /><a href="http://www.geocities.jp/kurororo4/looseleaf/" target="_blank">www.geocities.jp</a></p>
+      
     </aircle>
     ,
     <aircle className="clearfix">
