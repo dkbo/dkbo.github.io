@@ -2,7 +2,6 @@
 @import compass
 @import susy
 @import 'compass'
-$spriteMan: '/images/man.png'
 $spriteObject: '/images/rpg_maker_xp.png'
 $indexBg : '/images/mainbg.jpg'
 *
@@ -75,14 +74,7 @@ ul
   position: absolute
   top: 0
   left: 0
-.man-container
-  position: absolute
-  background: url($spriteMan)
-  top: 0
-  left: 0
-  color: white
-  z-index: 1
-#firstCanvas,#secondCanvas,#spritesOpacity,#grid,#fnpc,#snpc
+#firstCanvas,#secondCanvas,#spritesOpacity,#grid,#fnpc,#snpc,#player
   position: absolute
   top : 0
   left : 0
@@ -90,6 +82,8 @@ ul
   z-index : 3
 #firstCanvas,#fnpc
   z-index: 2
+#player
+  z-index: 1
 #secondCanvas,#snpc
   z-index: 0
 .chat

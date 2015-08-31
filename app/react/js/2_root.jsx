@@ -67,13 +67,13 @@ var Root = React.createClass({
       //判斷對話計次有無小於對話最大計次
       if(this.state.messageMax > this.state.messageNum){
       var x = this.state.messageNum +1
-      this.setState({messageNum : x,message: <p>{init.event[this.state.map.index][this.state.messageId].text[x]}</p> });
+      this.setState({messageNum : x,message: <p>{init.event[this.state.messageId].text[x]}</p> });
       }
       else
         this.initEvent();
         }
     else{
-      this.setState({messageId : x ,chatOpacity : 1,message: <p>{init.event[this.state.map.index][x].text[0]}</p>,messageName:init.event[this.state.map.index][x].name,messageNum:0,messageMax:init.event[this.state.map.index][x].text.length-1});
+      this.setState({messageId : x ,chatOpacity : 1,message: <p>{init.event[x].text[0]}</p>,messageName:init.event[x].name,messageNum:0,messageMax:init.event[x].text.length-1});
     }
   },
   eventSelect : function(x){
@@ -82,17 +82,17 @@ var Root = React.createClass({
       //判斷對話計次有無小於對話最大計次
       if(this.state.messageMax > this.state.messageNum){
     this.setState({messageNum : this.state.messageNum+1})
-    this.setState({message:<p>{init.event[this.state.map.index][x].select[this.state.chatSelectIndex].text[this.state.messageNum]}</p>});    
+    this.setState({message:<p>{init.event[x].select[this.state.chatSelectIndex].text[this.state.messageNum]}</p>});    
       }
       else
         this.initEvent();
     }
     else{
       var array = [];
-      for(var i=0;i<init.event[this.state.map.index][x].select.length;i++){ 
-        array.push({id: i, title : init.event[this.state.map.index][x].select[i].title})
+      for(var i=0;i<init.event[x].select.length;i++){ 
+        array.push({id: i, title : init.event[x].select[i].title})
       }
-      this.setState({chatSelectIndex : 0 ,chatSelectArray : array,messageId : x ,chatOpacity : 1,messageName:init.event[this.state.map.index][x].name,message:''})
+      this.setState({chatSelectIndex : 0 ,chatSelectArray : array,messageId : x ,chatOpacity : 1,messageName:init.event[x].name,message:''})
     }
   },
   handleChat : function(e){
@@ -100,7 +100,7 @@ var Root = React.createClass({
   },
   handleEventSelect : function(i){
     if(this.state.messageNum == -1)
-        this.setState({chatSelectArray :[],message:<p>{init.event[this.state.map.index][this.state.messageId].select[i].text[0]}</p>,messageNum:0,messageMax:init.event[this.state.map.index][this.state.messageId].select[i].text.length-1}); 
+        this.setState({chatSelectArray :[],message:<p>{init.event[this.state.messageId].select[i].text[0]}</p>,messageNum:0,messageMax:init.event[this.state.messageId].select[i].text.length-1}); 
     else{      
       this.eventSelect(this.state.messageId)
     }
@@ -184,7 +184,7 @@ var Root = React.createClass({
   },
   // 判斷人物是否可移動或是更換場景地圖
  isMove : function(posX,posY){
-   this.initEvent();
+   this.state.chatOpacity ? this.initEvent() : null;
    var x = init.move ?init.move : 0;
    var y = init.npc ? init.npc : 0;
    var ismove = true;
@@ -209,7 +209,7 @@ var Root = React.createClass({
    if(this.state.messageId == -1){
    for(var i = 0 ; i < x.length;i++){  
      if((x[i].sx <= this.state.x+init.man.sizeX+posX) && (this.state.x+posX <= x[i].ex) && (x[i].sy <= this.state.y+posY+init.man.sizeY) && (this.state.y+posY <= x[i].ey)){
-        if(init.event[this.state.map.index][x[i].ev].select){    
+        if(init.event[x[i].ev].select){    
           this.eventSelect(x[i].ev);
         }
         else
@@ -219,7 +219,7 @@ var Root = React.createClass({
    if(y){
     for(var i = 0 ; i < y.length;i++){
       if((y[i].pX <= this.state.x+init.man.sizeX+posX) && (this.state.x+posX <= y[i].w+y[i].pX) && (y[i].pY+24 <= this.state.y+posY+init.man.sizeY) && (this.state.y+posY <= 1+24+y[i].pY))
-        if(init.event[this.state.map.index][y[i].e].select){    
+        if(init.event[y[i].e].select){    
           this.eventSelect(y[i].e);
         }
         else
@@ -474,6 +474,7 @@ handleMap : function(x,y){
 handleStart : function(){
     this.AjaxLoad(this.state.map.index,function(){
      this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0,map:init.maps});
+     this.handleResize();
   this.drawObject(function(){ 
     init.menuNav = true;
       this.setState({mapFade : 1})
@@ -490,6 +491,7 @@ AjaxLoad : function(cm,callback){
       console.log("Ajax Error");
     },
     success: function(response) {
+      $.getScript(init.evtUrl[cm]);
       init.maps = response.map;
       init.npc  = response.npc;
       this.AjaxProcessObject(response.styles);
@@ -602,23 +604,26 @@ componentWillMount : function(){
 //所有DOM 已經載入時
 componentDidMount: function () {
     var canvas = document.getElementById('grid');
+    var playerCanvas = document.getElementById('player');
     var firstCanvas = document.getElementById('firstCanvas');
     var secondCanvas = document.getElementById('secondCanvas');
     init.context = canvas.getContext('2d');
     init.fcontext = firstCanvas.getContext('2d');
     init.scontext = secondCanvas.getContext('2d');
+    init.player =  playerCanvas.getContext('2d');
     $(window).on('load',this.handleLoad);
     $(window).on('resize',this.handleResize);
     $(window).on('keydown',this.handleKeyDown);
     $(window).on('keyup',this.handleKeyUp);
-    this.timer = setInterval(this.move.bind(this), init.man.moveSetInterVal);
+    $.ajaxSetup({cache: true});
+    this.timer = requestAFrame(this.move.bind(this));
   },
 //所有DOM將移除時
  componentWillUnmount : function(){
     $(window).off('resize',this.handleResize);
     $(window).off('keydown',this.handleKeyDown);
     $(window).off('keyup',this.handleKeyUp);
-    clearInterval(this.timer)
+    cancelAFrame(this.timer);
   },
 //返回平板 / 手機裝置的 XY 座標
 getTouchPos : function(e){
@@ -769,24 +774,25 @@ drawGridY : function(){
 //人物移動動作
 moveAnimate : function(){
   switch(this.state.manMoveImg){
-           case 3:
+           case 1:
             this.isEvents(this.props.left,0);
             break;
            case 2:
             this.isEvents(this.props.right,0);
             break;
-           case 1:
+           case 3:
             this.isEvents(0,this.props.up);
             break;
-           case 4:
+           case 0:
             this.isEvents(0,this.props.down);
             break; 
          }
 },
 //人物移動事件
 move : function(){
-
   var c = this.state;
+  if(c.mapFade){
+    init.player.clearRect(0,0,init.maps.col, init.maps.row);
   var p = this.props;
   var ctl = init.control;
   var map = init.map;
@@ -796,13 +802,13 @@ move : function(){
     init.man.spriteSpeed < init.man.spriteSpeedCount ? init.man.spriteSpeed++ : init.man.spriteSpeed=0;
   }
   if(ctl.left)
-    this.setState({manMoveImg: 3});
+    this.setState({manMoveImg: 1});
   if(ctl.right)
     this.setState({manMoveImg: 2});
   if(ctl.up)
-    this.setState({manMoveImg: 1});
+    this.setState({manMoveImg: 3});
   if(ctl.down)
-    this.setState({manMoveImg: 4});
+    this.setState({manMoveImg: 0});
   if(ctl.left && c.x > p.min ){
     var isL = this.isMove(p.left,0);
      if(isL){
@@ -861,6 +867,9 @@ move : function(){
   if(map.down){
     this.setState({mapTop: c.mapTop-p.down});
   }
+  init.player.drawImage(init.man.sprite,  this.state.manMoveAnimate*init.man.sizeX, this.state.manMoveImg*init.man.sizeY , init.man.sizeX, init.man.sizeY ,this.state.x, this.state.y , init.man.sizeX, init.man.sizeY);
+  }
+  this.timer = requestAFrame(this.move.bind(this));
 },
 menuItem : function(menuItem) {
     if(this.state.menuIndex == menuItem.id)
@@ -923,10 +932,11 @@ menuRightWheel : function(e){
       </div>
       : null }  
       <div id="map"  style={{opacity : s.mapFade ,zIndex : s.mapZindex ,background: s.map.bg,WebkitTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", msTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", transform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)",width: s.mapSizeX*s.map.col,height: s.mapSizeY*s.map.row}} >
-        <div className="man-container" style={{WebkitTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",msTransform : "translate3D("+s.left+"px,"+s.top+"px,0)",transform : "translate3D("+s.left+"px,"+s.top+"px,0)",width : s.mapSizeX*init.man.sizeX,height : s.mapSizeY*init.man.sizeY,backgroundPosition : s.manMoveAnimate*init.man.sizeX+"px "+s.manMoveImg*init.man.sizeY+"px"}} ></div>
+        
         <canvas id="grid" width={s.map.col} height={s.map.row} />
         <canvas id="firstCanvas" width={s.map.col} height={s.map.row} />
-        {s.mapFade ? <Npc  x={s.x} y={s.y} width={s.map.col} height={s.map.row}  /> : null}
+        <canvas id="player" width={s.map.col} height={s.map.row} />
+        <Npc  x={s.x} y={s.y} width={s.map.col} height={s.map.row}  />
         <canvas id="secondCanvas" width={s.map.col} height={s.map.row} /> 
       </div>
       { init.menuNav ?<nav id="menunav" className="s-hide">
@@ -1017,293 +1027,3 @@ var Load = React.createClass({
   )
   }
 });
-var Npc = React.createClass({
-fc : null,
-bc : null,
-animate : 0,
-img : new Image(),
-/**npcJSON : function(){
-for(var i = 0; i< this.num;i++){
-    this.NPC.push({
-    imgSrc : "http://dkbo.github.io/images/man.png",// NPC Sprites URL
-    pX: 1550+Math.floor(Math.random()*300 -150),    // X Pos
-    pY: 800+Math.floor(Math.random()*300 -150),     // y pos
-    aX: 1152,                                       // x Area
-    aY: 672,                                        // y Area
-    aW: 600,                                        //isMove Width Area
-    aH: 400,                                        //isMove Height Area
-    mX: 50,                                         // x Max
-    mY: 50,                                         // y Max
-    x : 0,                                          // x Move
-    y : 0,                                          // y Move
-    w : 32,                                         // NPC Width
-    h : 48,                                         // NPC Height
-    d : 0,                                          // NPC Down Sprites Pos
-    l : 1,                                          // NPC Up Sprites Pos
-    r : 2,                                          // NPC Right Sprites Pos
-    u : 3,                                          // NPC Left Sprites Pos
-    t : 0,                                          // NPC Turn 
-    s : 0,                                          // NPC Stop  
-    f : 0,                                          // NPC animate   ##DONT CHANGE
-    footSpeed:8,                                    // NPC Sprites Animate Speed
-    isR : false,                                    // Is Move Right
-    isU : false,                                    // Is Move Up
-    isD : false,                                    // Is Move Down
-    isL : false                                     // Is Move Left
-})
-}
-},**/
-walk : function(){
-  var pos = 12 ;
-  var l = init.npc ? init.npc.length : 0;
-  this.fc.clearRect(0,0,this.props.width,this.props.height);
-  this.sc.clearRect(0,0,this.props.width,this.props.height);
-  var n;
-    for(var i=0;i<l;i++){
-        n = init.npc[i];
-        this.img.src = n.b; 
-      if(n.isU && n.y > 0 || (n.isU && n.s > 0)){
-        if((this.props.x <= n.pX+n.w -pos) && (n.pX-pos <= init.man.sizeX+this.props.x) && (this.props.y+24 <= n.pY-pos+n.h) && (n.pY-pos <= 1+this.props.y+24)){
-          init.npc[i].isM = false;
-          this.draw(i,n.u);
-        }
-        else{
-          init.npc[i].isM = true;
-        if(n.aY <= n.pY && (n.aX + n.aW) >= n.pX && n.aX <= n.pX  )
-            this.draw(i,n.u);
-        else{
-            init.npc[i].isU = false;
-            init.npc[i].isL = false;
-            init.npc[i].isR = false;
-            init.npc[i].s = 0;
-        }
-      }
-      }
-
-      else if(n.isU && n.y == 0)
-        init.npc[i].isU = false;
-
-      if(n.isD && n.y < n.mY || (n.isD && n.s > 0 )){
-        if((this.props.x <= n.pX+n.w +pos) && (n.pX+pos <= init.man.sizeX+this.props.x) && (this.props.y+24 <= n.pY+pos+n.h) && (n.pY+pos <= 1+this.props.y+24)){
-          init.npc[i].isM = false;
-          this.draw(i,n.d);
-        }
-        else{
-          init.npc[i].isM = true;
-        if((n.aY + n.aH) >= n.pY  && (n.aX + n.aW) >= n.pX && n.aX <= n.pX  )
-            this.draw(i,n.d);
-        else{
-            init.npc[i].isD = false;
-            init.npc[i].isL = false;
-            init.npc[i].isR = false;
-            init.npc[i].s = 0;
-        }
-      }
-      }
-      else if(n.isD && n.y == n.mY)
-        init.npc[i].isD = false;
-
-      if(n.isR && n.x < n.mX || (n.isR && n.s > 0)){
-        if(n.t != 5 && n.t != 7){
-        if((this.props.x <= n.pX+n.w +pos) && (n.pX+pos <= init.man.sizeX+this.props.x) && (this.props.y+24 <= n.pY+pos+n.h) && (n.pY+pos <= 1+this.props.y+24)){
-          init.npc[i].isM = false;
-          this.draw(i,n.r);
-        }
-        else{
-          init.npc[i].isM = true;
-        
-        if((n.aX + n.aW) >= n.pX )
-            this.draw(i,n.r);
-        else{
-            init.npc[i].isR = false;
-            init.npc[i].s = 0;
-        }
-        }
-      }
-    }
-      else if(n.isR && n.x == n.mX)
-        init.npc[i].isR = false; 
-
-
-      if(n.isL && n.x > 0 || (n.isL && n.s > 0)){
-        if(n.t != 4 && n.t != 6){
-        if((this.props.x <= n.pX+n.w -pos) && (n.pX-pos <= init.man.sizeX+this.props.x) && (this.props.y+24 <= n.pY-pos+n.h) && (n.pY-pos <= 1+this.props.y+24)){
-          init.npc[i].isM = false;
-          this.draw(i,n.l);
-        }
-        else{
-          init.npc[i].isM = true;
-        
-         if(n.aX <= n.pX )
-            this.draw(i,n.l);
-        else{
-            init.npc[i].isL = false;
-            init.npc[i].s = 0;
-        }
-      }
-      }
-      }     
-      else if(n.isL && n.x == 0)
-        init.npc[i].isL = false;
-      
-      if(!n.isL && !n.isD && !n.isU && !n.isR && init.npc[i].s == 0){
-        this.random(i);
-      }
-    }
-  this.animate = requestAFrame(this.walk);
-},
-draw : function(i,turn){
-  var n = init.npc[i];
-  var a = Math.floor(init.npc[i].f/ n.footSpeed) % 4 * 32 ;
-  var t = n.h * turn;
-  this.fc.drawImage(this.img,  a , t , n.w, n.h-24 ,n.pX,n.pY , n.w, n.h-24);
-  this.sc.drawImage(this.img,  a , t+24 , n.w, n.h-24 ,n.pX,n.pY+24 , n.w, n.h-24);
-  if(n.isM){
-  if ((n.s > 0 && turn == 0 && n.y < n.mY) || (n.s > 0 && turn == 1 && n.x > 0) || (n.s > 0 && turn == 2 && n.x < n.mX) || (n.s > 0 && turn == 3 && n.y > 0)){
-    init.npc[i].f++;
-    this.process(i);
-  }
-  else{
-    init.npc[i].s--;
-    init.npc[i].f = 0;
-  }
-}
-},
-process : function(i){
-  switch(init.npc[i].t){
-    case 0:
-      init.npc[i].y--;
-      init.npc[i].pY--;
-      break;
-    case 1:
-      init.npc[i].x++;
-      init.npc[i].pX++;
-      break;
-    case 2:
-      init.npc[i].y++;
-      init.npc[i].pY++;
-      break;
-    case 3:
-      init.npc[i].x--;
-      init.npc[i].pX--;
-      break;
-    case 4:
-      init.npc[i].y--;
-      init.npc[i].pY--;
-      init.npc[i].x--;
-      init.npc[i].pX--;
-      break;
-    case 5:
-      init.npc[i].y--;
-      init.npc[i].pY--;  
-      init.npc[i].x++;
-      init.npc[i].pX++;
-      break;
-    case 6:
-      init.npc[i].y++;
-      init.npc[i].pY++;
-      init.npc[i].x--;
-      init.npc[i].pX--;
-      break;
-    case 7:
-      init.npc[i].y++;
-      init.npc[i].pY++;  
-      init.npc[i].x++;
-      init.npc[i].pX++;
-      break;  
-  
-  }
-},
-random : function(i){
-  var r = Math.floor(Math.random()*80)%8;
-  var rw = Math.floor(Math.random()*100)+10;
-  init.npc[i].s = Math.floor(Math.random()*100)+1;
-  switch(r){
-    case 0:
-      init.npc[i].isU = true;
-      init.npc[i].y = rw;
-      init.npc[i].t = 0;
-      this.draw(i,init.npc[i].u);
-      break;  
-    case 1:
-      init.npc[i].isR = true;
-      init.npc[i].mX = rw;
-      init.npc[i].x = 0;
-      init.npc[i].t = 1;
-      this.draw(i,init.npc[i].r);
-      break; 
-    case 2:
-      init.npc[i].isD = true;
-      init.npc[i].mY = rw;
-      init.npc[i].y = 0;
-      init.npc[i].t = 2;
-      this.draw(i,init.npc[i].d);
-      break;
-    case 3:
-      init.npc[i].isL = true;
-      init.npc[i].x = rw;
-      init.npc[i].t = 3;
-      this.draw(i,init.npc[i].l);
-      break;
-    case 4:
-      init.npc[i].isU = true;
-      init.npc[i].isL = true;
-      init.npc[i].y = rw;
-      init.npc[i].x = rw;
-      init.npc[i].t = 4;
-      this.draw(i,init.npc[i].l);
-      break;  
-    case 5:
-      init.npc[i].isU = true;
-      init.npc[i].isR = true;
-      init.npc[i].y = rw;
-      init.npc[i].mX = rw;
-      init.npc[i].x = 0;
-      init.npc[i].t = 5;
-      this.draw(i,init.npc[i].r);
-      break; 
-    case 6:
-      init.npc[i].isD = true;
-      init.npc[i].isL = true;
-      init.npc[i].mY = rw;
-      init.npc[i].y = 0;
-      init.npc[i].x = rw;
-      init.npc[i].t = 6;
-      this.draw(i,init.npc[i].l);
-      break;
-    case 7:
-      init.npc[i].isD = true;  
-      init.npc[i].isR = true;
-      init.npc[i].mX = rw;
-      init.npc[i].x = 0;
-      init.npc[i].mY = rw;
-      init.npc[i].y = 0;
-      init.npc[i].t = 7;
-      this.draw(i,init.npc[i].r);
-      break;       
-  }
-},
-componentWillMount : function(){
-    // this.npcJSON();
-},
-componentDidMount : function(){
-  this.fc = document.getElementById("fnpc").getContext('2d');
-  this.sc = document.getElementById("snpc").getContext('2d');
-  this.animate = requestAFrame(this.walk);
-},
-componentWillUnmount : function(){
-  init.npc= [];
-  console.log(cancelAFrame)
-  cancelAFrame(this.animate);
-
-},
-render : function(){
-  return(
-  <div x={this.props.x} y={this.props.y} >
-    <canvas id="fnpc" width={this.props.width}  height={this.props.height} />
-    <canvas id="snpc" width={this.props.width}  height={this.props.height} />
-    </div>
-  )
-}
-});
-var rt = React.render(<Root  />,document.body)

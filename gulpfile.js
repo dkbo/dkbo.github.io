@@ -52,6 +52,13 @@ gulp.task('react', function() {
           .pipe(notify({ message: 'Reactjs task ok' }))
           .pipe(livereload());
 });
+gulp.task('reactE', function() { 
+     gulp.src('app/events/react/*.jsx') 
+          .pipe(react()) 
+          .pipe(uglify())
+          .pipe(gulp.dest('events'))
+          .pipe(notify({ message: 'ReactEjs task ok' }))
+});
 gulp.task('compass', function() {
   gulp.src('app/sass/**/*.sass')
   .pipe(compass({
@@ -85,9 +92,10 @@ gulp.task('watch', function () {
   gulp.watch('app/sass/**/*.sass', ['compass']);
   gulp.watch('app/coffeescripts/**/*.coffee', ['coffee']);
   gulp.watch('app/react/**/*.jsx', ['react']);
+  gulp.watch('app/events/react/*.jsx', ['reactE']);
   gulp.watch('app/images/**/*', ['images']);
   livereload.listen();
 });
  // Default task
-gulp.task('default', ['jade','compass','coffee','react','webserver','watch'])
+gulp.task('default', ['jade','compass','coffee','react','reactE','webserver','watch'])
 
