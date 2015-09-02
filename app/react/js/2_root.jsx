@@ -591,7 +591,7 @@ componentDidMount: function () {
     $(window).on('resize',this.handleResize);
     $(window).on('keydown',this.handleKeyDown);
     $(window).on('keyup',this.handleKeyUp);
-    $.ajaxSetup({cache: true});
+    $.ajaxSetup({cache: false});
     this.timer = requestAFrame(this.move.bind(this));
   },
 //所有DOM將移除時

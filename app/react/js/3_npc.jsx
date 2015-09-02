@@ -293,6 +293,11 @@ init.menuText =
       <h2>紀錄條</h2>
       <ul>
         <li>
+          <date>2015/09/02</date>
+          <p>練習<mark>Socket.io</mark>順便就把現成的單機版Clone 去 Heroku 變成了很陽春的<a href="http://dkbo-rpg-online.herokuapp.com/" target="_blank">線上互動版</a>，只是遊戲開發經驗 0 的我不知道如何去優化，所以就當作試試水溫。聊天框也沒有去做特別的處理也沒有<mark>RWD</mark>，所以別傷到眼睛了。最近可能要慢慢的把整個架構的程式在重寫了。淚</p>
+        </li>
+        <br />
+        <li>
           <date>2015/08/31</date>
           <p>遊戲呈現的部分原本是 <code>div</code> 配上 <code>translate3D</code>去做位移呈現，現在全部轉換成 <code>Canvas</code> 呈現畫面。在計時的部分有看到<a href="https://msdn.microsoft.com/zh-tw/library/Hh920765(v=VS.85).aspx" target="_blank">此篇文章</a>所以都轉換成 <code>requestAnimationFrame</code> 呈現動畫。部分 JSX 資料抽離，並透過 $.getScript 來取出。</p>
         </li>

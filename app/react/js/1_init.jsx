@@ -94,7 +94,7 @@ function player(){
 
 }
 function mapUrl(){
-  var os = "//dkbo.github.io/objects/"
+  var os = "objects/"
   var o  = "_obj";
   var id = ["0000","0001","0002","0003"];
   var type = ".json";
@@ -104,7 +104,7 @@ function mapUrl(){
   return maps
 }
 function evtUrl(){
-  var os = "//dkbo.github.io/events/"
+  var os = "events/"
   var o  = "_obj";
   var id = ["0000","0001","0002","0003"];
   var type = ".js";

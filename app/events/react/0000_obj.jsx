@@ -33,7 +33,8 @@ init.event = [{ name : "稻草人",
                               id : 1,
                               title : "關於作者",
                               text : [ 
-                                      <span>作者本名叫 盧宏寶 在家排名老二，畢業於高雄市正修科技大學電機工程系，在網路世界中暱稱為 DKBO，<del>目前已婚有一子</del></span>
+                                      <span>作者本名叫 盧宏寶 在家排名老二，畢業於高雄市正修科技大學電機工程系，在網路世界中暱稱為 DKBO，<del>目前已婚有一子</del></span>,
+                                      "英語聽、說很差讀，美感不好，正在努力中。"
                                     ]
                            }
                          ]
@@ -41,7 +42,8 @@ init.event = [{ name : "稻草人",
               { name : "哆拉撞",
                 text : [ 
                           "作者太笨啦! NPC 碰撞有一堆 BUG，害我撞來撞去的。",
-                          <span>如果人物卡住了就按 <kbd>0</kbd> 或 <kbd>1</kbd>直接傳送走吧!</span>
+                          <span>如果人物卡住了就按 <kbd>0</kbd> 或 <kbd>1</kbd>直接傳送走吧!</span>,
+                          <span>如果想要體驗多人互動的話可以<a href="http://dkbo-rpg-online.herokuapp.com/">來這裡</a>，前提是你要經得起眼睛的考驗。</span>
                        ]
               }];
             
