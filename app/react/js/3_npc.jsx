@@ -294,7 +294,7 @@ init.menuText =
       <ul>
         <li>
           <date>2015/09/02</date>
-          <p>練習<mark>Socket.io</mark>順便就把現成的單機版Clone 去 Heroku 變成了很陽春的<a href="http://dkbo-chat.herokuapp.com/" target="_blank">線上互動版</a>，只是遊戲開發經驗 0 的我不知道如何去優化，所以就當作試試水溫。聊天框也沒有去做特別的處理也沒有<mark>RWD</mark>，所以別傷到眼睛了。最近可能要慢慢的把整個架構的程式在重寫了。淚</p>
+          <p>練習<mark>Socket.io</mark>順便就把現成的單機版Clone 去 Heroku 變成了很陽春的<a href="http://dkbo-rpg-online.herokuapp.com/" target="_blank">線上互動版</a>，只是遊戲開發經驗 0 的我不知道如何去優化，所以就當作試試水溫。聊天框也沒有去做特別的處理也沒有<mark>RWD</mark>，所以別傷到眼睛了。最近可能要慢慢的把整個架構的程式在重寫了。淚</p>
         </li>
         <br />
         <li>
