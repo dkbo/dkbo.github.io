@@ -52,7 +52,6 @@ var Root = React.createClass({
       messageName: false, // 當前對話人
       messageNum: -1, //對話計次
       messageMax: -1, //對話最大計次
-      menuIndex : 0,
       menuDisplay : false
     }
   },
@@ -288,20 +287,7 @@ var Root = React.createClass({
             case 27:
               this.initEvent();
               this.showMenu();
-              break;
-            case 38:
-              this.handleMenuIndexMove(-1);
-              break;
-            case 87:
-              this.handleMenuIndexMove(-1);
-              break;
- 
-            case 40:
-              this.handleMenuIndexMove(1);
-              break;
-            case 83:
-              this.handleMenuIndexMove(1);
-              break;      
+              break;    
           }
     }
     else{
@@ -556,13 +542,6 @@ handleIndexBoxMove : function(x){
      x = 2
    }
    this.setState({indexBox : x})
-},
-//處理選單選項移動
-handleMenuIndexMove : function(x){
-  var val = x + this.state.menuIndex;
-   if( val >= 0 && val < init.menuTitle.length){
-   this.menuSelect(val);
-}
 },
 //處理 NPC 聊天選取
 chatSelectMove : function(x){
@@ -828,17 +807,6 @@ move : function(){
   init.player.drawImage(init.man.sprite,  this.state.manMoveAnimate*init.man.sizeX, this.state.manMoveImg*init.man.sizeY , init.man.sizeX, init.man.sizeY ,this.state.x, this.state.y , init.man.sizeX, init.man.sizeY);
   }
   this.timer = requestAFrame(this.move.bind(this));
-},
-//選單選項載入
-menuItem : function(menuItem) {
-    if(this.state.menuIndex == menuItem.id)
-      return <li className="xx-dark-text-shadow" style={{borderColor : "white"}}>{menuItem.title}</li>;
-    else
-      return <li className="xx-dark-text-shadow" style={{borderColor : "transparent"}}onClick={this.menuSelect.bind('null',menuItem.id)}>{menuItem.title}</li>;
-},
-//選單
-menuSelect : function(x){
- this.setState({menuIndex : x , menuRightBoxWheel : 0});
 },
 //首頁選項載入
 indexBox : function(item) {

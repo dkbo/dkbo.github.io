@@ -2,8 +2,27 @@ var Menu = React.createClass({
 getInitialState : function(){
     return {
       menuRightBoxWheel: 0,
-      menuLeftBoxWheel: 0
+      menuLeftBoxWheel: 0,
+      menuIndex: 0
     }
+},
+//選單選項載入
+menuItem : function(menuItem) {
+    if(this.state.menuIndex == menuItem.id)
+      return <li className="xx-dark-text-shadow" style={{borderColor : "white"}}>{menuItem.title}</li>;
+    else
+      return <li className="xx-dark-text-shadow" style={{borderColor : "transparent"}}onClick={this.menuSelect.bind('null',menuItem.id)}>{menuItem.title}</li>;
+},
+//選單
+menuSelect : function(x){
+ this.setState({menuIndex : x , menuRightBoxWheel : 0});
+},
+//處理選單選項移動
+handleMenuIndexMove : function(x){
+  var val = x + this.state.menuIndex;
+   if( val >= 0 && val < init.menuTitle.length){
+   this.menuSelect(val);
+}
 },
 menuRightWheel : function(e){
   var scrollSpeed = 32;
@@ -36,18 +55,42 @@ menuLeftTouchMove : function(e){
     this.setState({menuLeftBoxWheel: this.state.menuLeftBoxWheel+x});
   }
 },
+handleKeyDown : function(e){
+          if(this.props.s.menuDisplay){
+          switch(e.keyCode){
+            case 38:
+              this.handleMenuIndexMove(-1);
+              break;
+            case 87:
+              this.handleMenuIndexMove(-1);
+              break;
+            case 40:
+              this.handleMenuIndexMove(1);
+              break;
+            case 83:
+              this.handleMenuIndexMove(1);
+              break;
+      }
+    }
+},
+componentDidMount: function () {
+    $(window).on('keydown',this.handleKeyDown);
+},
+componentWillUnmount : function(){
+    $(window).off('keydown',this.handleKeyDown);
+},
     render : function(){
       var s = this.props.s;
       return(
         <div id="menu">
           <div id="left" className="col xx12 s3 xx-np xx-ng" onTouchMove={this.menuLeftTouchMove} >
             <ul style={transform("translateX("+this.state.menuLeftBoxWheel+"px)")}>
-              {init.menuTitle.map(this.props.menuItem)}
+              {init.menuTitle.map(this.menuItem)}
             </ul>
           </div>
           <div id="right" className="col xx12 s9 xx-np xx-ng" ref="right" onTouchMove={this.menuRightTouchMove}>
             <div id="rightBox" onWheel={this.menuRightWheel} ref="rightBox" style={transform("translateY("+this.state.menuRightBoxWheel+"px)")}>
-              {init.menuText[s.menuIndex]}
+              {init.menuText[this.state.menuIndex]}
             </div>
           </div>
         </div>
