@@ -68,7 +68,6 @@ var init = {
     x : 0,
     y : 0
  },
- menuNav: false,
  preImg : [],
  objects : [],
  events : [],

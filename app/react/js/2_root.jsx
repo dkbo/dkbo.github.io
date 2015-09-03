@@ -44,6 +44,7 @@ var Root = React.createClass({
       isMoveRight: this.getMoveRDPoint(this.getWindowWidth()), //地圖右位移點
       isMoveUp: this.getMoveLUPoint(this.getWindowHeight()), //地圖上位移點
       isMoveDown: this.getMoveRDPoint(this.getWindowHeight()), //地圖下位移點
+      menuNav: false,
       chatOpacity : 0, //對話框透明度
       chatSelectArray : [], //對話框選項
       chatSelectIndex : -1, //對話框節點
@@ -433,9 +434,7 @@ handleStart : function(){
      this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0,map:init.maps});
      this.handleResize();
   this.drawObject(function(){ 
-    init.menuNav = true;
-      this.setState({mapFade : 1})
-
+      this.setState({mapFade : 1,menuNav:true})
     }.bind(this));
   }.bind(this));
 },
@@ -849,7 +848,7 @@ render : function (){
     <div  id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
       {s.mapZindex == -1  ? <Index indexBox={this.indexBox} s={s} />: null } 
       <Map s={s} /> //地圖
-      {init.menuNav ?<MenuNav showMenu={this.showMenu} />: null} //選單
+      {s.menuNav ?<MenuNav showMenu={this.showMenu} />: null} //選單
       {s.mapZindex != -1  ? <NPCMessage  handleChat={this.handleChat} chatArray={this.chatArray} s={s}/> : null}//NPC訊息
       {s.menuDisplay ? <Menu getTouchPos={this.getTouchPos} menuItem={this.menuItem} s={s}/>: null} //選單視窗
       {s.loadProcess ? <Load /> : null }//讀取畫面
