@@ -74,7 +74,7 @@ var init = {
  firstCanvas : [],
  secondCanvas : [],
  move : [],
- npc : [],
+ npc : []
 }
     // "n": 物件名
     // "l": 物件 X 位置

@@ -1,4 +1,5 @@
 // 根
+var t = 0;
 var Root = React.createClass({
     getDefaultProps: function() {
     return {
@@ -23,8 +24,6 @@ var Root = React.createClass({
               col : 0,
               row : 0
             },
-      windowWidth: window.innerWidth, //視窗寬度
-      windowHeight: window.innerHeight, //視窗高度
       gridX : false, // X 格線
       gridY : false, // Y 格線
       x : init.man.initPos.x, //人物 X 座標
@@ -40,10 +39,10 @@ var Root = React.createClass({
       mapAnimateSpeed: "0s", //地圖轉場速度
       mapFade : 0, //地圖轉場效果
       mapZindex: -1, //地圖前後層
-      isMoveLeft: this.getMoveLUPoint(this.getWindowWidth()), //地圖左位移點
-      isMoveRight: this.getMoveRDPoint(this.getWindowWidth()), //地圖右位移點
-      isMoveUp: this.getMoveLUPoint(this.getWindowHeight()), //地圖上位移點
-      isMoveDown: this.getMoveRDPoint(this.getWindowHeight()), //地圖下位移點
+      isMoveLeft: 0, //地圖左位移點
+      isMoveRight: 0, //地圖右位移點
+      isMoveUp: 0, //地圖上位移點
+      isMoveDown: 0, //地圖下位移點
       menuNav: false,
       chatOpacity : 0, //對話框透明度
       chatSelectArray : [], //對話框選項
@@ -78,8 +77,7 @@ var Root = React.createClass({
     if(this.state.messageId !=-1){
       //判斷對話計次有無小於對話最大計次
       if(this.state.messageMax > this.state.messageNum){
-    this.setState({messageNum : this.state.messageNum+1})
-    this.setState({message:<p>{init.event[x].select[this.state.chatSelectIndex].text[this.state.messageNum]}</p>});    
+        this.setState({messageNum : this.state.messageNum+1,message:<p>{init.event[x].select[this.state.chatSelectIndex].text[this.state.messageNum+1]}</p>})
       }
       else
         this.initEvent();
@@ -102,26 +100,14 @@ var Root = React.createClass({
       this.eventSelect(this.state.messageId)
     }
   },
-  // 返回當前視窗寬度
-  getWindowWidth : function(){
-    return window.innerWidth
-  },
-  // 返回當前視窗高度
-  getWindowHeight : function(){
-    return window.innerHeight
-  },
   // 返回當前地圖左 或 上 位移點
-  getMoveLUPoint : function(x){
-    return Math.floor(x/4) - Math.floor(x/4) % init.man.moveSpeed
-  },
-  // 返回當前地圖右 或 下 位移點
-  getMoveRDPoint : function(x){
-    return Math.floor(x/4*3) - Math.floor(x/4*3) % init.man.moveSpeed
+  getMovePoint : function(x,n){
+    return Math.floor(x/4*n) - Math.floor(x/4*n) % init.man.moveSpeed
   },
   // 視窗改變時，返回改變人物位置及地圖 X 座標位移點
   getResizeManPosX : function(){
     if(window.innerWidth - init.maps.col < 0){
-    if(this.state.x > this.getMoveRDPoint(this.getWindowWidth())){
+    if(this.state.x > this.getMovePoint(window.innerWidth,3)){
       var x = Math.floor(window.innerWidth/2 - this.state.x - init.man.sizeX/2);
       if(window.innerWidth >  x + init.maps.col)
         x =  window.innerWidth - init.maps.col;
@@ -140,7 +126,7 @@ var Root = React.createClass({
   // 視窗改變時，返回改變人物位置及地圖 Y 座標位移點
   getResizeManPosY : function(){
     if(window.innerHeight - init.maps.row <0){
-    if(this.state.y > this.getMoveRDPoint(this.getWindowHeight())){
+    if(this.state.y > this.getMovePoint(window.innerHeight,3)){
       var  y = Math.floor(window.innerHeight/2 - this.state.y - init.man.sizeY/2);
     if(window.innerHeight >  y + init.maps.row)
         y =  window.innerHeight - init.maps.row;
@@ -405,14 +391,13 @@ downStopMove : function(){
 },
 //處理視窗大小改變時的事件
 handleResize : function(){
-  this.setState({windowWidth: this.getWindowWidth(),
-                 windowHeight: this.getWindowHeight(),
-                 isMoveLeft: this.getMoveLUPoint(this.getWindowWidth()),
-                 isMoveRight: this.getMoveRDPoint(this.getWindowWidth()),
-                 isMoveUp: this.getMoveLUPoint(this.getWindowHeight()),
-                 isMoveDown: this.getMoveRDPoint(this.getWindowHeight()),
+  this.setState({isMoveLeft: this.getMovePoint(window.innerWidth,1),
+                 isMoveRight: this.getMovePoint(window.innerWidth,3),
+                 isMoveUp: this.getMovePoint(window.innerHeight,1),
+                 isMoveDown: this.getMovePoint(window.innerHeight,3),
                  mapLeft: this.getResizeManPosX(),
-                 mapTop: this.getResizeManPosY()})
+                 mapTop: this.getResizeManPosY(),
+                 menuNav: window.innerWidth < 768 ? true : false })
 },
 //處理地圖事件
 handleMap : function(x,y){
@@ -434,7 +419,7 @@ handleStart : function(){
      this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0,map:init.maps});
      this.handleResize();
   this.drawObject(function(){ 
-      this.setState({mapFade : 1,menuNav:true})
+      this.setState({mapFade : 1})
     }.bind(this));
   }.bind(this));
 },
@@ -726,29 +711,35 @@ moveAnimate : function(){
 },
 //人物移動事件
 move : function(){
-  var c = this.state;
-  if(c.mapFade){
-    init.player.clearRect(0,0,init.maps.col, init.maps.row);
+  if(this.state.mapFade){
+  init.player.clearRect(0,0,init.maps.col, init.maps.row);
   var p = this.props;
+  var c = this.state;
+  var json = {
+    manMoveImg : c.manMoveImg,
+    manMoveAnimate : c.manMoveAnimate,
+    mapLeft : c.mapLeft,
+    mapTop : c.mapTop,
+    x : c.x,
+    y : c.y,
+    left : c.left,
+    top : c.top
+  }
   var ctl = init.control;
   var map = init.map;
-  if(ctl.left || ctl.right || ctl.up || ctl.down){
-    if(!init.man.spriteSpeed)
-    this.setState({manMoveAnimate: (c.manMoveAnimate+1)%4});
-    init.man.spriteSpeed < init.man.spriteSpeedCount ? init.man.spriteSpeed++ : init.man.spriteSpeed=0;
-  }
   if(ctl.left)
-    this.setState({manMoveImg: 1});
+    json.manMoveImg = 1;
   if(ctl.right)
-    this.setState({manMoveImg: 2});
+    json.manMoveImg = 2;
   if(ctl.up)
-    this.setState({manMoveImg: 3});
+    json.manMoveImg = 3;
   if(ctl.down)
-    this.setState({manMoveImg: 0});
+    json.manMoveImg = 0;
   if(ctl.left && c.x > p.min ){
     var isL = this.isMove(p.left,0);
      if(isL){
-    this.setState({x:c.x+ p.left,left: p.left*c.mapSizeX+c.left});
+    json.x = c.x+ p.left;
+    json.left =  p.left*c.mapSizeX+c.left;
     if((c.mapLeft !=0 ) && (c.isMoveLeft - c.mapLeft == c.x))
       map.left = true;
     else
@@ -760,8 +751,9 @@ move : function(){
   if(ctl.right && (init.maps.col-(init.man.sizeX*c.mapSizeX)) > c.x){
     var isR = this.isMove(p.right,0);
     if(isR){
-    this.setState({x:c.x + p.right,left: p.right * c.mapSizeX + c.left});
-    if((c.mapSizeX*init.maps.col  + c.mapLeft > c.windowWidth ) && (c.isMoveRight - c.mapLeft == c.x))
+      json.x = c.x + p.right;
+      json.left =  p.right * c.mapSizeX + c.left;
+    if((c.mapSizeX*init.maps.col  + c.mapLeft > window.innerWidth ) && (c.isMoveRight - c.mapLeft == c.x))
       map.right = true;
     else
       map.right = false;     
@@ -772,7 +764,8 @@ move : function(){
   if(ctl.up &&  c.y > p.min){
     var isU = this.isMove(0,p.up);
     if(isU){ 
-    this.setState({y:c.y+p.up,top: p.up * c.mapSizeY+c.top});
+      json.y = c.y+p.up;
+      json.top =   p.up * c.mapSizeY+c.top;
     if((c.mapTop !=0 ) && (c.isMoveUp - c.mapTop == c.y))
       map.up = true;
     else
@@ -784,8 +777,9 @@ move : function(){
   if(ctl.down && (init.maps.row-(init.man.sizeY*c.mapSizeY)) > c.y){
     var isD = this.isMove(0,p.down);
     if(isD){
-    this.setState({y:c.y+p.down,top: p.down * c.mapSizeY+c.top});
-    if((c.mapSizeY*init.maps.row  + c.mapTop > c.windowHeight ) && (c.isMoveDown - c.mapTop == c.y))
+      json.y = c.y+p.down;
+      json.top =   p.down * c.mapSizeY+c.top;
+    if((c.mapSizeY*init.maps.row  + c.mapTop > window.innerHeight) && (c.isMoveDown - c.mapTop == c.y))
       map.down = true;
     else
       map.down = false; 
@@ -794,15 +788,23 @@ move : function(){
       map.down = false;
   }
   if(map.left)
-    this.setState({mapLeft: c.mapLeft-p.left});
+    json.mapLeft -=   p.left;
   if(map.right)
-    this.setState({mapLeft: c.mapLeft-p.right});
+    json.mapLeft -=   p.right;
   if(map.up){
-    this.setState({mapTop: c.mapTop-p.up});
+    json.mapTop -=  p.up;
   }
   if(map.down){
-    this.setState({mapTop: c.mapTop-p.down});
+    json.mapTop -=  p.down;
   }
+  if(ctl.left || ctl.right || ctl.up || ctl.down){
+    if(!init.man.spriteSpeed){
+      json.manMoveAnimate = (c.manMoveAnimate+1)%4;
+    }
+    init.man.spriteSpeed < init.man.spriteSpeedCount ? init.man.spriteSpeed++ : init.man.spriteSpeed=0;
+    this.setState(json);
+  }
+  
   init.player.drawImage(init.man.sprite,  this.state.manMoveAnimate*init.man.sizeX, this.state.manMoveImg*init.man.sizeY , init.man.sizeX, init.man.sizeY ,this.state.x, this.state.y , init.man.sizeX, init.man.sizeY);
   }
   this.timer = requestAFrame(this.move.bind(this));
@@ -843,6 +845,7 @@ chatSelect : function(x){
 },
 //生成所有DOM
 render : function (){
+  console.log(t++);
   var s = this.state;
   return (
     <div  id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
@@ -852,7 +855,7 @@ render : function (){
       {s.mapZindex != -1  ? <NPCMessage  handleChat={this.handleChat} chatArray={this.chatArray} s={s}/> : null}//NPC訊息
       {s.menuDisplay ? <Menu getTouchPos={this.getTouchPos} menuItem={this.menuItem} s={s}/>: null} //選單視窗
       {s.loadProcess ? <Load /> : null }//讀取畫面
-      <PreLoadImg />//預載圖片
+      //<PreLoadImg />//預載圖片
     </div>
    ) 
   }
