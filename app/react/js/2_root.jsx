@@ -53,9 +53,7 @@ var Root = React.createClass({
       messageNum: -1, //對話計次
       messageMax: -1, //對話最大計次
       menuIndex : 0,
-      menuDisplay : false,
-      menuRightBoxWheel: 0,
-      menuLeftBoxWheel: 0
+      menuDisplay : false
     }
   },
 
@@ -281,7 +279,7 @@ var Root = React.createClass({
               break;
           case 27:
              this.initEvent();
-             this.ShowMenu();
+             this.showMenu();
              break;
       } 
     }
@@ -289,7 +287,7 @@ var Root = React.createClass({
           switch(e.keyCode){
             case 27:
               this.initEvent();
-              this.ShowMenu();
+              this.showMenu();
               break;
             case 38:
               this.handleMenuIndexMove(-1);
@@ -398,9 +396,6 @@ handleKeyUp : function(e){
 
     }    
   },
-ShowMenu: function(){
-  this.setState({menuDisplay : !this.state.menuDisplay})
-},
 // 取消人物及地圖左移
 leftStopMove : function(){
           init.control.left = false
@@ -458,6 +453,7 @@ handleStart : function(){
     }.bind(this));
   }.bind(this));
 },
+//非同步載入物件檔案
 AjaxLoad : function(cm,callback){
     this.setState({mapFade : 0})
     $.ajax({
@@ -478,6 +474,7 @@ AjaxLoad : function(cm,callback){
       }.bind(this)
     });
 },
+//把載入到的物件放入全域物件
 AjaxProcessObject : function(objs){
 init.firstCanvas.length = 0;
 init.secondCanvas.length = 0;
@@ -512,6 +509,7 @@ init.secondCanvas[zz]=y;
       init.preImg.push(obj.b)
 }
 },
+//把載入到的碰撞設定放入全域物件
 AjaxProcessMove : function(objs , callback){
   init.move.length = 0;
   init.events.length = 0;
@@ -520,7 +518,7 @@ AjaxProcessMove : function(objs , callback){
 for(var i =0;i<objs.length;i++){
     var obj = objs[i];
     var x={
-    sx :  obj.x,
+    sx : obj.x,
     sy : obj.y,
     ex : obj.w + obj.x,
     ey : obj.h + obj.y,
@@ -559,18 +557,21 @@ handleIndexBoxMove : function(x){
    }
    this.setState({indexBox : x})
 },
+//處理選單選項移動
 handleMenuIndexMove : function(x){
   var val = x + this.state.menuIndex;
    if( val >= 0 && val < init.menuTitle.length){
    this.menuSelect(val);
 }
 },
+//處理 NPC 聊天選取
 chatSelectMove : function(x){
   var val = x + this.state.chatSelectIndex;
    if( val >= 0 && val < this.state.chatSelectArray.length){
    this.setState({chatSelectIndex : val});
 }
 },
+//等DOM 都建立好後處理
 handleLoad : function(){
   this.backIndex();
 },
@@ -659,27 +660,7 @@ handleTouchEnd : function(e){
   init.control.down = false;
   init.map.down = false;
 },
-menuRightTouchMove : function(e){
-    e.preventDefault();
-    var pos = this.getTouchPos(e);
-    var rw = React.findDOMNode(this.refs.right).clientHeight;
-    var rbw = React.findDOMNode(this.refs.rightBox).clientHeight;
-    var y = pos.y-init.startTouch.y;
-    var x = rbw + (this.state.menuRightBoxWheel +  y);
-    init.startTouch = pos;  
-    if( x > rw && this.state.menuRightBoxWheel +y <= 0)
-    this.setState({menuRightBoxWheel: this.state.menuRightBoxWheel+y});
-},
-menuLeftTouchMove : function(e){
-    if(e.view.innerWidth < 768 ){
-    e.preventDefault()
-    var pos = this.getTouchPos(e);
-    var x = pos.x-init.startTouch.x;
-    init.startTouch = pos;
-    if(this.state.menuLeftBoxWheel + x <= 0)
-    this.setState({menuLeftBoxWheel: this.state.menuLeftBoxWheel+x});
-  }
-},
+//處理預載的圖片
 preLoadImg : function(callback){
   var l = init.preImg.length;
   for(var i=0;i<init.preImg.length;i++){
@@ -691,6 +672,7 @@ preLoadImg : function(callback){
       img.src = init.preImg[i];
   }
 },
+//把物件畫出來
 drawObject : function(callback){
   this.preLoadImg(function(){
   init.fcontext.clearRect(0, 0, init.maps.col, init.maps.row);
@@ -847,15 +829,18 @@ move : function(){
   }
   this.timer = requestAFrame(this.move.bind(this));
 },
+//選單選項載入
 menuItem : function(menuItem) {
     if(this.state.menuIndex == menuItem.id)
       return <li className="xx-dark-text-shadow" style={{borderColor : "white"}}>{menuItem.title}</li>;
     else
       return <li className="xx-dark-text-shadow" style={{borderColor : "transparent"}}onClick={this.menuSelect.bind('null',menuItem.id)}>{menuItem.title}</li>;
 },
+//選單
 menuSelect : function(x){
  this.setState({menuIndex : x , menuRightBoxWheel : 0});
 },
+//首頁選項載入
 indexBox : function(item) {
     if(this.state.indexBox == item.id){
       if(item.id == 0)
@@ -870,135 +855,38 @@ indexBox : function(item) {
         return <li style={{borderColor : "transparent"}} onMouseOver={this.indexBoxSelect.bind('null',item.id)}>{item.title}</li>;
 }
 },
+//是否顯示選單視窗
+showMenu: function(){
+  this.setState({menuDisplay : !this.state.menuDisplay})
+},
+//選單選項
 indexBoxSelect : function(x){
  this.setState({indexBox : x});
 },
+//NPC 訊息內部的選項載入
 chatArray : function(item) {
     if(this.state.chatSelectIndex == item.id)
       return <li style={{borderColor : "white"}}>{item.title}</li>;
     else
       return <li style={{borderColor : "transparent"}} onMouseOver={this.chatSelect.bind('null',item.id)}>{item.title}</li>;
 },
+//NPC 訊息內部的選項選取
 chatSelect : function(x){
  this.setState({chatSelectIndex : x});
 },
-menuRightWheel : function(e){
-  var scrollSpeed = 32;
-  var delta = e.deltaY  > 0  ? e.deltaY : -e.deltaY;
-  var rw = React.findDOMNode(this.refs.right).clientHeight;
-  var rbw = React.findDOMNode(this.refs.rightBox).clientHeight;
-  var x = rbw + (this.state.menuRightBoxWheel - scrollSpeed*(e.deltaY / delta))  
-  var y = -scrollSpeed *e.deltaY / delta +this.state.menuRightBoxWheel
- if( x +scrollSpeed >  rw && y <= 0)
-  this.setState({menuRightBoxWheel : y})
-},
 //生成所有DOM
-  render : function (){
-    var s = this.state;
-   return (
-     <div  id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
-     {s.mapZindex == -1  ?
-      <div id="index" style={{opacity : s.indexShow}}>
-        <div id="indexBox"  style={{opacity : s.indexBoxShow}}>
-          <ul>
-            {init.indexBox.map(this.indexBox)}
-          </ul>
-        </div>
-        <Loadbox style={{opacity : s.loadBoxShow}} />
-      </div>
-      : null }  
-      <div id="map"  style={{opacity : s.mapFade ,zIndex : s.mapZindex ,background: s.map.bg,WebkitTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", msTransform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)", transform : "translate3D("+s.mapLeft+"px,"+s.mapTop+"px,0)",width: s.mapSizeX*s.map.col,height: s.mapSizeY*s.map.row}} >
-        <canvas id="grid" width={s.map.col} height={s.map.row} />
-        <canvas id="firstCanvas" width={s.map.col} height={s.map.row} />      
-        <Npc  x={s.x} y={s.y} width={s.map.col} height={s.map.row}  />
-        <canvas id="player" width={s.map.col} height={s.map.row} />
-        <canvas id="secondCanvas" width={s.map.col} height={s.map.row} /> 
-      </div>
-      { init.menuNav ?<nav id="menunav" className="s-hide">
-        <ul>
-          <li onClick={this.ShowMenu}>選單</li>
-        </ul>
-     </nav>: null}
-     {s.mapZindex != -1  ?<div className="chat" onClick={this.handleChat} style={{opacity: s.chatOpacity}}>{s.messageName} : {s.message}<ul>{s.chatSelectArray.map(this.chatArray)}</ul></div> : null}
-     {s.menuDisplay ? <Menu>
-        <div id="left" className="col xx12 s3 xx-np xx-ng" onTouchMove={this.menuLeftTouchMove} >
-          <ul style={{WebkitTransform : "translateX("+s.menuLeftBoxWheel+"px)",msTransform : "translateX("+s.menuLeftBoxWheel+"px)",transform : "translateX("+s.menuLeftBoxWheel+"px)" }}>
-            {init.menuTitle.map(this.menuItem)}
-          </ul>
-        </div>
-        <div id="right" className="col xx12 s9 xx-np xx-ng" ref="right" onTouchMove={this.menuRightTouchMove}><div id="rightBox" onWheel={this.menuRightWheel} ref="rightBox" style={{WebkitTransform : "translateY("+s.menuRightBoxWheel+"px)",msTransform : "translateY("+s.menuRightBoxWheel+"px)",transform : "translateY("+s.menuRightBoxWheel+"px)" }}>{init.menuText[s.menuIndex]}</div></div>
-     </Menu> : null}
-     {s.loadProcess ? <Load /> : null }
-     <PreLoadImg />
-     </div>
+render : function (){
+  var s = this.state;
+  return (
+    <div  id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
+      {s.mapZindex == -1  ? <Index indexBox={this.indexBox} s={s} />: null } 
+      <Map s={s} /> //地圖
+      {init.menuNav ?<MenuNav showMenu={this.showMenu} />: null} //選單
+      {s.mapZindex != -1  ? <NPCMessage  handleChat={this.handleChat} chatArray={this.chatArray} s={s}/> : null}//NPC訊息
+      {s.menuDisplay ? <Menu getTouchPos={this.getTouchPos} menuItem={this.menuItem} s={s}/>: null} //選單視窗
+      {s.loadProcess ? <Load /> : null }//讀取畫面
+      <PreLoadImg />//預載圖片
+    </div>
    ) 
-  }
-});
-var Menu = React.createClass({
-    render : function(){
-      return(
-        <div id="menu">
-          { this.props.children }
-        </div>
-        )
-    }
-});
-var PreLoadImg = React.createClass({
-  handleLoadImg : function(Img){
-  return <img src={Img} />;
-},
-  render : function(){
-    return (
-      <div style={{display: "none"}}>
-        {init.preImg.map(this.handleLoadImg)}
-      </div>
-  )
-  }
-});
-var Loadbox = React.createClass({
-  render : function(){
-    return(
-    <div id="loadBox" style={this.props.style}></div>
-  )
-  }
-});
-var Disqus = React.createClass({
-componentDidMount: function () {
-      this.addDisqus();
-},
-componentWillUnmount: function () {
-     this.removeDisqus();
-},
-addDisqus: function () {
-      $("body").append("<script id='disqus' type='text/javascript' src='//dkbo-rpg.disqus.com/embed.js' async='true'></script>");
-        
-},
-removeDisqus: function () {
-      $("#disqus").remove();
-},
-render: function () {
-        return (
-          <div>
-            <div id="disqus_thread"></div>
-            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-          </div>
-        );
-    }
-});
-var Load = React.createClass({
-  getDefaultProps: function() {
-    var x = [];
-    for(var i=0; i < 12;i++){
-    x.push(<div></div>);
-  }
-    return {
-      load : x
-    }
-  },
-  render : function(){
-    
-    return(
-    <div  id="load" style={this.props.style} >{this.props.load}</div>
-  )
   }
 });

@@ -113,3 +113,11 @@ function evtUrl(){
   })
   return maps
 }
+function transform(x){
+  return{
+    WebkitTransform : x,
+    msTransform : x,
+    oTransform : x,
+    transform :x
+  }
+}
