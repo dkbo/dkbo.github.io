@@ -27,8 +27,8 @@ handleMenuIndexMove : function(x){
 menuRightWheel : function(e){
   var scrollSpeed = 32;
   var delta = e.deltaY  > 0  ? e.deltaY : -e.deltaY;
-  var rw = React.findDOMNode(this.refs.right).clientHeight;
-  var rbw = React.findDOMNode(this.refs.rightBox).clientHeight;
+  var rw = this.refs.right.clientHeight;
+  var rbw = this.refs.rightBox.clientHeight;
   var x = rbw + (this.state.menuRightBoxWheel - scrollSpeed*(e.deltaY / delta))  
   var y = -scrollSpeed *e.deltaY / delta +this.state.menuRightBoxWheel
  if( x +scrollSpeed >  rw && y <= 0)
@@ -37,8 +37,8 @@ menuRightWheel : function(e){
 menuRightTouchMove : function(e){
     e.preventDefault();
     var pos = this.props.getTouchPos(e);
-    var rw = React.findDOMNode(this.refs.right).clientHeight;
-    var rbw = React.findDOMNode(this.refs.rightBox).clientHeight;
+    var rw = this.refs.right.clientHeight;
+    var rbw = this.refs.rightBox.clientHeight;
     var y = pos.y-init.startTouch.y;
     var x = rbw + (this.state.menuRightBoxWheel +  y);
     init.startTouch = pos;  

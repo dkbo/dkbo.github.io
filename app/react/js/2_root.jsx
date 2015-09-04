@@ -24,8 +24,6 @@ var Root = React.createClass({
               col : 0,
               row : 0
             },
-      gridX : false, // X 格線
-      gridY : false, // Y 格線
       x : init.man.initPos.x, //人物 X 座標
       y : init.man.initPos.y, //人物 Y 座標 
       left : init.man.initPos.x-1, //人物 X 座標位移
@@ -248,14 +246,6 @@ var Root = React.createClass({
           case 49:
               this.handleMap(this.state.map.index,0);
               break;
-          // 顯示X取消格線
-          case 88:
-             this.drawGridX();
-             break;
-          // 顯示Y取消格線
-          case 89:
-             this.drawGridY();
-             break;
           // 返回進場畫面
           case 32:
              this.moveAnimate();
@@ -538,33 +528,6 @@ chatSelectMove : function(x){
 handleLoad : function(){
   this.backIndex();
 },
-//所有DOM 載入前 
-componentWillMount : function(){
-},
-//所有DOM 已經載入時
-componentDidMount: function () {
-    var canvas = document.getElementById('grid');
-    var playerCanvas = document.getElementById('player');
-    var firstCanvas = document.getElementById('firstCanvas');
-    var secondCanvas = document.getElementById('secondCanvas');
-    init.context = canvas.getContext('2d');
-    init.fcontext = firstCanvas.getContext('2d');
-    init.scontext = secondCanvas.getContext('2d');
-    init.player =  playerCanvas.getContext('2d');
-    $(window).on('load',this.handleLoad);
-    $(window).on('resize',this.handleResize);
-    $(window).on('keydown',this.handleKeyDown);
-    $(window).on('keyup',this.handleKeyUp);
-    $.ajaxSetup({cache: false});
-    this.timer = requestAFrame(this.move.bind(this));
-  },
-//所有DOM將移除時
- componentWillUnmount : function(){
-    $(window).off('resize',this.handleResize);
-    $(window).off('keydown',this.handleKeyDown);
-    $(window).off('keyup',this.handleKeyUp);
-    cancelAFrame(this.timer);
-  },
 //返回平板 / 手機裝置的 XY 座標
 getTouchPos : function(e){
   return {
@@ -655,42 +618,6 @@ for(var i=0 ;i<ff.length;i++){
 if(callback && typeof(callback) ==="function")
   callback();
 }.bind(this));
-},
-//畫格線或取消格線
-drawGridX : function(){
-  if(!this.state.gridX){
-
-    init.context.beginPath();
-      for(var i=1;i<(init.maps.col/init.object.sizeX);i++){
-      init.context.moveTo(i*init.object.sizeX,init.object.sizeY);
-      init.context.lineTo(i*init.object.sizeX,init.maps.row);
-      init.context.font = 'italic .5em Calibri';
-      init.context.textAlign = 'center';
-      init.context.fillText(i*init.object.sizeX, i*init.object.sizeX, 20);
-    }
-      init.context.stroke();
-}
-  else{
-      init.context.clearRect(0, 0, init.maps.col, init.maps.row);
-  }
-  this.setState({gridX : !this.state.gridX});
-},
-drawGridY : function(){
-  if(!this.state.gridY){
-    init.context.beginPath();
-      for(var j=1;j<(init.maps.row/init.object.sizeY);j++){
-      init.context.moveTo(init.object.sizeX,j*init.object.sizeY);
-      init.context.lineTo(init.maps.col,j*init.object.sizeY);
-      init.context.font = 'italic .5em Calibri';
-      init.context.textAlign = 'center';
-      init.context.fillText(j*init.object.sizeY, 20, j*init.object.sizeY+4);
-    }
-      init.context.stroke();
-  }
-      else{
-      init.context.clearRect(0, 0, init.maps.col, init.maps.row);
-  }
-  this.setState({gridY : !this.state.gridY});
 },
 //人物移動動作
 moveAnimate : function(){
@@ -843,9 +770,29 @@ chatArray : function(item) {
 chatSelect : function(x){
  this.setState({chatSelectIndex : x});
 },
+//所有DOM 載入前 
+componentWillMount : function(){
+},
+//所有DOM 已經載入時
+componentDidMount: function () {
+    var playerCanvas = document.getElementById('player');
+    init.player =  playerCanvas.getContext('2d');
+    $(window).on('load',this.handleLoad);
+    $(window).on('resize',this.handleResize);
+    $(window).on('keydown',this.handleKeyDown);
+    $(window).on('keyup',this.handleKeyUp);
+    $.ajaxSetup({cache: false});
+    this.timer = requestAFrame(this.move.bind(this));
+  },
+//所有DOM將移除時
+ componentWillUnmount : function(){
+    $(window).off('resize',this.handleResize);
+    $(window).off('keydown',this.handleKeyDown);
+    $(window).off('keyup',this.handleKeyUp);
+    cancelAFrame(this.timer);
+  },
 //生成所有DOM
 render : function (){
-  console.log(t++);
   var s = this.state;
   return (
     <div  id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>

@@ -4,16 +4,17 @@ bc : null,
 animate : 0,
 img : new Image(),
 walk : function(){
+  var s = this.props.s;
   var pos = 12 ;
   var l = init.npc ? init.npc.length : 0;
-  this.fc.clearRect(0,0,this.props.width,this.props.height);
-  this.sc.clearRect(0,0,this.props.width,this.props.height);
+  this.fc.clearRect(0,0,s.map.col,s.map.row);
+  this.sc.clearRect(0,0,s.map.col,s.map.row);
   var n;
     for(var i=0;i<l;i++){
         n = init.npc[i];
         this.img.src = n.b; 
       if(n.isU && n.y > 0 || (n.isU && n.s > 0)){
-        if((this.props.x <= n.pX+n.w -pos) && (n.pX-pos <= init.man.sizeX+this.props.x) && (this.props.y+24 <= n.pY-pos+n.h) && (n.pY-pos <= 1+this.props.y+24)){
+        if((s.x <= n.pX+n.w -pos) && (n.pX-pos <= init.man.sizeX+s.x) && (s.y+24 <= n.pY-pos+n.h) && (n.pY-pos <= 1+s.y+24)){
           init.npc[i].isM = false;
           this.draw(i,n.u);
         }
@@ -34,7 +35,7 @@ walk : function(){
         init.npc[i].isU = false;
 
       if(n.isD && n.y < n.mY || (n.isD && n.s > 0 )){
-        if((this.props.x <= n.pX+n.w +pos) && (n.pX+pos <= init.man.sizeX+this.props.x) && (this.props.y+24 <= n.pY+pos+n.h) && (n.pY+pos <= 1+this.props.y+24)){
+        if((s.x <= n.pX+n.w +pos) && (n.pX+pos <= init.man.sizeX+s.x) && (s.y+24 <= n.pY+pos+n.h) && (n.pY+pos <= 1+s.y+24)){
           init.npc[i].isM = false;
           this.draw(i,n.d);
         }
@@ -55,7 +56,7 @@ walk : function(){
 
       if(n.isR && n.x < n.mX || (n.isR && n.s > 0)){
         if(n.t != 5 && n.t != 7){
-        if((this.props.x <= n.pX+n.w +pos) && (n.pX+pos <= init.man.sizeX+this.props.x) && (this.props.y+24 <= n.pY+pos+n.h) && (n.pY+pos <= 1+this.props.y+24)){
+        if((s.x <= n.pX+n.w +pos) && (n.pX+pos <= init.man.sizeX+s.x) && (s.y+24 <= n.pY+pos+n.h) && (n.pY+pos <= 1+s.y+24)){
           init.npc[i].isM = false;
           this.draw(i,n.r);
         }
@@ -77,7 +78,7 @@ walk : function(){
 
       if(n.isL && n.x > 0 || (n.isL && n.s > 0)){
         if(n.t != 4 && n.t != 6){
-        if((this.props.x <= n.pX+n.w -pos) && (n.pX-pos <= init.man.sizeX+this.props.x) && (this.props.y+24 <= n.pY-pos+n.h) && (n.pY-pos <= 1+this.props.y+24)){
+        if((s.x <= n.pX+n.w -pos) && (n.pX-pos <= init.man.sizeX+s.x) && (s.y+24 <= n.pY-pos+n.h) && (n.pY-pos <= 1+s.y+24)){
           init.npc[i].isM = false;
           this.draw(i,n.l);
         }
@@ -246,10 +247,11 @@ componentWillUnmount : function(){
   cancelAFrame(this.animate);
 },
 render : function(){
+  var s = this.props.s
   return(
-  <div x={this.props.x} y={this.props.y} >
-    <canvas id="fnpc" width={this.props.width}  height={this.props.height} />
-    <canvas id="snpc" width={this.props.width}  height={this.props.height} />
+  <div x={s.x} y={s.y} >
+    <canvas id="fnpc" width={s.map.col}  height={s.map.row} />
+    <canvas id="snpc" width={s.map.col}  height={s.map.row} />
   </div>
   )
 }
