@@ -849,13 +849,12 @@ render : function (){
   var s = this.state;
   return (
     <div  id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
-      {s.mapZindex == -1  ? <Index indexBox={this.indexBox} s={s} />: null } 
-      <Map s={s} /> //地圖
-      {s.menuNav ?<MenuNav showMenu={this.showMenu} />: null} //選單
-      {s.mapZindex != -1  ? <NPCMessage  handleChat={this.handleChat} chatArray={this.chatArray} s={s}/> : null}//NPC訊息
-      {s.menuDisplay ? <Menu getTouchPos={this.getTouchPos} menuItem={this.menuItem} s={s}/>: null} //選單視窗
-      {s.loadProcess ? <Load /> : null }//讀取畫面
-      //<PreLoadImg />//預載圖片
+      {s.mapZindex == -1  ? <Index indexBox={this.indexBox} s={s} />: null }{/*首頁*/} 
+      <Map s={s} />{/*地圖*/}
+      {s.menuNav ?<MenuNav showMenu={this.showMenu} />: null }{/*選單*/} 
+      {s.mapZindex != -1  ? <NPCMessage  handleChat={this.handleChat} chatArray={this.chatArray} s={s}/> : null}{/*NPC訊息*/}
+      {s.menuDisplay ? <Menu getTouchPos={this.getTouchPos} menuItem={this.menuItem} s={s}/>: null}{ /*選單視窗*/} 
+      {s.loadProcess ? <Load /> : null  }{/*讀取畫面*/}
     </div>
    ) 
   }
