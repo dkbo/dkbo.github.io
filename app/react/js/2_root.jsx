@@ -396,20 +396,21 @@ handleMap : function(x,y){
                  left : init.maps.in[y].x -1,
                  top : init.maps.in[y].y -1,
                  x : init.maps.in[y].x,
-                 y : init.maps.in[y].y})
+                 y : init.maps.in[y].y,
+                loadProcess: true})
   this.handleResize();
   this.drawObject(function(){
-      this.setState({mapFade : 1})
+      this.setState({mapFade : 1,loadProcess: false})
     }.bind(this));
 }.bind(this));
 },
 //處理進場畫面至 Map 畫面事件
 handleStart : function(){
     this.AjaxLoad(this.state.map.index,function(){
-     this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0,map:init.maps});
+     this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0,map:init.maps,loadProcess: true});
      this.handleResize();
   this.drawObject(function(){ 
-      this.setState({mapFade : 1})
+      this.setState({mapFade : 1,loadProcess: false})
     }.bind(this));
   }.bind(this));
 },
