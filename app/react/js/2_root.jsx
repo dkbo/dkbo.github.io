@@ -417,7 +417,7 @@ handleStart : function(){
 },
 //非同步載入物件檔案
 AjaxLoad : function(cm,callback){
-    this.setState({mapFade : 0,menuNav: false})
+    this.setState({mapFade : 0,menuNav: false});
     $.ajax({
     url: init.mapUrl[cm],
     dataType: 'json',
