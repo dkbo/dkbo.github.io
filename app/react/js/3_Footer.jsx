@@ -35,6 +35,11 @@ init.menuText =
       <h2>學習日誌條</h2>
       <ul>
         <li>
+          <date>2015/09/05</date>
+          <p>把 <mark>Github</mark> 同步 <mark>Heroku</mark> 然後就可分成單機及線上兩個不同網站。</p>
+        </li>
+        <br />
+        <li>
           <date>2015/09/03</date>
           <p>在一開始學習 ReactJS 時，不太懂 State 跟 Props 的用意，但是程式碼還是一字一字的刻上去，到現在要新增功能時，感覺都特別的凌亂不勘。目前第一步就是先把 ROOT 內部組件分割開來。</p>
         </li>

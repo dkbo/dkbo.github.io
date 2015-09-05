@@ -397,8 +397,8 @@ handleMap : function(x,y){
                  left : init.maps.in[y].x -1,
                  top : init.maps.in[y].y -1,
                  x : init.maps.in[y].x,
-                 y : init.maps.in[y].y,
-                loadProcess: true})
+                 y : init.maps.in[y].y
+                })
   this.handleResize();
   this.drawObject(function(){
       this.setState({mapFade : 1,loadProcess: false,menuNav: true})
@@ -408,7 +408,7 @@ handleMap : function(x,y){
 //處理進場畫面至 Map 畫面事件
 handleStart : function(){
     this.AjaxLoad(this.state.map.index,function(){
-     this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0,map:init.maps,loadProcess: true});
+     this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0,map:init.maps});
      this.handleResize();
   this.drawObject(function(){ 
       this.setState({mapFade : 1,loadProcess: false,menuNav: true})
@@ -417,7 +417,7 @@ handleStart : function(){
 },
 //非同步載入物件檔案
 AjaxLoad : function(cm,callback){
-    this.setState({mapFade : 0,menuNav: false});
+    this.setState({mapFade : 0,menuNav: false,loadProcess: true});
     $.ajax({
     url: init.mapUrl[cm],
     dataType: 'json',
