@@ -408,7 +408,7 @@ handleMap : function(x,y){
 //處理進場畫面至 Map 畫面事件
 handleStart : function(){
     this.AjaxLoad(this.state.map.index,function(){
-     this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0,map:init.maps});
+     this.setState({indexBoxShow : 0,indexShow : 0,map:init.maps});
      this.handleResize();
   this.drawObject(function(){ 
       this.setState({mapFade : 1,loadProcess: false,menuNav: true})
@@ -417,7 +417,7 @@ handleStart : function(){
 },
 //非同步載入物件檔案
 AjaxLoad : function(cm,callback){
-    this.setState({mapFade : 0,menuNav: false,loadProcess: true});
+    this.setState({mapZindex : 1,mapFade : 0,menuNav: false,loadProcess: true});
     $.ajax({
     url: init.mapUrl[cm],
     dataType: 'json',
