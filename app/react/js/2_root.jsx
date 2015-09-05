@@ -416,7 +416,6 @@ handleStart : function(){
 },
 //非同步載入物件檔案
 AjaxLoad : function(cm,callback){
-    init.player.clearRect(0,0,99999, 99999);
     this.setState({mapFade : 0})
     $.ajax({
     url: init.mapUrl[cm],
@@ -641,7 +640,7 @@ moveAnimate : function(){
 //人物移動事件
 move : function(){
   if(this.state.mapFade){
-  init.player.clearRect(this.state.x,this.state.y,init.man.sizeX, init.man.sizeY);
+  init.player.clearRect(0,0,init.maps.col, init.maps.row);
   var p = this.props;
   var c = this.state;
   var json = {
@@ -658,11 +657,11 @@ move : function(){
   var map = init.map;
   if(ctl.left)
     json.manMoveImg = 1;
-  else if(ctl.right)
+  if(ctl.right)
     json.manMoveImg = 2;
   if(ctl.up)
     json.manMoveImg = 3;
-  else if(ctl.down)
+  if(ctl.down)
     json.manMoveImg = 0;
   if(ctl.left && c.x > p.min ){
     var isL = this.isMove(p.left,0);
@@ -677,7 +676,7 @@ move : function(){
     else
       map.left = false;
   }
-  else if(ctl.right && (init.maps.col-(init.man.sizeX*c.mapSizeX)) > c.x){
+  if(ctl.right && (init.maps.col-(init.man.sizeX*c.mapSizeX)) > c.x){
     var isR = this.isMove(p.right,0);
     if(isR){
       json.x = c.x + p.right;
@@ -703,7 +702,7 @@ move : function(){
     else
       map.up = false;
   }
-  else if(ctl.down && (init.maps.row-(init.man.sizeY*c.mapSizeY)) > c.y){
+  if(ctl.down && (init.maps.row-(init.man.sizeY*c.mapSizeY)) > c.y){
     var isD = this.isMove(0,p.down);
     if(isD){
       json.y = c.y+p.down;
@@ -718,12 +717,12 @@ move : function(){
   }
   if(map.left)
     json.mapLeft -=   p.left;
-  else if(map.right)
+  if(map.right)
     json.mapLeft -=   p.right;
   if(map.up){
     json.mapTop -=  p.up;
   }
-  else if(map.down){
+  if(map.down){
     json.mapTop -=  p.down;
   }
   if(ctl.left || ctl.right || ctl.up || ctl.down){
