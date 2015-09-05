@@ -12101,6 +12101,7 @@
       "npc": [
             {
                   "b": "http://dkbo.github.io/images/man.png",
+                  "type": 0,
                   "pX": 128,
                   "pY": 224,
                   "aX": 64,
@@ -12130,6 +12131,7 @@
             },
             {
                   "b": "http://dkbo.github.io/images/man.png",
+                  "type": 0,
                   "pX": 504,
                   "pY": 224,
                   "aX": 384,
@@ -12159,6 +12161,7 @@
             },
             {
                   "b": "http://dkbo.github.io/images/man.png",
+                  "type": 0,
                   "pX": 428,
                   "pY": 424,
                   "aX": 64,

@@ -2131,6 +2131,7 @@
       "npc": [
             {
                   "b": "http://dkbo.github.io/images/man.png",
+                  "type": 0,
                   "pX": 650,
                   "pY": 500,
                   "aX": 512,

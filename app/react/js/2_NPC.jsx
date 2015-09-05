@@ -1,3 +1,13 @@
+/*
+man.png 
+  type : [0] 小叮噹
+         [1] 小叮鈴
+         [2] 技安
+         [3] 大雄
+         [4] 小叮噹原型
+         [5] 宜靜
+         [6] 阿福
+*/
 var Npc = React.createClass({
 fc : null,
 bc : null,
@@ -107,8 +117,9 @@ draw : function(i,turn){
   var n = init.npc[i];
   var a = Math.floor(init.npc[i].f/ n.footSpeed) % 4 * 32 ;
   var t = n.h * turn;
-  this.fc.drawImage(this.img,  a , t , n.w, n.h/2 ,n.pX,n.pY , n.w, n.h/2);
-  this.sc.drawImage(this.img,  a , t+n.h/2 , n.w, n.h/2 ,n.pX,n.pY+n.h/2 , n.w, n.h/2);
+  var type = n.type *192;
+  this.fc.drawImage(this.img,  a , t+type , n.w, n.h/2 ,n.pX,n.pY , n.w, n.h/2);
+  this.sc.drawImage(this.img,  a , t+type+n.h/2 , n.w, n.h/2 ,n.pX,n.pY+n.h/2 , n.w, n.h/2);
   if(n.isM){
   if ((n.s > 0 && turn == 0 && n.y < n.mY) || (n.s > 0 && turn == 1 && n.x > 0) || (n.s > 0 && turn == 2 && n.x < n.mX) || (n.s > 0 && turn == 3 && n.y > 0)){
     init.npc[i].f++;
