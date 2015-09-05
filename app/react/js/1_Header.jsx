@@ -95,7 +95,7 @@ function player(){
 function mapUrl(){
   var os = "objects/"
   var o  = "_obj";
-  var id = ["0000","0001","0002","0003"];
+  var id = ["0000","0001","0002","0003","0004","0005"];
   var type = ".json";
   var maps = id.map(function(arr){
       return os+arr+o+type
@@ -105,7 +105,7 @@ function mapUrl(){
 function evtUrl(){
   var os = "events/"
   var o  = "_obj";
-  var id = ["0000","0001","0002","0003"];
+  var id = ["0000","0001","0002","0003","0004","0005"];
   var type = ".js";
   var maps = id.map(function(arr){
       return os+arr+o+type
