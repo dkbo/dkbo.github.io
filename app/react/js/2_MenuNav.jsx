@@ -1,9 +1,11 @@
 var MenuNav = React.createClass({
-render : function(){
+	render : function(){
+		var s = this.props.s;
       return(
-        <nav id="menunav" className="s-hide">
+        <nav id="menunav" >
           <ul>  
-            <li onClick={this.props.showMenu}>選單</li>
+            <li  className="s-hide" onClick={this.props.showMenu}>選單</li>
+            {io.connected ? <li>Online {s.onlinePlayers}</li> : <li>單機</li>}
           </ul>  
         </nav>
         )

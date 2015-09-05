@@ -4,16 +4,25 @@
   "description": "<p>本頁面主要放置過去及未來所開發網頁時所運用到的工具。</p>\r <a href=\"http://dkbo.github.io\">說明文件</a>",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dkbo/dkbo.github.io.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "DKBO",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dkbo/dkbo.github.io/issues"
   },
-  "homepage": "https://github.com/dkbo/dkbo.github.io#readme"
+  "homepage": "https://github.com/dkbo/dkbo.github.io#readme",
+  "dependencies": {
+        "express": "4.10.x",
+        "socket.io": "1.3.x"
+    },
+  "engines": {
+        "node": "0.10.x",
+        "npm": "1.2.x"
+    }
 }

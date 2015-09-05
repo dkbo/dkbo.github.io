@@ -1,5 +1,5 @@
+var io = io();
 // 根
-var t = 0;
 var Root = React.createClass({
     getDefaultProps: function() {
     return {
@@ -50,7 +50,8 @@ var Root = React.createClass({
       messageName: false, // 當前對話人
       messageNum: -1, //對話計次
       messageMax: -1, //對話最大計次
-      menuDisplay : false
+      menuDisplay : false,
+      onlinePlayers : 0
     }
   },
 
@@ -386,8 +387,8 @@ handleResize : function(){
                  isMoveUp: this.getMovePoint(window.innerHeight,1),
                  isMoveDown: this.getMovePoint(window.innerHeight,3),
                  mapLeft: this.getResizeManPosX(),
-                 mapTop: this.getResizeManPosY(),
-                 menuNav: window.innerWidth < 768 ? true : false })
+                 mapTop: this.getResizeManPosY()
+                  })
 },
 //處理地圖事件
 handleMap : function(x,y){
@@ -400,7 +401,7 @@ handleMap : function(x,y){
                 loadProcess: true})
   this.handleResize();
   this.drawObject(function(){
-      this.setState({mapFade : 1,loadProcess: false})
+      this.setState({mapFade : 1,loadProcess: false,menuNav: true})
     }.bind(this));
 }.bind(this));
 },
@@ -410,14 +411,13 @@ handleStart : function(){
      this.setState({mapZindex : 1 , indexBoxShow : 0,indexShow : 0,map:init.maps,loadProcess: true});
      this.handleResize();
   this.drawObject(function(){ 
-      this.setState({mapFade : 1,loadProcess: false})
+      this.setState({mapFade : 1,loadProcess: false,menuNav: true})
     }.bind(this));
   }.bind(this));
 },
 //非同步載入物件檔案
 AjaxLoad : function(cm,callback){
-    init.player.clearRect(0,0,99999, 99999);
-    this.setState({mapFade : 0})
+    this.setState({mapFade : 0,menuNav: false})
     $.ajax({
     url: init.mapUrl[cm],
     dataType: 'json',
@@ -641,7 +641,7 @@ moveAnimate : function(){
 //人物移動事件
 move : function(){
   if(this.state.mapFade){
-  init.player.clearRect(this.state.x,this.state.y,init.man.sizeX, init.man.sizeY);
+  init.player.clearRect(0,0,init.maps.col, init.maps.row);
   var p = this.props;
   var c = this.state;
   var json = {
@@ -733,8 +733,22 @@ move : function(){
     init.man.spriteSpeed < init.man.spriteSpeedCount ? init.man.spriteSpeed++ : init.man.spriteSpeed=0;
     this.setState(json);
   }
-  
-  init.player.drawImage(init.man.sprite,  this.state.manMoveAnimate*init.man.sizeX, this.state.manMoveImg*init.man.sizeY , init.man.sizeX, init.man.sizeY ,this.state.x, this.state.y , init.man.sizeX, init.man.sizeY);
+  var player ={
+    id : init.playerID,
+    map : c.map.index,
+    name : "test",
+    bg : init.man.sprite,
+    sx : c.manMoveAnimate*init.man.sizeX,
+    sy : c.manMoveImg*init.man.sizeY,
+    w : init.man.sizeX,
+    h : init.man.sizeY,
+    x : c.x,
+    y : c.y,
+  }
+  if(io.connected){
+    io.emit('playerMove', player);
+  }
+  init.player.drawImage(init.man.sprite,  player.sx, player.sy , player.w, player.h ,player.x, player.y , player.w, player.h);
   }
   this.timer = requestAFrame(this.move.bind(this));
 },
@@ -777,8 +791,15 @@ componentWillMount : function(){
 },
 //所有DOM 已經載入時
 componentDidMount: function () {
-    var playerCanvas = document.getElementById('player');
-    init.player =  playerCanvas.getContext('2d');
+    io.io._reconnection = false;
+    io.on('connect', function () {
+      io.on('playerID',this.playerID);
+      io.on('onlinePlayerNum', this.onlinePlayerNum);
+      io.on('playerMove',this.onlinePlayerMove);  
+    }.bind(this));
+    io.on('disconnect', function() {
+      console.log('disconnected');
+    });
     $(window).on('load',this.handleLoad);
     $(window).on('resize',this.handleResize);
     $(window).on('keydown',this.handleKeyDown);
@@ -793,6 +814,24 @@ componentDidMount: function () {
     $(window).off('keyup',this.handleKeyUp);
     cancelAFrame(this.timer);
   },
+onlinePlayerMove : function (player){
+  if(this.state.mapFade){
+  init.playerscontext.clearRect(0, 0, init.maps.col, init.maps.row);
+  var x;
+  for(var i=0;i<player.length;i++){
+    if(player[i] && player[i].id != init.playerID && player[i].map ==this.state.map.index ){
+      x = player[i];
+  init.playerscontext.drawImage(init.man.sprite,  x.sx , x.sy , x.w, x.h ,x.x,x.y , x.w, x.h);
+}
+}
+}
+},
+onlinePlayerNum : function(num){
+    this.setState({onlinePlayers : num});
+},
+playerID : function(id){
+  init.playerID = id;
+},
 //生成所有DOM
 render : function (){
   var s = this.state;
@@ -800,7 +839,7 @@ render : function (){
     <div  id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
       {s.mapZindex == -1  ? <Index indexBox={this.indexBox} s={s} />: null }{/*首頁*/} 
       <Map s={s} />{/*地圖*/}
-      {s.menuNav ?<MenuNav showMenu={this.showMenu} />: null }{/*選單*/} 
+      {s.menuNav ?<MenuNav showMenu={this.showMenu} s={s} />: null }{/*選單*/} 
       {s.mapZindex != -1  ? <NPCMessage  handleChat={this.handleChat} chatArray={this.chatArray} s={s}/> : null}{/*NPC訊息*/}
       {s.menuDisplay ? <Menu getTouchPos={this.getTouchPos} menuItem={this.menuItem} s={s}/>: null}{ /*選單視窗*/} 
       {s.loadProcess ? <Load /> : null  }{/*讀取畫面*/}
