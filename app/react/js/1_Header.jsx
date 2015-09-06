@@ -21,17 +21,14 @@ var init = {
   indexBox  : [ 
     {
       id : 0,
-      title: "Start"
+      title: "單機模式"
     },
     {
       id : 1,
-      title :"Load"
-    },
-    {
-      id : 2,
-      title :"End"
+      title :"多人模式"
     }
   ],
+  multiPlayerUrl :'http://dkbo-rpg-online.herokuapp.com/',
   object:{
     sizeX : 32, // sprites width size 
     sizeY : 32, // sprites height size

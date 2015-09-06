@@ -33,7 +33,12 @@ init.menuText =
   [
     <aircle className="clearfix">
       <h2>學習日誌條</h2>
-      <ul>
+      <ul>  
+        <li>
+          <date>2015/09/06</date>
+          <p>在多人模式加入聊天框，把 Socket.io 的 Reload 改成 false ，一旦與 Server 中斷連接，左上角就會變成單機，另外人物移動的預測處理，目前個人還想不到如何寫，所以其他人物移動會很卡純屬正常。</p>
+        </li>
+        <br />
         <li>
           <date>2015/09/05</date>
           <p>把 <mark>Github</mark> 同步 <mark>Heroku</mark> 然後就可分成<a href="http://dkbo.github.io">單機</a>及<a href="http://dkbo-rpg-online.herokuapp.com/">線上</a>兩個不同網站。</p>
@@ -129,18 +134,4 @@ init.menuText =
       <Disqus />
       <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
     </aircle>
-  ];
-init.indexBox =[ 
-    {
-      id : 0,
-      title: "Start"
-    },
-    {
-      id : 1,
-      title :"Load"
-    },
-    {
-      id : 2,
-      title :"End"
-    }
   ];

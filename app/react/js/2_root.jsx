@@ -318,16 +318,9 @@ var Root = React.createClass({
           break;
     }
       //判斷是否選擇了 Start 
-      if(this.state.indexBox == 0){
+      if(e.keyCode == 32 || e.keyCode == 13){
          // 空白鍵 或 Enter
-         switch(e.keyCode){
-            case 32:
-             this.handleStart();
-             break;
-            case 13:
-             this.handleStart();
-             break;
-      }
+         this.state.indexBox  ? this.handleMultiPlayer() : this.handleStart() ;
      }
    }
   },
@@ -414,9 +407,13 @@ handleStart : function(){
      this.setState({indexBoxShow : 0,indexShow : 0,map:init.maps});
      this.handleResize();
   this.drawObject(function(){ 
+    handleControl();
       this.setState({mapFade : 1,loadProcess: false,menuNav: true})
     }.bind(this));
   }.bind(this));
+},
+handleMultiPlayer : function(){
+  window.location.href = init.multiPlayerUrl;
 },
 //非同步載入物件檔案
 AjaxLoad : function(cm,callback){
@@ -513,12 +510,12 @@ backIndex : function(){
 },
 //處理進場畫面選單移動
 handleIndexBoxMove : function(x){
-   if(this.state.indexBox + x > 2)
-    x = (this.state.indexBox + x)% 3
+   if(this.state.indexBox + x > 1)
+    x = (this.state.indexBox + x)% 2
    else{
     x =this.state.indexBox +x
     if(x == -1)
-     x = 2
+     x = 1
    }
    this.setState({indexBox : x})
 },
@@ -621,7 +618,8 @@ for(var i=0 ;i<ff.length;i++){
   imageObj.src = ff[i].background;
   init.scontext.drawImage(imageObj, ff[i].sourceX , ff[i].sourceY , ff[i].width, ff[i].height, ff[i].left, ff[i].top, ff[i].width, ff[i].height );     
 }
-if(callback && typeof(callback) ==="function")
+
+if(callback && typeof(callback) ==="function" && i == ff.length)
   callback();
 }.bind(this));
 },
@@ -762,13 +760,13 @@ indexBox : function(item) {
       if(item.id == 0)
         return <li style={{borderColor : "white"}} onClick={this.handleStart}>{item.title}</li>;
       else
-        return <li style={{borderColor : "white"}} >{item.title}</li>;
+        return <li style={{borderColor : "white"}} onClick={this.handleMultiPlayer}>{item.title}</li>;
     }
     else{
       if(item.id == 0)
         return <li onClick={this.handleStart} style={{borderColor : "transparent"}} onMouseOver={this.indexBoxSelect.bind('null',item.id)}>{item.title}</li>;
       else
-        return <li style={{borderColor : "transparent"}} onMouseOver={this.indexBoxSelect.bind('null',item.id)}>{item.title}</li>;
+        return <li onClick={this.handleMultiPlayer} style={{borderColor : "transparent"}} onMouseOver={this.indexBoxSelect.bind('null',item.id)}>{item.title}</li>;
 }
 },
 //是否顯示選單視窗
