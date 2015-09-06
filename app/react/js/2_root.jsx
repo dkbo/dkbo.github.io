@@ -849,6 +849,7 @@ render : function (){
       {s.menuDisplay ? <Menu getTouchPos={this.getTouchPos} menuItem={this.menuItem} s={s}/>: null}{ /*選單視窗*/} 
       {s.loadProcess ? <Load /> : null  }{/*讀取畫面*/}
       <input id="control" onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp} maxlength="1" ref='handle' />
+      <PreLoadImg />
     </div>
    ) 
   }

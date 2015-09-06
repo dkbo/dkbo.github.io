@@ -68,7 +68,7 @@ var init = {
     x : 0,
     y : 0
  },
- preImg : [],
+ preImg : ["/images/mainbg.jpg"],
  objects : [],
  events : [],
  firstCanvas : [],
