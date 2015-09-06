@@ -51,7 +51,8 @@ var Root = React.createClass({
       messageNum: -1, //對話計次
       messageMax: -1, //對話最大計次
       menuDisplay : false,
-      onlinePlayers : 0
+      onlinePlayers : 0,
+      playerChatOpacity : 1
     }
   },
 
@@ -772,7 +773,11 @@ indexBox : function(item) {
 },
 //是否顯示選單視窗
 showMenu: function(){
-  this.setState({menuDisplay : !this.state.menuDisplay})
+  this.setState({menuDisplay : !this.state.menuDisplay});
+},
+hideChat: function(){
+  this.setState({playerChatOpacity : this.state.playerChatOpacity? 0 : 1});
+  handleControl();
 },
 //選單選項
 indexBoxSelect : function(x){
@@ -836,11 +841,11 @@ render : function (){
   var s = this.state;
   return (
     <div  id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
-      {s.mapZindex == -1  ? <Index  indexBox={this.indexBox} s={s} />: null }{/*首頁*/} 
+      {s.mapZindex == -1 ? <Index  indexBox={this.indexBox} s={s} />: null }{/*首頁*/}
       <Map  s={s} />{/*地圖*/}
-      {s.menuNav ?<MenuNav showMenu={this.showMenu} s={s} />: null }{/*選單*/} 
+      {s.menuNav ?<MenuNav hideChat={this.hideChat} showMenu={this.showMenu} s={s} />: null }{/*選單*/} 
       {s.mapZindex != -1  ? <NPCMessage  handleChat={this.handleChat} chatArray={this.chatArray} s={s}/> : null}{/*NPC訊息*/}
-      {s.mapZindex != -1 && io.connected ? <PlayerChat /> : null  }{/*聊天框架*/}
+      {s.mapZindex != -1 && io.connected ? <PlayerChat s={s} /> : null  }{/*聊天框架*/}
       {s.menuDisplay ? <Menu getTouchPos={this.getTouchPos} menuItem={this.menuItem} s={s}/>: null}{ /*選單視窗*/} 
       {s.loadProcess ? <Load /> : null  }{/*讀取畫面*/}
       <input id="control" onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp} maxlength="1" ref='handle' />

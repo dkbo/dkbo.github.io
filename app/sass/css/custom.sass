@@ -66,7 +66,16 @@ kbd
       text-align: center
       border: solid transparent
       cursor: pointer
-      +transition(border .1s) 
+      +transition(border .1s)
+  label
+    display: block
+    font-size: 2em
+    margin-bottom: .2em
+  input
+    font-size: 2em
+    +border-radius(1rem) 
+    outline: none
+    border: none
   @media (min-width: 720px)
     width: 400px
     margin-left: -200px 
@@ -86,7 +95,7 @@ ul
   left : 0
 #grid
   z-index : 3
-#firstCanvas,#fnpc
+#firstCanvas,#fnpc,#PlayerChat
   z-index: 2
 #player,#snpc,#playersCanvas
   z-index: 1
@@ -96,12 +105,10 @@ ul
   position: absolute
   border: solid white
   +border-radius(1rem 1rem 0 0)
-  left: 5%
-  bottom: 5%
-  width : 30%
+  bottom: 0
+  left : 0
   height: 250px
   padding: .2rem
-  z-index: 9999
   #chatBox,input
     width: 100% 
   #chatBox

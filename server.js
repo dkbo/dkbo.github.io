@@ -5,12 +5,14 @@ var io = require('socket.io')(server);
 var id = 0;
 var data = [];
 var players = [];
+var playersname = [];
 
 app.use(express.static(__dirname + '/'))
 server.listen(process.env.PORT || 3000);
 io.on('connection', function(so){
 	players.push(so);
 	id++;
+	playersname.push('訪客 '+id);
 	io.emit('onlinePlayerNum',players.length);
 	so.emit('playerID',id);
 	so.on('disconnect',onlinePlayerNum);
@@ -28,6 +30,16 @@ io.on('connection', function(so){
 	};
 	so.on('enter message',sendMessage);
 	function sendMessage(val){
-		io.emit('player chat' , val);
+		var i = players.indexOf(so);
+		var json={
+			name : playersname[i],
+			val : val
+		}
+		io.emit('player chat' , json);
+	};
+	so.on('nickname',setNickName);
+	function setNickName(val){
+		var i = players.indexOf(so);
+		playersname[i] = val;
 	};
 });

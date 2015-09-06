@@ -1,7 +1,6 @@
 var PlayerChat = React.createClass({
 getInitialState : function(){
   return {
-    playerChatOpacity : 1,
     chatMsg : [],
     chatBoxTop : 0
   }
@@ -21,7 +20,7 @@ playerChat : function(msg){
   this.setState({chatBoxTop: top});
 },
 chatMsgShow : function(msg){
-  return <li>{msg}</li>
+  return <li><mark>{msg.name}</mark> {msg.val}</li>
 },
 cancelMessage : function(){
   this.refs.inputMessage.value = '';
@@ -45,15 +44,17 @@ handleKeyDown : function(e){
   }
 },
 render : function(){
+    var s = this.props.s;
+    let x = s.mapFade ? s.playerChatOpacity : 0;
       return(
-        <div id="PlayerChat" style={{opacity: this.state.playerChatOpacity}}>
-          <div ref="chatBox" id="chatBox">
-            <ul style={transform("translateY("+this.state.chatBoxTop+"px)")} ref="messageBox">
-              {this.state.chatMsg.map(this.chatMsgShow)}
-            </ul>
-           </div> 
-          <input ref="inputMessage" onKeyDown={this.handleKeyDown}  />
-        </div>
+        <div id="PlayerChat" className="xx10 xx10o1 s6 s6o1 m4 m4o1 l3 l3o1" style={{opacity: x }}>
+            <div ref="chatBox" id="chatBox">
+              <ul style={transform("translateY("+this.state.chatBoxTop+"px)")} ref="messageBox">
+                {this.state.chatMsg.map(this.chatMsgShow)}
+              </ul>
+            </div> 
+            <input ref="inputMessage" onKeyDown={this.handleKeyDown}  />
+          </div>
         )
     }
 });
