@@ -26,4 +26,8 @@ io.on('connection', function(so){
 		data[i] = val;
 		io.emit('playerMove' , data);
 	};
+	so.on('enter message',sendMessage);
+	function sendMessage(val){
+		io.emit('player chat' , val);
+	};
 });

@@ -74,7 +74,8 @@ var init = {
  firstCanvas : [],
  secondCanvas : [],
  move : [],
- npc : []
+ npc : [],
+ chatInputSelect:false
 }
     // "n": 物件名
     // "l": 物件 X 位置
@@ -123,3 +124,7 @@ function transform(x){
     
   }
 }
+function handleControl(){
+    rt.refs.handle.focus();
+    init.chatInputSelect=false;
+};

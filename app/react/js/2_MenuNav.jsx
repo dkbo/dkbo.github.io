@@ -5,7 +5,7 @@ var MenuNav = React.createClass({
         <nav id="menunav" >
           <ul>  
             <li  className="s-hide" onClick={this.props.showMenu}>選單</li>
-            {io.connected ? <li>Online {s.onlinePlayers}</li> : <li>單機</li>}
+            {io.connected ? <li>Online {s.onlinePlayers} 人</li> : <li>單機</li>}
           </ul>  
         </nav>
         )

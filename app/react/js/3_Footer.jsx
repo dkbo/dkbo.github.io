@@ -36,7 +36,7 @@ init.menuText =
       <ul>
         <li>
           <date>2015/09/05</date>
-          <p>把 <mark>Github</mark> 同步 <mark>Heroku</mark> 然後就可分成單機及線上兩個不同網站。</p>
+          <p>把 <mark>Github</mark> 同步 <mark>Heroku</mark> 然後就可分成<a href="http://dkbo.github.io">單機</a>及<a href="http://dkbo-rpg-online.herokuapp.com/">線上</a>兩個不同網站。</p>
         </li>
         <br />
         <li>

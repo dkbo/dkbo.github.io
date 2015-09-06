@@ -35,12 +35,18 @@ kbd,mark,code
   +border-radius(.2em)
 kbd
   background: #211F1F
+#control
+  width: 0
+  height: 0
+  outline : 0
+  position: absolute
+  top: -999999px
 #index
   height: 100%
   width: 100%
   background: url($indexBg)
   background-size: cover
-#indexBox,#loadBox,.chat
+#indexBox,#loadBox,.chat,#PlayerChat
   background: rgba(37, 69, 168, 0.77)
   +transition(opacity .5s)
 #indexBox
@@ -74,11 +80,7 @@ ul
     font-size: 1.5rem
     @media (min-width: 720px)
       font-size: 2rem
-#map
-  position: absolute
-  top: 0
-  left: 0
-#firstCanvas,#secondCanvas,#spritesOpacity,#grid,#fnpc,#snpc,#player,#playersCanvas
+#firstCanvas,#secondCanvas,#spritesOpacity,#grid,#fnpc,#snpc,#player,#playersCanvas,#map
   position: absolute
   top : 0
   left : 0
@@ -90,6 +92,24 @@ ul
   z-index: 1
 #secondCanvas
   z-index: 0
+#PlayerChat
+  position: absolute
+  border: solid white
+  +border-radius(1rem 1rem 0 0)
+  left: 5%
+  bottom: 5%
+  width : 30%
+  height: 250px
+  padding: .2rem
+  z-index: 9999
+  #chatBox,input
+    width: 100% 
+  #chatBox
+    height: 90%
+    overflow: hidden
+    color: white
+  input
+    outline : none  
 .chat
   width: 90%
   height: 8.1rem
@@ -97,7 +117,7 @@ ul
   bottom: 1rem
   left: 50%
   margin-left: -45%
-  border-radius : 1rem
+  +border-radius(1rem)
   border: solid 
   color : white
   font-size : 1.2em
@@ -123,7 +143,7 @@ ul
   #left,#right
     color: white
     background: rgba(37, 69, 168, 0.77)
-    border-radius : 1rem
+    +border-radius(1rem)
     border: solid
   #left
     padding: 1rem
@@ -190,7 +210,7 @@ ul
     width: 14px
     height: 40px
     background: #00b2ff
-    border-radius: 10px
+    +border-radius(10px)
     position: absolute
   &> div:nth-of-type(1)
     +transform(rotate(0deg)  translate(0,-60px))

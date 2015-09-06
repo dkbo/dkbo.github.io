@@ -90,6 +90,7 @@ var Root = React.createClass({
     }
   },
   handleChat : function(e){
+      handleControl();
       this.moveAnimate();
   },
   handleEventSelect : function(i){
@@ -207,9 +208,9 @@ var Root = React.createClass({
   },
   // 當鍵盤按鍵按下時
   handleKeyDown : function(e){
-    e.preventDefault()
     // 判斷是否已經 Start
     if(this.state.mapZindex != -1  ){
+      e.preventDefault()
       if(this.state.chatSelectArray.length ==0 && !this.state.menuDisplay){
         switch(e.keyCode){
           // 人物左移
@@ -299,6 +300,7 @@ var Root = React.createClass({
     }
    }
   else{
+    e.preventDefault()
       switch(e.keyCode){
       // 進場選單標題 上 下 w d 鍵選擇    
       case 38:
@@ -529,6 +531,7 @@ chatSelectMove : function(x){
 //等DOM 都建立好後處理
 handleLoad : function(){
   this.backIndex();
+  handleControl();
 },
 //返回平板 / 手機裝置的 XY 座標
 getTouchPos : function(e){
@@ -732,7 +735,6 @@ move : function(){
     }
     init.man.spriteSpeed < init.man.spriteSpeedCount ? init.man.spriteSpeed++ : init.man.spriteSpeed=0;
     this.setState(json);
-  }
   var player ={
     id : init.playerID,
     map : c.map.index,
@@ -748,7 +750,8 @@ move : function(){
   if(io.connected){
     io.emit('playerMove', player);
   }
-  init.player.drawImage(init.man.sprite,  player.sx, player.sy , player.w, player.h ,player.x, player.y , player.w, player.h);
+  }
+  init.player.drawImage(init.man.sprite,  this.state.manMoveAnimate*init.man.sizeX, this.state.manMoveImg*init.man.sizeY , init.man.sizeX, init.man.sizeY ,this.state.x, this.state.y , init.man.sizeX, init.man.sizeY);
   }
   this.timer = requestAFrame(this.move.bind(this));
 },
@@ -802,16 +805,12 @@ componentDidMount: function () {
     });
     $(window).on('load',this.handleLoad);
     $(window).on('resize',this.handleResize);
-    $(window).on('keydown',this.handleKeyDown);
-    $(window).on('keyup',this.handleKeyUp);
     $.ajaxSetup({cache: false});
     this.timer = requestAFrame(this.move.bind(this));
   },
 //所有DOM將移除時
  componentWillUnmount : function(){
     $(window).off('resize',this.handleResize);
-    $(window).off('keydown',this.handleKeyDown);
-    $(window).off('keyup',this.handleKeyUp);
     cancelAFrame(this.timer);
   },
 onlinePlayerMove : function (player){
@@ -837,12 +836,14 @@ render : function (){
   var s = this.state;
   return (
     <div  id="container" onTouchStart={this.handleTouchStart} onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
-      {s.mapZindex == -1  ? <Index indexBox={this.indexBox} s={s} />: null }{/*首頁*/} 
-      <Map s={s} />{/*地圖*/}
+      {s.mapZindex == -1  ? <Index  indexBox={this.indexBox} s={s} />: null }{/*首頁*/} 
+      <Map  s={s} />{/*地圖*/}
       {s.menuNav ?<MenuNav showMenu={this.showMenu} s={s} />: null }{/*選單*/} 
       {s.mapZindex != -1  ? <NPCMessage  handleChat={this.handleChat} chatArray={this.chatArray} s={s}/> : null}{/*NPC訊息*/}
+      {s.mapZindex != -1 && io.connected ? <PlayerChat /> : null  }{/*聊天框架*/}
       {s.menuDisplay ? <Menu getTouchPos={this.getTouchPos} menuItem={this.menuItem} s={s}/>: null}{ /*選單視窗*/} 
       {s.loadProcess ? <Load /> : null  }{/*讀取畫面*/}
+      <input id="control" onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp} maxlength="1" ref='handle' />
     </div>
    ) 
   }

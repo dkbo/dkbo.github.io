@@ -41,6 +41,7 @@ var MapGrid = React.createClass({
     this.setState({gridY : !this.state.gridY});
 },
 handleKeyDown : function(e){
+  if(!init.chatInputSelect){
   switch(e.keyCode){      
     // 顯示X取消格線
     case 88:
@@ -50,6 +51,7 @@ handleKeyDown : function(e){
     case 89:
        this.drawGridY();
        break;
+     }
   }
 },
 componentDidMount: function () {
