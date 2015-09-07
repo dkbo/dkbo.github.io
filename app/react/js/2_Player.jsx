@@ -1,14 +1,15 @@
 var Player = React.createClass({
-	componentDidMount: function () {
-   		var playerCanvas = document.getElementById('player');
-    	init.player =  playerCanvas.getContext('2d');
-  },
     render : function(){
       var s = this.props.s;
+      let style = {
+        transform : "translateY("+s.top+"px) translateX("+s.left +"px)",
+        oTransform : "translateY("+s.top+"px) translateX("+s.left +"px)",
+        msTransform : "translateY("+s.top+"px) translateX("+s.left +"px)",
+        WebkitTransform : "translateY("+s.top+"px) translateX("+s.left +"px)",
+        backgroundPosition : s.manMoveAnimate*init.man.sizeX+"px "+s.manMoveImg*(-init.man.sizeY)+"px"
+      };
       return(
-        <div>
-          <canvas id="player" width={s.map.col} height={s.map.row} />   
-        </div>  
+        <div id="player" style={style} />
       )
     }
 });
