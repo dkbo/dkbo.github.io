@@ -659,6 +659,7 @@ moveAnimate : function(){
 //人物移動事件
 move : function(){
   if(this.state.mapFade){
+  init.player.clearRect(0,0,init.maps.col, init.maps.row);
   var p = this.props;
   var c = this.state;
   var json = {
@@ -765,6 +766,7 @@ move : function(){
     io.emit('playerMove', player);
   }
   }
+  init.player.drawImage(init.man.sprite,  this.state.manMoveAnimate*init.man.sizeX, this.state.manMoveImg*init.man.sizeY , init.man.sizeX, init.man.sizeY ,this.state.x, this.state.y , init.man.sizeX, init.man.sizeY);
   }
   this.timer = requestAFrame(this.move.bind(this));
 },
@@ -786,6 +788,7 @@ indexBox : function(item) {
 //是否顯示選單視窗
 showMenu: function(){
   this.setState({menuDisplay : !this.state.menuDisplay});
+  handleControl();
 },
 hideChat: function(){
   this.setState({playerChatOpacity : this.state.playerChatOpacity? 0 : 1});
