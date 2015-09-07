@@ -24,6 +24,7 @@ chatMsgShow : function(msg){
 },
 cancelMessage : function(){
   this.refs.inputMessage.value = '';
+  this.refs.inputMessage.blur();
   handleControl();
 },
 enterMessage : function(){
@@ -31,8 +32,7 @@ enterMessage : function(){
   io.emit('enter message',x);
   this.refs.inputMessage.value = '';
 },
-handleKeyDown : function(e){
-  init.chatInputSelect=true;
+handleKeyUp : function(e){ 
   switch(e.keyCode){
     case 27:
       this.cancelMessage();
@@ -40,8 +40,10 @@ handleKeyDown : function(e){
     case 13:
       this.enterMessage();
       break;
-
   }
+},
+handleMouseDown : function(){
+  init.chatInputSelect=true;
 },
 render : function(){
     var s = this.props.s;
@@ -53,7 +55,7 @@ render : function(){
                 {this.state.chatMsg.map(this.chatMsgShow)}
               </ul>
             </div> 
-            <input ref="inputMessage" onKeyDown={this.handleKeyDown}  />
+            <input ref="inputMessage" onMouseDown={this.handleMouseDown} onKeyUp={this.handleKeyUp} type="text" />
           </div>
         )
     }

@@ -211,8 +211,12 @@ var Root = React.createClass({
   handleKeyDown : function(e){
     // 判斷是否已經 Start
     if(this.state.mapZindex != -1  ){
-      e.preventDefault()
-      if(this.state.chatSelectArray.length ==0 && !this.state.menuDisplay){
+      
+      if(init.chatInputSelect){
+
+      }
+      else if(this.state.chatSelectArray.length ==0 && !this.state.menuDisplay){
+        e.preventDefault()
         switch(e.keyCode){
           // 人物左移
           case 37:
@@ -257,12 +261,14 @@ var Root = React.createClass({
               this.moveAnimate();
               break;
           case 27:
+            console.log(1)
              this.initEvent();
              this.showMenu();
              break;
       } 
     }
     else if(this.state.menuDisplay){
+          e.preventDefault()
           switch(e.keyCode){
             case 27:
               this.initEvent();
@@ -271,6 +277,7 @@ var Root = React.createClass({
           }
     }
     else{
+        e.preventDefault()
         // 對話框選取
         switch(e.keyCode){
           case 38:
@@ -301,7 +308,11 @@ var Root = React.createClass({
     }
    }
   else{
-    e.preventDefault()
+    if(init.chatInputSelect){
+        
+      }
+      else{
+      e.preventDefault()
       switch(e.keyCode){
       // 進場選單標題 上 下 w d 鍵選擇    
       case 38:
@@ -323,9 +334,14 @@ var Root = React.createClass({
          this.state.indexBox  ? this.handleMultiPlayer() : this.handleStart() ;
      }
    }
+   }
   },
 //鍵盤彈起後
 handleKeyUp : function(e){
+  if(init.chatInputSelect){
+
+  }
+  else{
  e.preventDefault()
     // 取消人物移動
     switch(e.keyCode){
@@ -355,6 +371,7 @@ handleKeyUp : function(e){
           break;
 
     }    
+  }
   },
 // 取消人物及地圖左移
 leftStopMove : function(){
@@ -526,10 +543,13 @@ chatSelectMove : function(x){
    this.setState({chatSelectIndex : val});
 }
 },
+handleStartControl :function (){
+    init.chatInputSelect= io.connected ? true : false;
+},
 //等DOM 都建立好後處理
 handleLoad : function(){
   this.backIndex();
-  handleControl();
+  this.handleStartControl();
 },
 //返回平板 / 手機裝置的 XY 座標
 getTouchPos : function(e){
@@ -806,6 +826,8 @@ componentDidMount: function () {
     io.on('disconnect', function() {
       console.log('disconnected');
     });
+    $(window).on('keydown',this.handleKeyDown);
+    $(window).on('keyup',this.handleKeyUp);
     $(window).on('load',this.handleLoad);
     $(window).on('resize',this.handleResize);
     $.ajaxSetup({cache: false});
@@ -846,7 +868,6 @@ render : function (){
       {s.mapZindex != -1 && io.connected ? <PlayerChat s={s} /> : null  }{/*聊天框架*/}
       {s.menuDisplay ? <Menu getTouchPos={this.getTouchPos} menuItem={this.menuItem} s={s}/>: null}{ /*選單視窗*/} 
       {s.loadProcess ? <Load /> : null  }{/*讀取畫面*/}
-      <input id="control" onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp} maxlength="1" ref='handle' readonly="true"/>
       <PreLoadImg />
     </div>
    ) 
