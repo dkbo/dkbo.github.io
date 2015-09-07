@@ -16,7 +16,17 @@ var Index = React.createClass({
       }
       else{
         io.emit('nickname',x);
+        init.NameInputSelect = false;
         rt.handleStart();
+      }
+    },
+    handleMouseDown : function(){
+      init.NameInputSelect = true;
+    },
+    componentDidMount : function(){
+      if(io.connected){
+        init.NameInputSelect = true;
+        this.refs.nickname.focus();
       }
     },
     render : function(){
@@ -29,7 +39,7 @@ var Index = React.createClass({
             </ul> :
             <div>
               <label className="xx12  xx-center" htmlFor="gamename" >請輸入暱稱</label>
-              <input ref="nickname" className="xx10 xx10o1 xx-center" id="gamename" type="text"  onKeyDown={this.handleKeyDown} placeholder="尊姓大名?" />
+              <input ref="nickname" className="xx10 xx10o1 xx-center" id="gamename" type="text"  onMouseDown={this.handleMouseDown} onKeyDown={this.handleKeyDown} placeholder="尊姓大名?" />
             </div> }
           </div>
           <Loadbox style={{opacity : s.loadBoxShow}} />

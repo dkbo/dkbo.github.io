@@ -28,11 +28,16 @@ cancelMessage : function(){
   handleControl();
 },
 enterMessage : function(){
-  let x = this.refs.inputMessage.value; 
-  io.emit('enter message',x);
-  this.refs.inputMessage.value = '';
+  let x = this.refs.inputMessage.value.trim();
+  if(!x){
+      
+  }
+  else{
+    io.emit('enter message',x);
+    this.refs.inputMessage.value = '';
+  } 
 },
-handleKeyUp : function(e){ 
+handleKeyUp : function(e){
   switch(e.keyCode){
     case 27:
       this.cancelMessage();

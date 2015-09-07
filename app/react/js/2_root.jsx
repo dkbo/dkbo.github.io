@@ -212,7 +212,7 @@ var Root = React.createClass({
     // 判斷是否已經 Start
     if(this.state.mapZindex != -1  ){
       
-      if(init.chatInputSelect){
+      if(init.chatInputSelect || init.NameInputSelect){
 
       }
       else if(this.state.chatSelectArray.length ==0 && !this.state.menuDisplay){
@@ -308,7 +308,7 @@ var Root = React.createClass({
     }
    }
   else{
-    if(init.chatInputSelect){
+    if(init.chatInputSelect || init.NameInputSelect){
         
       }
       else{
@@ -338,7 +338,7 @@ var Root = React.createClass({
   },
 //鍵盤彈起後
 handleKeyUp : function(e){
-  if(init.chatInputSelect){
+  if(init.chatInputSelect || init.NameInputSelect){
 
   }
   else{
@@ -543,13 +543,9 @@ chatSelectMove : function(x){
    this.setState({chatSelectIndex : val});
 }
 },
-handleStartControl :function (){
-    init.chatInputSelect= io.connected ? true : false;
-},
 //等DOM 都建立好後處理
 handleLoad : function(){
   this.backIndex();
-  this.handleStartControl();
 },
 //返回平板 / 手機裝置的 XY 座標
 getTouchPos : function(e){

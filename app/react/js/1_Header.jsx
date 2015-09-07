@@ -72,7 +72,8 @@ var init = {
  secondCanvas : [],
  move : [],
  npc : [],
- chatInputSelect: false
+ chatInputSelect: false,
+ NameInputSelect: false
 }
     // "n": 物件名
     // "l": 物件 X 位置
