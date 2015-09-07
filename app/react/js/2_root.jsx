@@ -261,7 +261,6 @@ var Root = React.createClass({
               this.moveAnimate();
               break;
           case 27:
-            console.log(1)
              this.initEvent();
              this.showMenu();
              break;
@@ -622,6 +621,8 @@ drawObject : function(callback){
   this.preLoadImg(function(){
   init.fcontext.clearRect(0, 0, init.maps.col, init.maps.row);
   init.scontext.clearRect(0, 0, init.maps.col, init.maps.row);
+  init.player.clearRect(0, 0, init.maps.col, init.maps.row);
+  init.player.drawImage(init.man.sprite,  this.state.manMoveAnimate*init.man.sizeX, this.state.manMoveImg*init.man.sizeY , init.man.sizeX, init.man.sizeY ,this.state.x, this.state.y , init.man.sizeX, init.man.sizeY);
 var imageObj = new Image();
 var s = this.state;
 var f = init.firstCanvas;
@@ -659,7 +660,6 @@ moveAnimate : function(){
 //人物移動事件
 move : function(){
   if(this.state.mapFade){
-  init.player.clearRect(0,0,init.maps.col, init.maps.row);
   var p = this.props;
   var c = this.state;
   var json = {
@@ -746,11 +746,15 @@ move : function(){
   }
   if(ctl.left || ctl.right || ctl.up || ctl.down){
     if(!init.man.spriteSpeed){
-      json.manMoveAnimate = (c.manMoveAnimate+1)%4;
+      json.manMoveAnimate = (c.manMoveAnimate+1)%init.man.spriteFrame;
     }
     init.man.spriteSpeed < init.man.spriteSpeedCount ? init.man.spriteSpeed++ : init.man.spriteSpeed=0;
     this.setState(json);
-  var player ={
+    init.player.clearRect(0,0,init.maps.col, init.maps.row);
+    init.player.drawImage(init.man.sprite,  this.state.manMoveAnimate*init.man.sizeX, this.state.manMoveImg*init.man.sizeY , init.man.sizeX, init.man.sizeY ,this.state.x, this.state.y , init.man.sizeX, init.man.sizeY);
+  }
+  if(io.connected){
+    var player ={
     id : init.playerID,
     map : c.map.index,
     name : "test",
@@ -760,15 +764,16 @@ move : function(){
     w : init.man.sizeX,
     h : init.man.sizeY,
     x : c.x,
-    y : c.y,
-  }
-  if(io.connected){
+    y : c.y
+    };
     io.emit('playerMove', player);
   }
-  }
-  init.player.drawImage(init.man.sprite,  this.state.manMoveAnimate*init.man.sizeX, this.state.manMoveImg*init.man.sizeY , init.man.sizeX, init.man.sizeY ,this.state.x, this.state.y , init.man.sizeX, init.man.sizeY);
-  }
-  this.timer = requestAFrame(this.move.bind(this));
+}
+  var now = new Date(), delay = (now - lastDate);
+  fpsDelay += (delay - fpsDelay) / 10;
+  lastDate = now;
+  //console.log((1000/fpsDelay).toFixed(1) + " fps");
+  this.timer = requestAFrame(this.move);
 },
 //首頁選項載入
 indexBox : function(item) {

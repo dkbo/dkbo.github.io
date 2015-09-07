@@ -33,7 +33,12 @@ init.menuText =
   [
     <aircle className="clearfix">
       <h2>學習日誌條</h2>
-      <ul>  
+      <ul>
+        <li>
+          <date>2015/09/07</date>
+          <p>最近直接使用原生 JS 來測試，測試結果出來之後，才知道日前所寫的程式有著很嚴重的問題，整個網站只有 Root 1個組件，所以只要 <code>this.setState</code> 就是整個 render。所以效能會很差。</p>
+        </li>
+        <br />  
         <li>
           <date>2015/09/06</date>
           <p>在多人模式加入聊天框，把 Socket.io 的 Reload 改成 false ，一旦與 Server 中斷連接，左上角就會變成單機，另外人物移動的預測處理，目前個人還想不到如何寫，所以其他人物移動會很卡純屬正常。</p>

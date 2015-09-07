@@ -35,8 +35,9 @@ var init = {
   },
   man : {
     sprite : player(),
-    spriteSpeed : 0,
-    spriteSpeedCount : 8,
+    spriteFrame : 4,  //畫格數
+    spriteSpeed : 0,   //畫格所在
+    spriteSpeedCount : 8, //畫格停留次數
     sizeX: 32, //人物寬度度
     sizeY: 48, //人物長度
     moveSpeed: 4, // 移動速度
@@ -116,12 +117,12 @@ function transform(x){
     transform :x,
     oTransform : x,
     msTransform : x,
-    WebkitTransform : x,
-    
-    
+    WebkitTransform : x, 
     
   }
 }
 function handleControl(){
     init.chatInputSelect= false;
 };
+
+var fpsDelay = 0,lastDate = new Date();
