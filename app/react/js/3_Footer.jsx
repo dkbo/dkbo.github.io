@@ -1,37 +1,37 @@
-var rt = React.render(<Root  />,document.body)
+const rt = React.render(<Root  />,document.body)
 
 
 // 選單內容 
 init.menuTitle =[ 
     {
       id : 0,
-      title: "實作紀錄"
+      title: '實作紀錄'
     },
     {
       id : 1,
-      title: "說明"
+      title: '說明'
     },
     {
       id : 2,
-      title :"關於作者"
+      title :'關於作者'
     },
     {
       id : 3,
-      title :"操作"
+      title :'操作'
     },
     {
       id : 4,
-      title :"素材來源"
+      title :'素材來源'
     }
     ,
     {
       id : 5,
-      title :"Disqus留言"
+      title :'Disqus留言'
     }
   ];
 init.menuText =
   [
-    <aircle className="clearfix">
+    <aircle className='clearfix'>
       <h2>學習日誌條</h2>
       <ul>
         <li>
@@ -46,7 +46,7 @@ init.menuText =
         <br />
         <li>
           <date>2015/09/05</date>
-          <p>把 <mark>Github</mark> 同步 <mark>Heroku</mark> 然後就可分成<a href="http://dkbo.github.io">單機</a>及<a href="http://dkbo-rpg-online.herokuapp.com/">線上</a>兩個不同網站。</p>
+          <p>把 <mark>Github</mark> 同步 <mark>Heroku</mark> 然後就可分成<a href='http://dkbo.github.io'>單機</a>及<a href='http://dkbo-rpg-online.herokuapp.com/'>線上</a>兩個不同網站。</p>
         </li>
         <br />
         <li>
@@ -56,18 +56,18 @@ init.menuText =
         <br />
         <li>
           <date>2015/09/02</date>
-          <p>練習<mark>Socket.io</mark>順便就把現成的單機版Clone 去 Heroku 變成了很陽春的<a href="http://dkbo-rpg-online.herokuapp.com/" target="_blank">線上互動版</a>，只是遊戲開發經驗 0 的我不知道如何去優化，所以就當作試試水溫。聊天框也沒有去做特別的處理也沒有<mark>RWD</mark>，所以別傷到眼睛了。最近可能要慢慢的把整個架構的程式在重寫了。淚</p>
+          <p>練習<mark>Socket.io</mark>順便就把現成的單機版Clone 去 Heroku 變成了很陽春的<a href='http://dkbo-rpg-online.herokuapp.com/' target='_blank'>線上互動版</a>，只是遊戲開發經驗 0 的我不知道如何去優化，所以就當作試試水溫。聊天框也沒有去做特別的處理也沒有<mark>RWD</mark>，所以別傷到眼睛了。最近可能要慢慢的把整個架構的程式在重寫了。淚</p>
         </li>
         <br />
         <li>
           <date>2015/08/31</date>
-          <p>遊戲呈現的部分原本是 <code>div</code> 配上 <code>translate3D</code>去做位移呈現，現在全部轉換成 <code>Canvas</code> 呈現畫面。在計時的部分有看到<a href="https://msdn.microsoft.com/zh-tw/library/Hh920765(v=VS.85).aspx" target="_blank">此篇文章</a>所以都轉換成 <code>requestAnimationFrame</code> 呈現動畫。部分 JSX 資料抽離，並透過 $.getScript 來取出。</p>
+          <p>遊戲呈現的部分原本是 <code>div</code> 配上 <code>translate3D</code>去做位移呈現，現在全部轉換成 <code>Canvas</code> 呈現畫面。在計時的部分有看到<a href='https://msdn.microsoft.com/zh-tw/library/Hh920765(v=VS.85).aspx' target='_blank'>此篇文章</a>所以都轉換成 <code>requestAnimationFrame</code> 呈現動畫。部分 JSX 資料抽離，並透過 $.getScript 來取出。</p>
         </li>
         <br />
         <li>
           <date>2015/08/29</date>
           <p>圖片及部分資料改成 AJAX 方式取得。目前尚未轉場效果。接下來要把 NPC 在做出來。</p>
-          <iframe height='268' scrolling='no' src='//codepen.io/dkbo/embed/RWbjjZ/?height=268&theme-id=4234&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style={{width: "100%"}}>See the Pen <a href='http://codepen.io/dkbo/pen/RWbjjZ/'>RPG NPC Walk Type one </a> by dkbo (<a href='http://codepen.io/dkbo'>@dkbo</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>        
+          <iframe height='268' scrolling='no' src='//codepen.io/dkbo/embed/RWbjjZ/?height=268&theme-id=4234&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style={{width: '100%'}}>See the Pen <a href='http://codepen.io/dkbo/pen/RWbjjZ/'>RPG NPC Walk Type one </a> by dkbo (<a href='http://codepen.io/dkbo'>@dkbo</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>        
         </li>
         <br />
         <li>
@@ -77,9 +77,9 @@ init.menuText =
       </ul>
     </aircle>
     ,
-    <aircle className="clearfix">
+    <aircle className='clearfix'>
       <h2>簡介</h2>
-      <p>此遊戲履歷想法來源在於 <mark>RPG 遊戲製作大師</mark>，以貼近於傳統紅白機的　UI/UX　，來架設在網頁上，另個原因則在於練習　<a href="http://facebook.github.io/react/" target="_blank" >ReactJS</a> ，以　VDOM　操作的方式 ，開發這可擴展的遊戲網頁。</p>
+      <p>此遊戲履歷想法來源在於 <mark>RPG 遊戲製作大師</mark>，以貼近於傳統紅白機的　UI/UX　，來架設在網頁上，另個原因則在於練習　<a href='http://facebook.github.io/react/' target='_blank' >ReactJS</a> ，以　VDOM　操作的方式 ，開發這可擴展的遊戲網頁。</p>
       <h2>可擴展</h2>
       <p>遊戲定義的可擴展，因使用網頁共通語法 HTML 、 CSS 、 JS ，所以只要能在網頁做出來的設計，都能在此遊戲中呈現。</p>
       <h2>遊戲目的</h2>
@@ -88,11 +88,11 @@ init.menuText =
       <p>作者會在空餘的時間，慢慢地加進一些資訊及修改程式。</p>
     </aircle>
     ,
-    <aircle className="clearfix">
+    <aircle className='clearfix'>
       <h2>作者</h2>
-      <div className="row xx-ng">
-        <figrue className="col xx12 x6 x6o3 s3o0 s3 l2 xx-np"><img src="http://1.gravatar.com/avatar/d2cddbe46278bf25a41b9479af20cf8d?s=250&d=wavatar&r=g" width="100%"/></figrue>
-        <div className="col xx12  s9 l10 xx-np"><p className="s-p">前端攻城師，做出的網頁以兼容電腦、手機、平板等裝置為優先。會簡單的後端語言連接資料庫能做出簡易的會員系統、訂單管理系統、物流管理系統等等。正朝著網頁美感路線努力中。</p></div>
+      <div className='row xx-ng'>
+        <figrue className='col xx12 x6 x6o3 s3o0 s3 l2 xx-np'><img src='http://1.gravatar.com/avatar/d2cddbe46278bf25a41b9479af20cf8d?s=250&d=wavatar&r=g' width='100%'/></figrue>
+        <div className='col xx12  s9 l10 xx-np'><p className='s-p'>前端攻城師，做出的網頁以兼容電腦、手機、平板等裝置為優先。會簡單的後端語言連接資料庫能做出簡易的會員系統、訂單管理系統、物流管理系統等等。正朝著網頁美感路線努力中。</p></div>
       </div>
       <h2>作者自介</h2>
       <p>作者本名叫 盧宏寶 27歲，在家排名老二，畢業於高雄市正修科技大學電機工程系，在網路世界中暱稱為 DKBO，目前已婚有一子。<br /><br />
@@ -114,7 +114,7 @@ init.menuText =
       </p>
     </aircle>
     ,
-    <aircle className="clearfix">
+    <aircle className='clearfix'>
       <h2>電腦熱鍵</h2>
       <p>上 : <kbd>w</kbd> 、 下 : <kbd>s</kbd> 、 左 : <kbd>l</kbd> 、 右 : <kbd>r</kbd></p>
       <p>X座標格線 : <kbd>x</kbd> 、 Y座標格線 : <kbd>y</kbd></p>
@@ -125,18 +125,18 @@ init.menuText =
       <p>執行 : 螢幕下方處觸碰</p>
     </aircle>
     ,
-    <aircle className="clearfix">
+    <aircle className='clearfix'>
       <h2>地圖拼圖</h2>
-      <p>來源 : <br /><a href="http://fc03.deviantart.net/fs26/i/2008/149/d/7/rpg_maker_xp_the_best_tileset_by_davide_86.png" target="_blank">www.deviantart.com/</a></p>
+      <p>來源 : <br /><a href='http://fc03.deviantart.net/fs26/i/2008/149/d/7/rpg_maker_xp_the_best_tileset_by_davide_86.png' target='_blank'>www.deviantart.com/</a></p>
       <h2>人物拼圖</h2>
-      <p>來源 : <br /><a href="http://doraspace.web.fc2.com/material/xp/chara/index.html" target="_blank">doraspace.web.fc2.com</a></p>
-      <p>來源 : <br /><a href="http://www.geocities.jp/kurororo4/looseleaf/" target="_blank">www.geocities.jp</a></p>
+      <p>來源 : <br /><a href='http://doraspace.web.fc2.com/material/xp/chara/index.html' target='_blank'>doraspace.web.fc2.com</a></p>
+      <p>來源 : <br /><a href='http://www.geocities.jp/kurororo4/looseleaf/' target='_blank'>www.geocities.jp</a></p>
       
     </aircle>
     ,
-    <aircle className="clearfix">
+    <aircle className='clearfix'>
       <h2>留下訊息</h2>
       <Disqus />
-      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+      <noscript>Please enable JavaScript to view the <a href='https://disqus.com/?ref_noscript' rel='nofollow'>comments powered by Disqus.</a></noscript>
     </aircle>
   ];

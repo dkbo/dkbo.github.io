@@ -1,4 +1,4 @@
-var requestAFrame = (function () {
+const requestAFrame = (()=>{
     return window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame ||
@@ -7,7 +7,7 @@ var requestAFrame = (function () {
                 return window.setTimeout(callback, 1000 / 60);
             };
 })();
-var cancelAFrame = (function () {
+const cancelAFrame = (()=>{
     return window.cancelAnimationFrame ||
             window.webkitCancelAnimationFrame ||
             window.mozCancelAnimationFrame ||
@@ -17,15 +17,15 @@ var cancelAFrame = (function () {
             };
 })();
 // init
-var init = {
+const init = {
   indexBox  : [ 
     {
       id : 0,
-      title: "單機模式"
+      title: '單機模式'
     },
     {
       id : 1,
-      title :"多人模式"
+      title :'多人模式'
     }
   ],
   multiPlayerUrl :'http://dkbo-rpg-online.herokuapp.com/',
@@ -53,7 +53,7 @@ var init = {
     down : false,
   },
   map :{  // 判斷地圖位移動
-    bg : "url('images/bg.jpg')",
+    bg : 'url("images/bg.jpg")',
     left : false,
     up : false,
     right : false,
@@ -66,7 +66,7 @@ var init = {
     x : 0,
     y : 0
  },
- preImg : ["/images/mainbg.jpg"],
+ preImg : ['/images/mainbg.jpg'],
  objects : [],
  events : [],
  firstCanvas : [],
@@ -74,43 +74,33 @@ var init = {
  move : [],
  npc : [],
  chatInputSelect: false,
- NameInputSelect: false
+ NameInputSelect: false,
+ menuTitle : null,
+ menuText : null,
 }
-    // "n": 物件名
-    // "l": 物件 X 位置
-    // "t": 物件 Y 位置
-    // "w": 物件寬度
-    // "h": 物件高度
-    // "b": 物件來源圖
-    // "x": 物件拼圖 X 位置
-    // "y": 物件拼圖 Y 位置
-    // "z": 物件顯示層 預設為 NULL 或是填入 2
+    // 'n': 物件名
+    // 'l': 物件 X 位置
+    // 't': 物件 Y 位置
+    // 'w': 物件寬度
+    // 'h': 物件高度
+    // 'b': 物件來源圖
+    // 'x': 物件拼圖 X 位置
+    // 'y': 物件拼圖 Y 位置
+    // 'z': 物件顯示層 預設為 NULL 或是填入 2
 
 function player(){
-  var playerImg = new Image();
-    playerImg.src="http://dkbo.github.io/images/man.png";
+  let playerImg = new Image();
+    playerImg.src='http://dkbo.github.io/images/man.png';
   return playerImg;
 
 }
 function mapUrl(){
-  var os = "objects/"
-  var o  = "_obj";
-  var id = ["0000","0001","0002","0003","0004","0005"];
-  var type = ".json";
-  var maps = id.map(function(arr){
-      return os+arr+o+type
-  })
-  return maps
+  let [os,o,id,type] =['objects/','_obj',['0000','0001','0002','0003','0004','0005'],'.json'];
+  return id.map((arr)=> {return os+arr+o+type});
 }
 function evtUrl(){
-  var os = "events/"
-  var o  = "_obj";
-  var id = ["0000","0001","0002","0003","0004","0005"];
-  var type = ".js";
-  var maps = id.map(function(arr){
-      return os+arr+o+type
-  })
-  return maps
+  let [os,o,id,type] =['events/','_obj',['0000','0001','0002','0003','0004','0005'],'.js']
+  return id.map((arr)=>{return os+arr+o+type});
 }
 function transform(x){
   return{
@@ -125,4 +115,4 @@ function handleControl(){
     init.chatInputSelect= false;
 };
 
-var fpsDelay = 0,lastDate = new Date();
+let [fpsDelay , lastDate] = [0,new Date()];
