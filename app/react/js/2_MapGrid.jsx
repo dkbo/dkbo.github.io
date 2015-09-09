@@ -66,5 +66,5 @@ const MapGrid = React.createClass({
     return(
       <canvas id="grid" width={s.map.col} height={s.map.row} />      
     )
-  }
+  },
 });

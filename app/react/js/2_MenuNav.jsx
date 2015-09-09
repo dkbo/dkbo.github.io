@@ -9,5 +9,5 @@ const MenuNav = React.createClass({
         </ul>  
       </nav>
     )
-  }
+  },
 });

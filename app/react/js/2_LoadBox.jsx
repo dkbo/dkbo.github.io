@@ -3,5 +3,5 @@ const Loadbox = React.createClass({
     return(
     	<div id='loadBox' style={this.props.style}></div>
     )
-  }
+  },
 });

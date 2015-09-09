@@ -9,5 +9,5 @@ const PreLoadImg = React.createClass({
         {init.preImg.map(this.handleLoadImg)}
       </div>
     )
-  }
+  },
 });

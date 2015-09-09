@@ -36,7 +36,6 @@ let Menu = React.createClass({
       -scrollSpeed *e.deltaY / delta +this.state.menuRightBoxWheel,
     ];
     if(x +scrollSpeed > rw && y <= 0){
-      
       this.setState({menuRightBoxWheel : y})
     }
   },
@@ -105,5 +104,5 @@ let Menu = React.createClass({
         </div>
       </div>
     )
-  }
+  },
 });

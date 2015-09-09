@@ -9,6 +9,6 @@ const Player = React.createClass({
         <canvas id="player" width={s.map.col} height={s.map.row} />   
       </div>  
     )
-  }
+  },
 });
 

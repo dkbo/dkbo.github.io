@@ -6,5 +6,5 @@ const Load = React.createClass({
     return(
      	<div  id='load' style={this.props.style} >{x}</div>
   	)
-  }
+  },
 });

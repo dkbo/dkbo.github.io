@@ -950,6 +950,6 @@ const Root = React.createClass({
         {s.loadProcess ? <Load /> : null  }{/*讀取畫面*/}
         <PreLoadImg />
       </div>
-     ) 
-    }
+    ) 
+  },
 });

@@ -12,5 +12,5 @@ const MapObject = React.createClass({
         <canvas id='secondCanvas' width={s.map.col} height={s.map.row} />
       </div>    
     )
-  }
+  },
 });

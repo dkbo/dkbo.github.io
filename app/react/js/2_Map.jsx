@@ -5,10 +5,10 @@ const Map = React.createClass({
         <MapGrid s={s} />
         <MapObject s={s} />
         <OnlinePlayers s={s} />
-        <Npc  s={s}  />
+        <Npc s={s} />
         <Player s={s} />    
       </div>  
     )
-  }
+  },
 });
 

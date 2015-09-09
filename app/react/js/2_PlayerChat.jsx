@@ -62,6 +62,6 @@ const PlayerChat = React.createClass({
         <input ref="inputMessage" onMouseDown={this.handleMouseDown} onKeyUp={this.handleKeyUp} type="text" />
       </div>
     )
-  }
+  },
 });
 

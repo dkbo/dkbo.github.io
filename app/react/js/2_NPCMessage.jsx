@@ -9,5 +9,5 @@ const NPCMessage = React.createClass({
         </ul>
       </div>
     )
-  }
+  },
 });

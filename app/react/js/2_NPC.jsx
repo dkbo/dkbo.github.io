@@ -266,5 +266,5 @@ const Npc = React.createClass({
       <canvas id="snpc" width={s.map.col}  height={s.map.row} />
     </div>
     )
-  }
+  },
 });

@@ -9,6 +9,6 @@ const OnlinePlayers = React.createClass({
         <canvas id="playersCanvas" width={s.map.col} height={s.map.row} />   
       </div>  
     )
-  }
+  },
 });
 
