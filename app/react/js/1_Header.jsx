@@ -95,11 +95,11 @@ function player(){
 
 }
 function mapUrl(){
-  let [os,o,id,type] =['objects/','_obj',['0000','0001','0002','0003','0004','0005'],'.json'];
+  let [os,o,id,type] =['objects/','_obj',['0000','0001','0002','0003'],'.json'];
   return id.map((arr)=> {return os+arr+o+type});
 }
 function evtUrl(){
-  let [os,o,id,type] =['events/','_obj',['0000','0001','0002','0003','0004','0005'],'.js']
+  let [os,o,id,type] =['events/','_obj',['0000','0001','0002','0003'],'.js']
   return id.map((arr)=>{return os+arr+o+type});
 }
 function transform(x){
