@@ -1,6 +1,6 @@
 ## Web RPG Maker  
 <aircle>
-  <h2>簡介</h2>
+  <h2>簡介test123123213</h2>
   <p>此遊戲履歷想法來源在於 <mark>RPG 遊戲製作大師</mark>，以貼近於傳統紅白機的　UI/UX　，來架設在網頁上，另個原因則在於練習　<a href="http://facebook.github.io/react/" target="_blank" >ReactJS</a> ，以　VDOM　操作的方式 ，開發這可擴展的遊戲網頁。</p>
   <h2>可擴展</h2>
   <p>遊戲定義的可擴展，因使用網頁共通語法 HTML 、 CSS 、 JS ，所以只要能在網頁做出來的設計，都能在此遊戲中呈現。</p>
@@ -46,7 +46,7 @@
             所以cm: 0 就是本張地圖。
             "in": [
                   // cmm: 0
-                  { 
+                  {
                         "x": 472,  
                         "y": 544
                   },
@@ -141,14 +141,14 @@
             }
       ]
     }
-  
+
   ```
 
   <p>以下則為 Event 事件的資料，因內部會使用到 JSX 所以用 React 或 Babel 再另外編譯，至於為何使用 JSX 呢?在看到下面程式碼時，內部都可以放入 Tag ， 在訊息方面，可以任意改變文字顏色、大小、字型、樣式及 Css3 動畫，這是在網頁中可寫出的優勢。</p>
 
   ```jsx
     init.event = [{ name : "哆拉撞", //名字
-                text : [ 
+                text : [
                           "作者太笨啦! NPC 碰撞有一堆 BUG，害我撞來撞去的。",  // 第一段訊息
                           <span>如果人物卡住了就按 <kbd>0</kbd> 或 <kbd>1</kbd>直接傳送走吧!</span>, //第二段訊息
                           <span>如果想要體驗多人互動的話可以<a href="http://dkbo-rpg-online.herokuapp.com/">來這裡</a>，前提是你要經得起眼睛的考驗。</span> //第三段訊息內部包含超連結。
@@ -166,5 +166,3 @@
   <p><strong>何謂 E 履歷?</strong>電子化履歷? Email履歷?</p>
   <p>在下認為以上都不重要，遇到對的面試官才是最重要的。</p>
 </aircle>
-
-
