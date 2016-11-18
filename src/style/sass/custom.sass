@@ -1,0 +1,202 @@
+*
+  box-sizing: border-box
+body, html
+  height: 100%
+  overflow: hidden
+  background: black
+
+canvas
+  position: absolute
+  left: 0
+  top: 0
+
+
+#indexBox,#loadBox,#chatBox,#PlayerChat
+  background: rgba(37, 69, 168, 0.77)
+  transition: opacity .5s
+
+#menu
+  position: absolute
+  top: 10%
+  left : 10%
+  width: 80%
+  height: 80%
+  z-index: 5
+  #left,#right
+    color: white
+    background: rgba(37, 69, 168, 0.77)
+    border-radius: 1rem
+    border: solid
+  #left
+    padding: 1rem
+    overflow: hidden
+    @media (min-width: 768px)
+      height: 100%
+    ul
+      width: 200%
+      @media (min-width: 768px)
+        width: auto
+      li
+        display: inline-block
+        @media (min-width: 768px)
+          display: block
+        border: solid transparent
+        cursor: pointer
+        padding: .2em
+        font-weight: bold
+
+  #right
+    height: 90%
+    overflow : hidden
+    @media (min-width: 768px)
+      height: 100%
+    &Box
+      min-height: 100%
+      padding: 1rem
+      h2:nth-child(1)
+        margin-top : 0
+      img
+        border: solid
+
+#menunav
+  position: absolute
+  left: 2%
+  top: 1%
+  z-index: 5
+  ul
+    li
+      background: rgba(37,69,168,0.77)
+      border-radius: .5rem
+      border: solid
+      color: #fff
+      float: left
+      margin: 0 0.2em
+      font-size: 1.4em
+      padding: .2rem
+      cursor: pointer
+
+#chatBox
+  width: 90%
+  height: 8.1rem
+  position: absolute
+  bottom: 1rem
+  left: 50%
+  margin-left: -45%
+  border-radius: 1rem
+  border: solid
+  color : white
+  font-size : 1.2em
+  padding: .5em
+  z-index : 2
+  p
+    margin: 0
+    line-height : 1
+  ul
+    li
+      border : solid transparent
+      cursor : pointer
+  @media (min-width: 720px)
+    height: 10.5rem
+    font-size : 2rem
+.chatHide
+  opacity: 0
+
+mark
+  background: #712068
+  color: white
+code
+  background: #26266D
+  color: #D8CBCB
+a
+  color : #23FF2B
+  text-decoration : underline
+kbd,mark,code
+  padding: 0 .2em
+  border-radius: .2em
+kbd
+  background: #211F1F
+
+pre
+  background: rgba(13, 25, 62, 0.81)
+  padding: 15px
+  border: 1px solid white
+
+#control
+  width: 0
+  height: 0
+  outline : 0
+  position: absolute
+  top: -999999px
+
+
+
+#load
+  width: 200px
+  height: 200px
+  position: absolute
+  top: 50%
+  left: 50%
+  margin: -100px 0 0 -100px
+  transform: scale(0.6)
+  z-index: 999
+  &> div
+    top: 80px
+    left: 93px
+    width: 14px
+    height: 40px
+    background: #00b2ff
+    border-radius: 10px
+    position: absolute
+  &> div:nth-of-type(1)
+    transform: rotate(0deg)  translate(0,-60px)
+    animation: load 1s linear infinite
+    animation-delay: -0.5s
+  &> div:nth-of-type(2)
+    transform: rotate(30deg) translate(0,-60px)
+    animation: load 1s linear infinite
+    animation-delay: -0.4166666666666667s
+  &> div:nth-of-type(3)
+    transform: rotate(60deg) translate(0,-60px)
+    animation: load 1s linear infinite
+    animation-delay: -0.33333333333333337s
+  &> div:nth-of-type(4)
+    transform: rotate(90deg) translate(0,-60px)
+    animation: load 1s linear infinite
+    animation-delay: -0.25s
+  &> div:nth-of-type(5)
+    transform: rotate(120deg) translate(0,-60px)
+    animation: load 1s linear infinite
+    animation-delay: -0.16666666666666669s
+  &> div:nth-of-type(6)
+    transform: rotate(150deg) translate(0,-60px)
+    animation: load 1s linear infinite
+    animation-delay: -0.08333333333333331s
+  &> div:nth-of-type(7)
+    transform: rotate(180deg) translate(0,-60px)
+    animation: load 1s linear infinite
+    animation-delay: 0s
+  &> div:nth-of-type(8)
+    transform: rotate(210deg) translate(0,-60px)
+    animation: load 1s linear infinite
+    animation-delay: 0.08333333333333337s
+  &> div:nth-of-type(9)
+    transform: rotate(240deg) translate(0,-60px)
+    animation: load 1s linear infinite
+    animation-delay: 0.16666666666666663s
+  &> div:nth-of-type(10)
+    transform: rotate(270deg) translate(0,-60px)
+    animation: load 1s linear infinite
+    animation-delay: 0.25s
+  &> div:nth-of-type(11)
+    transform: rotate(300deg) translate(0,-60px)
+    animation: load 1s linear infinite
+    animation-delay: 0.33333333333333337s
+  &> div:nth-of-type(12)
+    transform: rotate(0deg) translate(330,-60px)
+    animation: load 1s linear infinite
+    animation-delay: 0.41666666666666663s
+@keyframes load
+  0%
+    opacity: 1
+  100%
+    opacity: 0

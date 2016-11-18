@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AACA,MAAM,CACJ,MAAM,CAAE,cAAc,CACtB,KAAK,CAAE,IAAI,CACX,UAAU,CAAE,IAAK,CACjB,OAAO,CAAE,CAAC,CACV,OAAO,CAAE,CAAC,CCsVV,kBAAwC,CDrVzB,IAAI,CCqVnB,qBAAwC,CC9Sb,IAAuB,CD8SlD,aAAwC,CDrVzB,IAAI,CACrB,iBAAmB,CACjB,KAAK,CAAE,GAAG,CACZ,SAAS,CACP,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,KAAK",
-"sources": ["../../app/sass/public/canvas-pinter/custom.sass","file:///C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/_support.scss","file:///C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_border-radius.scss"],
-"names": [],
-"file": "custom.css"
-}

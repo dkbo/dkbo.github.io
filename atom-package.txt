@@ -1,0 +1,14 @@
+atom-beautify@0.29.13
+atom-jade@0.3.0
+color-picker@2.2.2
+emmet@2.4.3
+file-icons@1.7.24
+language-babel@2.48.3
+linter@1.11.18
+linter-eslint@8.0.0
+minimap@4.25.6
+minimap-highlight-selected@4.4.0
+monokai@0.18.0
+react-snippets@0.5.0
+
+
