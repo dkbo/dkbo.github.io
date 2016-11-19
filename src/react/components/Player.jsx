@@ -233,31 +233,46 @@ export default class Player extends Component {
 		const mDw = parseInt(h / 2 + mh - nY) - (parseInt(h / 2 + mh - nY) % 4)
 		const mLf = parseInt(w / 2 - mw) - (parseInt(w / 2 - mw) % 4)
 		const mRf = parseInt(w / 2 + mw - nX) - (parseInt(w / 2 + mw - nX) % 4)
-
 		const msx = w > senceWidth
-			? 0 : ( px <= mRf
-				? 0 : ( px >= senceWidth - nX
-					? senceWidth - w : (px - mRf) > (senceWidth - w)
-						? senceWidth - w : px - mRf ))
+			? 0
+			: ( px <= mRf
+				? 0
+				: ( px >= senceWidth - nX
+					? senceWidth - w
+					: (px - mRf) > (senceWidth - w)
+						? senceWidth - w
+						: px - mRf ))
 
 		const msy = h > senceHeight
-			? 0 : ( py <= mDw
-				? 0 : ( py >= senceHeight - nY
-					? senceHeight - h : (py - mDw) > (senceHeight - h)
-						? senceHeight - h : py - mDw ))
+			? 0
+			: ( py <= mDw
+				? 0
+				: ( py >= senceHeight - nY
+					? senceHeight - h
+					: (py - mDw) > (senceHeight - h)
+						? senceHeight - h
+						: py - mDw ))
 
 
 		const spx = w > senceWidth
-			? px + (w - senceWidth) / 2 : ( px <= mRf
-				? px : ( px >= senceWidth - nX
-					? px - msx : (px - mRf) > (senceWidth - w)
-						? px - msx : mRf ))
+			? px + (w - senceWidth) / 2
+			: ( px <= mRf
+				? px
+				: ( px >= senceWidth - nX
+					? px - msx
+					: (px - mRf) > (senceWidth - w)
+						? px - msx
+						: mRf ))
 
 		const spy = h > senceHeight
-			? py + (h - senceHeight) / 2 : ( py <= mDw ? py : ( py <= mDw
-				? 0 : py >= senceHeight - nY
-					? py - msy : (py - mDw) > (senceHeight - h)
-						? py - msy : mDw ))
+			? py + (h - senceHeight) / 2
+			: ( py <= mDw
+				? py
+				: ( py >= senceHeight - nY
+					? py - msy
+					: (py - mDw) > (senceHeight - h)
+						? py - msy
+						: mDw ))
 
 
 			this.drawSenceAndPlayer({spx, spy }, { mUp, mDw, mLf, mRf, msx, msy})

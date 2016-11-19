@@ -9,7 +9,7 @@ const json = {
 	'mDw': 0,
 	'mLf': 0,
 	'mRf': 0,
-	'isTransSence': false,
+	'isTransSence': true,
 }
 export const sence = (state = Map(json), action) => {
   switch (action.type) {

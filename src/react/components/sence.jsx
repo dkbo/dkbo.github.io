@@ -4,7 +4,7 @@ import { isMoveObject } from '../constants/ismove/'
 export default class Sence extends Component {
 	constructor(props) {
 		super(props)
-
+		this.handleResize = ::this.handleResize
 	}
 
 	drawSence() {
@@ -20,16 +20,21 @@ export default class Sence extends Component {
 			this.mpx = width >= window.innerWidth ? 0 : (window.innerWidth - width) / 2
 			this.mpy = height >= window.innerHeight ? 0 : (window.innerHeight - height) / 2
 			this.drawSence()
-			setTimeout(()=> props.sen({isTransSence: false}), 1000)
-
+			this.props.sence.get('isTransSence') ? setTimeout(()=> props.sen({isTransSence: false}), 1000) : null
 		}
 		this.img.src = isMoveObject[props.sence.get('mapId')]['map'][props.senceImg]
+	}
+	handleResize() {
+		this.senceChange()
 	}
 	shouldComponentUpdate(nextProps) {
 		if(this.props.sence.get('mapId') !== nextProps.sence.get('mapId')) {
 			this.senceChange(nextProps)
 		}
 		return this.props.sence !== nextProps.sence
+	}
+	componentWillMount() {
+		window.addEventListener('resize', this.handleResize)
 	}
 	componentDidUpdate() {
 		this.drawSence()
