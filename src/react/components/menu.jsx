@@ -19,6 +19,7 @@ export default class Menu extends Component {
 		this.menuRightTouchMove = ::this.menuRightTouchMove
 		this.menuRightWheel = ::this.menuRightWheel
 		this.handleTouchStart = ::this.handleTouchStart
+		this.handleTouchEnd = ::this.handleTouchEnd
 	}
   //選單
   menuSelect(x){
@@ -48,6 +49,7 @@ export default class Menu extends Component {
   }
 	//返回觸碰時 XY 座標
   handleTouchStart(e){
+		e.preventDefault()
     menu.startTouch = this.getTouchPos(e)
   }
   menuRightTouchMove(e){
@@ -67,8 +69,8 @@ export default class Menu extends Component {
     }
   }
   menuLeftTouchMove(e){
+		e.preventDefault()
     if(e.view.innerWidth < 768 ){
-      e.preventDefault()
       const pos = this.getTouchPos(e)
 			const x = pos.x - menu.startTouch.x
       menu.startTouch = pos
@@ -83,6 +85,9 @@ export default class Menu extends Component {
 			x: e.changedTouches[0].pageX,
 			y: e.changedTouches[0].pageY,
 		}
+	}
+	handleTouchEnd(e) {
+		e.preventDefault()
 	}
   handleKeyDown(e){
     if(this.props.menu.menuDisplay){
@@ -123,17 +128,17 @@ export default class Menu extends Component {
   render(){
     return(
       <div id='menu'>
-        <div id='left' className='col xx12 s3 xx-np xx-ng' onTouchStart={this.handleTouchStart} onTouchMove={this.menuLeftTouchMove} >
+        <div id='left' className='col xx12 s3 xx-np xx-ng' onTouchStart={this.handleTouchStart} onTouchMove={this.menuLeftTouchMove} onTouchEnd={this.handleTouchEnd}>
           <ul style={this.transform(`translateX(${this.state.menuLeftBoxWheel}px)`)}>
 						{menu.menuTitle.map((menuItem, key) =>
 							this.state.menuIndex === menuItem.id
 								? <li key={key} className='xx-dark-text-shadow' style={{borderColor: 'white'}}>{menuItem.title}</li>
-								: <li key={key} className='xx-dark-text-shadow' style={{borderColor: 'transparent'}} onClick={this.menuSelect.bind(this, menuItem.id)}>{menuItem.title}</li>
+								: <li key={key} className='xx-dark-text-shadow' style={{borderColor: 'transparent'}} onTouchStart={this.menuSelect.bind(this, menuItem.id)} onClick={this.menuSelect.bind(this, menuItem.id)}>{menuItem.title}</li>
 
 						)}
           </ul>
         </div>
-        <div id='right' className='col xx12 s9 xx-np xx-ng' ref='right' onTouchStart={this.handleTouchStart} onTouchMove={this.menuRightTouchMove}>
+        <div id='right' className='col xx12 s9 xx-np xx-ng' ref='right' onTouchStart={this.handleTouchStart} onTouchMove={this.menuRightTouchMove} onTouchEnd={this.handleTouchEnd}>
           <div id='rightBox' onWheel={this.menuRightWheel} ref='rightBox' style={this.transform(`translateY(${this.state.menuRightBoxWheel}px)`)}>
             {menu.menuText[this.state.menuIndex]}
           </div>

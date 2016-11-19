@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import { SEC} from '../constants';
+import { SEC } from '../constants';
 
 const json = {
 	'mapId': 0, // 地圖編號
@@ -12,6 +12,7 @@ const json = {
 	'isTransSence': true,
 }
 export const sence = (state = Map(json), action) => {
+
   switch (action.type) {
   	case SEC:
   	  return state.merge({...action.object});

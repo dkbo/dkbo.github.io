@@ -36,7 +36,7 @@ export default class Player extends Component {
 			if(left && !right) {
 				x = -s
 				sy = nY
-				msx = ( spx + x ) < mLf ? ( msx === 0 ? msx : msx + x) : msx
+				msx = ( spx + x ) < mLf ? ( msx <= 0 ? msx : msx + x) : msx
 				spx = ( spx + x ) < mLf ? (( spx + x ) <= 0 ? 0 : ( msx === 0 ? spx + x : spx)) : spx + x
 				isMoveX = true
 			} else if(right && !left) {
@@ -51,7 +51,7 @@ export default class Player extends Component {
 			if(up && !down) {
 				y = -s
 				sy = nY * 3
-				msy = ( spy + y ) < mUp ? ( msy === 0 ? msy : msy + y) : msy
+				msy = ( spy + y ) < mUp ? ( msy <= 0 ? msy : msy + y) : msy
 				spy = ( spy + y ) < mUp ? (( spy + y ) <= 0 ? 0 : ( msy === 0 ? spy + y : spy)) : spy + y
 				isMoveY = true
 			} else if(down && !up) {
@@ -62,8 +62,10 @@ export default class Player extends Component {
 				spy = ( spy + y ) > mDw ? ( msy >= dsh ? (spy >= h - nY ? spy : spy + y ) : spy) : spy + y
 				isMoveY = true
 			}
-
 			if(isMoveX || isMoveY) {
+				msy = msy < 0 ? 0 : msy
+				msx = msx < 0 ? 0 : msx
+
 				px = w > senceWidth ? spx - (w - senceWidth) / 2 : msx + spx
 				py = h > senceHeight ? spy - (h - senceHeight) / 2 : msy + spy
 			if(!this.isTransSence(px, py)){
@@ -116,6 +118,7 @@ export default class Player extends Component {
 
 	//Check the player's direction, then excute isMessage
 	  moveAnimate(){
+
 			if(!this.props.menu.menuDisplay) {
 		  	const { sy, s } = this.props.player
 		    switch(sy){
@@ -253,7 +256,6 @@ export default class Player extends Component {
 						? senceHeight - h
 						: py - mDw ))
 
-
 		const spx = w > senceWidth
 			? px + (w - senceWidth) / 2
 			: ( px <= mRf
@@ -277,6 +279,12 @@ export default class Player extends Component {
 
 			this.drawSenceAndPlayer({spx, spy }, { mUp, mDw, mLf, mRf, msx, msy})
 	}
+	componentWillMount() {
+		window.addEventListener("resize", this.handleResize)
+		window.addEventListener("keydown", this.handleKeyDown)
+		window.addEventListener("keyup", this.handleKeyUp)
+		window.addEventListener("touchstart", this.moveAnimate)
+	}
 	componentDidMount() {
 		this.canvas = this.refs.player
 		this.player = this.canvas.getContext('2d')
@@ -288,12 +296,7 @@ export default class Player extends Component {
 			this.handleResize()
 		}
 		this.img.src = man
-
 		this.af = 0
-		window.addEventListener("resize", this.handleResize)
-		window.addEventListener("keydown", this.handleKeyDown)
-		window.addEventListener("keyup", this.handleKeyUp)
-		window.addEventListener("touchstart", this.moveAnimate)
 
 		this.props.rAF()(::this.isDraw)
 
