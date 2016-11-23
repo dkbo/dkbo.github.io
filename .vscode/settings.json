@@ -1,0 +1,10 @@
+// 將您的設定放入此檔案中以覆寫預設值和使用者設定。
+{
+    "editor.mouseWheelZoom": true,
+
+    // 控制編輯器是否應顯示縮排輔助線
+    "editor.renderIndentGuides": true,
+
+    // 若啟用，將在您儲存檔案時修剪尾端空白。
+    "files.trimTrailingWhitespace": true,
+}
